@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 13:20:32 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/16 14:40:37 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/16 15:07:25 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ char	*find_env_var(char *str, char **envp, int doubflag)
 
 	i = 0;
 	size = 0;
-	while (!check_char(str[size], "\'\" <>|"))
+	while (!check_char(str[size], "\'\" <>|$"))
 		size++;
 	tmp = ft_calloc(sizeof(char), size + 2);
 	ft_strlcpy(tmp, str, size + 1);
@@ -139,7 +139,7 @@ char	*currency_exchange(char *str, char **envp)
 	*str = 0;
 	str++;
 	replace = find_env_var(str, envp, doubflag);
-	while (!check_char(*str, "\'\" <>|"))
+	while (!check_char(*str, "\'\" <>|$"))
 		str++;
 	after = str;
 	result = ft_strjoin2(ft_strjoin(before, replace), after);
