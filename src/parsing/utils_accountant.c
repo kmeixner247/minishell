@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   accountant_utils.c                                 :+:      :+:    :+:   */
+/*   utils_accountant.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 13:20:32 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/16 14:18:07 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/16 14:40:37 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../incl/minishell.h"
+#include "../../incl/minishell.h"
 
 //writes *envvar into *ret, while enclosing ' into "" and vice versa
 static void	write_var(char *ret, char *envvar)

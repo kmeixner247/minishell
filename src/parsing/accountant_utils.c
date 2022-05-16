@@ -6,11 +6,11 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 13:20:32 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/16 13:21:34 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/16 14:39:35 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../incl/minishell.h"
+#include "../../incl/minishell.h"
 //Returns the position of the first non-escaped $
 //Returns -1 if there is none
 int	find_cash(char *str, int *doubflag)

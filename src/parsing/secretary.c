@@ -6,11 +6,11 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 11:37:40 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/16 14:34:38 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/16 14:40:31 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../incl/minishell.h"
 
 static int	identify_redir(char *str)
 {

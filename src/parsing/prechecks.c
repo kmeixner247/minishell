@@ -6,11 +6,11 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 16:30:07 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/16 14:34:21 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/16 14:40:09 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../incl/minishell.h"
+#include "../../incl/minishell.h"
 
 static int	check_openquotes(char *str)
 {

@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   utils_parsing.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 13:58:39 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/16 14:22:27 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/16 14:40:47 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../incl/minishell.h"
 
 //Returns 1 if c appears in str, 0 if not
 //Returns 1 if c is 0

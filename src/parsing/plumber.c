@@ -6,11 +6,11 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 16:29:55 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/16 13:23:43 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/16 14:40:00 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../incl/minishell.h"
 
 //counts all non-escaped pipe characters within str
 static int	countpipes(char *str)

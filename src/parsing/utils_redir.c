@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   redirutils.c                                       :+:      :+:    :+:   */
+/*   utils_redir.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 14:06:15 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/16 14:08:09 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/16 14:40:53 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../incl/minishell.h"
+#include "../../incl/minishell.h"
 
 t_redir	*new_redir(void)
 {

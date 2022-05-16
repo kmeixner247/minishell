@@ -6,11 +6,11 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 14:09:39 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/16 14:09:55 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/16 14:40:57 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../incl/minishell.h"
+#include "../../incl/minishell.h"
 
 t_token	*new_token(void)
 {

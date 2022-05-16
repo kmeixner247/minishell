@@ -6,11 +6,11 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 16:23:55 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/16 14:34:07 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/16 14:39:46 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../incl/minishell.h"
 
 //handles all the dollars
 static char	*accountant(char *str, char **envp)

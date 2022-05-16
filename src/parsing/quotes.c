@@ -6,11 +6,11 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 10:56:56 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/15 16:34:37 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/16 14:40:17 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../incl/minishell.h"
 
 static int	quotecount(char *str)
 {

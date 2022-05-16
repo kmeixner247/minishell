@@ -6,11 +6,11 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 13:58:39 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/15 14:00:18 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/16 14:41:03 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../incl/minishell.h"
 
 //Returns 1 if c appears in str, 0 if not
 //Returns 1 if c is 0
