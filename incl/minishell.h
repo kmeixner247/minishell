@@ -6,7 +6,7 @@
 /*   By: jsubel <jsubel@student.42wolfsburg.de >    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 10:53:46 by jsubel            #+#    #+#             */
-/*   Updated: 2022/05/16 12:01:36 by jsubel           ###   ########.fr       */
+/*   Updated: 2022/05/16 12:02:14 by jsubel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,5 @@ int	ft_exec_builtins(char **args);
 // builtins
 int	ft_echo(char **args);
 int	ft_pwd(char **args);
-
-//utils
-int	ft_strcmp(const char *s1, const char *s2);
 
 #endif
