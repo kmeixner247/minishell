@@ -34,11 +34,52 @@ int	main(int argc, char **argv, char **envp)
 	return (0);
 }
 
+//	this is just temporarily here for testing
+void	printtoken(t_token *token)
+{
+	t_args	*args;
+	t_redir	*redir;
+
+	while (token)
+	{
+		printf("-------------NEW TOKEN------------\n");
+		args = token->args;
+		printf("---------------ARGS---------------\n");
+		while (args)
+		{
+			printf("%s\n", args->arg);
+			args = args->next;
+		}
+		printf("----------------------------------\n");
+		redir = token->redir;
+		printf("--------------REDIRS--------------\n");
+		while (redir)
+		{
+			printf("%d: %s\n", redir->id, redir->filename);
+			redir = redir->next;
+		}
+		printf("----------------------------------\n");
+		token = token->next;
+	}
+}
+
 void	shell(char **envp)
 {
-	char *input;
-
+	char	*input;
+	t_token	*token;
+	char	**tmp;
 	input = readline("minishell$");
-	free(input);
+	while (42)
+	{
+		add_history(input);
+		if (input && *input && !prechecks(input))
+		{
+			token = parser(input, envp);
+			printtoken(token);
+		}
+		if (!input)
+			exit(1);
+		input = readline("minishell$");
+	}
 	return ;
 }
