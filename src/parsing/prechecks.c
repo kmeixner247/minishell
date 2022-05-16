@@ -6,13 +6,13 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 16:30:07 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/16 13:27:28 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/16 14:19:51 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/minishell.h"
 
-int	check_openquotes(char *str)
+static int	check_openquotes(char *str)
 {
 	int	sing;
 	int	doub;
@@ -33,7 +33,7 @@ int	check_openquotes(char *str)
 		return (0);
 }
 
-int	checkpipes(char *str)
+static int	checkpipes(char *str)
 {
 	while (*str)
 	{
@@ -51,7 +51,7 @@ int	checkpipes(char *str)
 	return (0);
 }
 
-int	checkredirs(char *str)
+static int	checkredirs(char *str)
 {
 	while (*str)
 	{

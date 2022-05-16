@@ -4,10 +4,20 @@ FLAGS		= -Wall -Wextra -Werror -ggdb3 -O0
 SRC_PATH	= src
 LIBFT		= libft
 BI			= builtins/
+PAR			= parsing/
 SRC_FILES 	=	main.c \
 				$(BI)echo.c \
 				$(BI)pwd.c \
-
+				$(PAR)accountant.c
+				$(PAR)plumber.c
+				$(PAR)prechecks.c
+				$(PAR)quotes.c
+				$(PAR)secretary.c
+				$(PAR)utils_accountant.c
+				$(PAR)utils_args.c
+				$(PAR)utils_redir.c
+				$(PAR)utils_tokens.c
+				$(PAR)utils_parsing.c
 
 SRC			= $(addprefix $(SRC_PATH)/,$(SRC_FILES))
 

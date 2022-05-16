@@ -6,13 +6,13 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 11:37:40 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/15 18:16:01 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/16 14:20:43 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	identify_redir(char *str)
+static int	identify_redir(char *str)
 {
 	if (*str == 60)
 	{
@@ -31,7 +31,7 @@ int	identify_redir(char *str)
 	return (0);
 }
 
-t_redir	*redirect_handler(char **strptr)
+static t_redir	*redirect_handler(char **strptr)
 {
 	t_redir	*redir;
 	int		i;
@@ -56,7 +56,7 @@ t_redir	*redirect_handler(char **strptr)
 	return (redir);
 }
 
-t_args	*args_handler(char **strptr)
+static t_args	*args_handler(char **strptr)
 {
 	char	*str;
 	t_args	*args;
@@ -77,7 +77,7 @@ t_args	*args_handler(char **strptr)
 	return (args);
 }
 
-t_token	*get_token(char *str)
+static t_token	*get_token(char *str)
 {
 	t_token	*token;
 	t_redir	*redir;

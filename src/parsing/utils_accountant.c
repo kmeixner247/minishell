@@ -6,41 +6,14 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 13:20:32 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/16 13:21:34 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/16 14:18:07 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/minishell.h"
-//Returns the position of the first non-escaped $
-//Returns -1 if there is none
-int	find_cash(char *str, int *doubflag)
-{
-	int	sing;
-	int	doub;
-	int	pos;
-
-	sing = -1;
-	doub = -1;
-	pos = 0;
-	while (str[pos])
-	{
-		if (str[pos] == 39 && doub == -1)
-			sing *= -1;
-		if (str[pos] == 34 && sing == -1)
-			doub *= -1;
-		if (str[pos] == 36 && sing == -1)
-			break ;
-		pos++;
-	}
-	*doubflag = doub;
-	if (str[pos])
-		return (pos);
-	else
-		return (-1);
-}
 
 //writes *envvar into *ret, while enclosing ' into "" and vice versa
-void	write_var(char *ret, char *envvar)
+static void	write_var(char *ret, char *envvar)
 {
 	int	i;
 	int	j;
@@ -68,7 +41,7 @@ void	write_var(char *ret, char *envvar)
 
 //skips until after the = of the passed envvar and creates 
 //and returns a new string with the value
-char	*assemble_var(char *envvar)
+static char	*assemble_var(char *envvar)
 {
 	int		i;
 	int		j;
@@ -89,6 +62,34 @@ char	*assemble_var(char *envvar)
 	ret = ft_calloc(sizeof(char), j + 1);
 	write_var(ret, envvar);
 	return (ret);
+}
+
+//Returns the position of the first non-escaped $
+//Returns -1 if there is none
+int	find_cash(char *str, int *doubflag)
+{
+	int	sing;
+	int	doub;
+	int	pos;
+
+	sing = -1;
+	doub = -1;
+	pos = 0;
+	while (str[pos])
+	{
+		if (str[pos] == 39 && doub == -1)
+			sing *= -1;
+		if (str[pos] == 34 && sing == -1)
+			doub *= -1;
+		if (str[pos] == 36 && sing == -1)
+			break ;
+		pos++;
+	}
+	*doubflag = doub;
+	if (str[pos])
+		return (pos);
+	else
+		return (-1);
 }
 
 //Finds and returns the value of the variable $str in envp

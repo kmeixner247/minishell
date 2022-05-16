@@ -6,14 +6,14 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 16:23:55 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/16 13:22:19 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/16 14:16:53 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 //handles all the dollars
-char	*accountant(char *str, char **envp)
+static char	*accountant(char *str, char **envp)
 {
 	char	*tmp;
 	int		doubflag;
