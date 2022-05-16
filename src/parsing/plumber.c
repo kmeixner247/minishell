@@ -6,12 +6,13 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 16:29:55 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/15 14:02:58 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/16 13:23:43 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+//counts all non-escaped pipe characters within str
 static int	countpipes(char *str)
 {
 	int	count;
@@ -28,6 +29,8 @@ static int	countpipes(char *str)
 	return (count);
 }
 
+//cuts the inputstring by pipes and returns a NULL-terminated string array
+//with each element being one section
 char	**plumber(char *str)
 {
 	char	**retarr;
