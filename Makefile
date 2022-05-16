@@ -2,7 +2,7 @@ NAME		= minishell
 GCC			= gcc
 FLAGS		= -Wall -Wextra -Werror -ggdb3 -O0
 SRC_PATH	= src
-LIBFT		= 42_libft
+LIBFT		= libft
 BI			= builtins/
 SRC_FILES 	=	main.c \
 				$(BI)echo.c \
