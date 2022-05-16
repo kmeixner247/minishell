@@ -39,7 +39,6 @@ void	shell(char **envp)
 	char *input;
 
 	input = readline("minishell$");
-	rl
 	free(input);
 	return ;
 }

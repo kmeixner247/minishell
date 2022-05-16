@@ -6,7 +6,7 @@
 /*   By: jsubel <jsubel@student.42wolfsburg.de >    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 10:53:46 by jsubel            #+#    #+#             */
-/*   Updated: 2022/05/16 10:08:43 by jsubel           ###   ########.fr       */
+/*   Updated: 2022/05/16 11:36:14 by jsubel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,9 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <errno.h>
+# include "../42_libft/libft.h" 
 # include <sys/param.h>	// max path len
+
 
 void		shell(char **envp);
 char		*readline(const char *);
