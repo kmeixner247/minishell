@@ -6,11 +6,11 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 16:30:07 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/15 17:09:10 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/16 13:27:28 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../incl/minishell.h"
 
 int	check_openquotes(char *str)
 {
@@ -79,12 +79,14 @@ int	prechecks(char *str)
 	while (*str == 32)
 		str++;
 	if (check_openquotes(str))
-		i = printf("ERROR: Open quotes\n");
+		fd_putstr("ERROR: Open quotes\n", 2);
 	else if (*str == 124)
-		i = printf("ERROR: No valid input before pipe\n");
+		fd_putstr("ERROR: No valid input before pipe\n", 2);
 	else if (checkpipes(str))
-		i = printf("ERROR: No valid input after pipe\n");
+		fd_putstr("ERROR: No valid input after pipe\n", 2);
 	else if (checkredirs(str))
-		i = printf("ERROR: No valid input after redirection\n");
-	return (i);
+		fd_putstr("ERROR: No valid input after redirection\n", 2);
+	else
+		return (0);
+	return (-1);
 }
