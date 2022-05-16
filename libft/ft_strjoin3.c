@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 12:06:39 by jsubel            #+#    #+#             */
-/*   Updated: 2022/05/16 13:34:37 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/16 13:35:35 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,6 @@ char	*ft_strjoin3(char const *s1, char *s2)
 		i++;
 	}
 	dst[i + ft_strlen(s1)] = '\0';
-	free(s3);
+	free(s2);
 	return (dst);
 }
