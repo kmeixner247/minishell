@@ -68,18 +68,31 @@ void	shell(char **envp)
 	char	*input;
 	t_token	*token;
 	char	**tmp;
-	input = readline("minishell$");
-	while (42)
-	{
-		add_history(input);
-		if (input && *input && !prechecks(input))
-		{
-			token = parser(input, envp);
-			printtoken(token);
-		}
-		if (!input)
-			exit(1);
-		input = readline("minishell$");
-	}
+	t_env	*envv;
+
+	envv = init_env(envp);
+	char *test[5];
+	test[0] = "export";
+	test[1] = "SHELL";
+	test[2] = "COLORTERM";
+	test[3] = "SECURITYSESSIONID";
+	test[4] = NULL;
+	unset(&envv, test);
+	// export(&envv, test);
+	env(envv);
+
+	// input = readline("minishell$");
+	// while (42)
+	// {
+	// 	add_history(input);
+	// 	if (input && *input && !prechecks(input))
+	// 	{
+	// 		token = parser(input, envp);
+	// 		printtoken(token);
+	// 	}
+	// 	if (!input)
+	// 		exit(1);
+	// 	input = readline("minishell$");
+	// }
 	return ;
 }

@@ -7,7 +7,12 @@ BI			= builtins/
 PAR			= parsing/
 SRC_FILES 	=	main.c \
 				$(BI)echo.c \
+				$(BI)env.c \
+				$(BI)export.c \
 				$(BI)pwd.c \
+				$(BI)unset.c \
+				$(BI)utils_env.c \
+				$(PAR)parser.c \
 				$(PAR)accountant.c \
 				$(PAR)plumber.c \
 				$(PAR)prechecks.c \

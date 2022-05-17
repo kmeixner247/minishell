@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 10:53:46 by jsubel            #+#    #+#             */
-/*   Updated: 2022/05/16 14:25:33 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/17 11:35:31 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,25 @@ int	ft_exec_builtins(char **args);
 int	ft_echo(char **args);
 int	ft_pwd(char **args);
 
+
+// env.c
+void	env(t_env *env);;
+
+// utils_env.c
+t_env	*new_env(char *var);
+void	env_addback(t_env **start, t_env *new);
+t_env	*init_env(char **envp);
+
+// export.c
+void	export(t_env **env, char**args);
+
+// unset.c
+void	unset(t_env **env, char **args);
+
 // parsing
+
+// parser.c
+t_token *parser(char *input, char **envp);
 
 // accountant.c 
 void	meta_accountant(t_token *token, char **envp);

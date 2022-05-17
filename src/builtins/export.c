@@ -1,25 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/15 19:12:43 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/17 11:30:25 by kmeixner         ###   ########.fr       */
+/*   Created: 2022/05/17 11:29:32 by kmeixner          #+#    #+#             */
+/*   Updated: 2022/05/17 11:29:45 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
-void env(t_env *env)
+void	export(t_env **env, char**args)
 {
-	t_env	*tempenv;
+	t_env	*newenv;
+	int		i;
 
-	tempenv = env;
-	while (tempenv)
+	i = 1;
+	while (args[i])
 	{
-		printf("%s\n", tempenv->var);
-		tempenv = tempenv->next;
-	}
+		newenv = new_env(args[i]);
+		env_addback(env, newenv);
+		i++;
+	}	
 }
