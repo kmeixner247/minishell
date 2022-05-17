@@ -71,11 +71,14 @@ void	shell(char **envp)
 	input = readline("minishell$");
 	while (42)
 	{
+		printf("but is this\n");
 		add_history(input);
 		if (input && *input && !prechecks(input))
 		{
 			token = parser(input, envp);
 			printtoken(token);
+			exectests(token);
+			printf("this is printing%s\n", input);
 		}
 		if (!input)
 			exit(1);

@@ -19,6 +19,7 @@ SRC_FILES 	=	main.c \
 				$(PAR)utils_redir.c \
 				$(PAR)utils_tokens.c \
 				$(PAR)utils_parsing.c \
+				pipeTESTS/pipesDONTUSETHIS.c
 
 SRC			= $(addprefix $(SRC_PATH)/,$(SRC_FILES))
 

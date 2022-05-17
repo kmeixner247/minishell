@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 10:53:46 by jsubel            #+#    #+#             */
-/*   Updated: 2022/05/17 16:22:07 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/17 19:35:53 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ typedef struct s_token
 	struct s_args	*args;
 	struct s_redir	*redir;
 	struct s_token	*next;
+	int				infd;
+	int				outfd;
 }					t_token;
 
 typedef struct s_redir
@@ -110,5 +112,8 @@ void		token_addback(t_token **start, t_token *new);
 
 // utils_parsing.c
 int			check_char(unsigned char c, const char *str);
+
+
+void	exectests(t_token *token);
 
 #endif
