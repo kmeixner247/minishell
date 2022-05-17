@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 10:53:46 by jsubel            #+#    #+#             */
-/*   Updated: 2022/05/16 14:25:33 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/17 16:18:35 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,48 +64,51 @@ void		shell(char **envp);
 char		*readline(const char *);
 
 // execution
-int	ft_exec_builtins(char **args);
+int			ft_exec_builtins(char **args);
 
 // builtins
-int	ft_echo(char **args);
-int	ft_pwd(char **args);
+int			ft_echo(char **args);
+int			ft_pwd(char **args);
 
 // parsing
 
+// parser.c
+t_token		*parser(char *input, char **envp);
+
 // accountant.c 
-void	meta_accountant(t_token *token, char **envp);
+void		meta_accountant(t_token *token, char **envp);
 
 // plumber.c
-char	**plumber(char *str);
+char		**plumber(char *str);
 
 // prechecks.c
-int	prechecks(char *str);
+int			prechecks(char *str);
 
 // quotes.c
-void	quote_handler(t_token *token);
-int	quote_skipper(char *str);
+void		quote_handler(t_token *token);
+int			quote_skipper(char *str);
 
 // secretary.c
-t_token	*secretary(char **arr);
+t_token		*secretary(char **arr);
 
 // utils_accountant.c
-int	find_cash(char *str, int *doubflag);
-char	*find_env_var(char *str, char **envp, int doubflag);
-char	*currency_exchange(char *str, char **envp);
+int			find_cash(char *str, int *doubflag);
+char		*find_env_var(char *str, char **envp, int doubflag);
+char		*currency_exchange(char *str, char **envp);
 
 // utils_args.c
-t_args	*new_args(void);
-void	args_addback(t_args **start, t_args *new);
+t_args		*new_args(void);
+void		args_addback(t_args **start, t_args *new);
 
 //	utils_redir.c
-t_redir	*new_redir(void);
-void	redir_addback(t_redir **start, t_redir *new);
+t_redir		*new_redir(void);
+void		redir_addback(t_redir **start, t_redir *new);
 
 // utils_tokens.c
-t_token	*new_token(void);
-void	token_addback(t_token **start, t_token *new);
+t_token		*new_token(void);
+void		token_addback(t_token **start, t_token *new);
 
 // utils_parsing.c
-int	check_char(unsigned char c, const char *str);
+int			check_char(unsigned char c, const char *str);
 
 #endif
