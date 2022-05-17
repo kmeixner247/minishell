@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 11:29:32 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/17 15:59:48 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/17 16:07:22 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,8 @@ void	print_alphabetical(t_env *env)
 		n--;
 	}
 }
+
+//still need to protect variable names
 
 void	export(t_env **env, char**args)
 {
