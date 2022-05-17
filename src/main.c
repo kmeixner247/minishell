@@ -71,7 +71,6 @@ void	shell(char **envp)
 	input = readline("minishell$");
 	while (42)
 	{
-		printf("but is this\n");
 		add_history(input);
 		if (input && *input && !prechecks(input))
 		{
