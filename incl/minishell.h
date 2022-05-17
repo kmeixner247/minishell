@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 10:53:46 by jsubel            #+#    #+#             */
-/*   Updated: 2022/05/17 16:18:35 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/17 16:22:07 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ typedef struct s_env
 }					t_env;
 
 void		shell(char **envp);
-char		*readline(const char *);
+// char		*readline(const char *str);
 
 // execution
 int			ft_exec_builtins(char **args);
