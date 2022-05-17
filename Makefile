@@ -9,6 +9,7 @@ SRC_FILES 	=	main.c \
 				$(BI)echo.c \
 				$(BI)pwd.c \
 				$(PAR)accountant.c \
+				$(PAR)parser.c \
 				$(PAR)plumber.c \
 				$(PAR)prechecks.c \
 				$(PAR)quotes.c \
