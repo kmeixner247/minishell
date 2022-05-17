@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 11:29:32 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/17 16:07:22 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/17 16:37:10 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,11 @@ void	print_alphabetical(t_env *env)
 	}
 }
 
+//still need to export empty variables
 //still need to protect variable names
+//can't start with number
+//only alphanumerical
+//dirty exceptions?
 
 void	export(t_env **env, char**args)
 {

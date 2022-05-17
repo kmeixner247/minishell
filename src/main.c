@@ -73,13 +73,13 @@ void	shell(char **envp)
 	envv = init_env(envp);
 	char *test[5];
 	test[0] = "export";
-	test[1] = "SHELL";
+	test[1] = NULL;
 	test[2] = "COLORTERM";
 	test[3] = "SECURITYSESSIONID";
 	test[4] = NULL;
-	unset(&envv, test);
-	// export(&envv, test);
-	env(envv);
+	// unset(&envv, test);
+	export(&envv, test);
+	// env(envv);
 
 	// input = readline("minishell$");
 	// while (42)
