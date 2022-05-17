@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 16:26:36 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/17 20:32:17 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/17 20:43:19 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	exectests(t_token *token)
 {
 	int	pid;
 	int	pipefds[2];
+	int	wpid;
 
 	pid = 1;
 	if (!token->next)
@@ -43,6 +44,7 @@ void	exectests(t_token *token)
 	}
 	if (pid)
 		pid = fork();
+	//basically here I can start executing shit
 	if (!pid)
 	{
 		if (token->infd > 0)
@@ -55,8 +57,9 @@ void	exectests(t_token *token)
 	else
 	{
 		printf("I am the almighty parent and my pid is %d\n", pid);
-		wait(NULL);
 		close(pipefds[0]);
+		while (wpid > 0)
+			wpid = wait(NULL);
 	}
 	return ;
 }
