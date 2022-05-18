@@ -75,9 +75,9 @@ void	shell(char **envp)
 		if (input && *input && !prechecks(input))
 		{
 			token = parser(input, envp);
-			printtoken(token);
+			// printtoken(token);
 			exectests(token, envp);
-			printf("this is printing%s\n", input);
+			// printf("this is printing%s\n", input);
 		}
 		if (!input)
 			exit(1);

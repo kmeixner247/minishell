@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 10:53:46 by jsubel            #+#    #+#             */
-/*   Updated: 2022/05/18 10:31:07 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/18 12:53:24 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ char		*currency_exchange(char *str, char **envp);
 // utils_args.c
 t_args		*new_args(void);
 void		args_addback(t_args **start, t_args *new);
+char		**get_args(t_token *token);
 
 //	utils_redir.c
 t_redir		*new_redir(void);
