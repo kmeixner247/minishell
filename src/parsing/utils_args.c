@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 14:07:48 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/18 13:21:32 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/18 19:02:17 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ char	**get_args(t_token *token)
 {
 	t_args	*tempargs;
 	char	**retarr;
-	int	i;
+	int		i;
 
 	tempargs = token->args;
 	i = 0;

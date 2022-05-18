@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 10:53:46 by jsubel            #+#    #+#             */
-/*   Updated: 2022/05/18 12:53:24 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/18 19:02:43 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,6 @@ void		token_addback(t_token **start, t_token *new);
 // utils_parsing.c
 int			check_char(unsigned char c, const char *str);
 
-
-void	exectests(t_token *token, char **envp);
+void		exectests(t_token *token, char **envp);
 
 #endif

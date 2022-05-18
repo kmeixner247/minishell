@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 16:26:36 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/18 18:07:50 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/18 19:02:04 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	try_paths(char **args, char **envp)
 {
 	int		i;
 	char	**paths;
+
 	i = 0;
 	while (ft_strncmp(envp[i], "PATH=", 5))
 		i++;
@@ -40,9 +41,9 @@ int	here_doc(char *delimiter)
 	char	*line;
 	char	*tempfilepath;
 	int		openflags;
-	
+
 	openflags = O_WRONLY | O_CREAT | O_EXCL | O_TRUNC;
-	tempfilepath = ft_strjoin3("/tmp/minishell-thd", ft_itoa((int)&writefd));
+	tempfilepath = ft_strjoin3("/tmp/minishell-thd", ft_itoa((int)&delimiter));
 	writefd = open(tempfilepath, openflags, 0600);
 	line = readline("> ");
 	while (42)
@@ -57,7 +58,8 @@ int	here_doc(char *delimiter)
 	free(line);
 	readfd = open(tempfilepath, O_RDONLY);
 	close(writefd);
-	return(readfd);
+	unlink(tempfilepath);
+	return (readfd);
 }
 
 int	redir_input(t_redir *redir, int tempinfd)
@@ -78,7 +80,7 @@ int	redir_output(t_redir *redir, int tempoutfd)
 
 	openflags = 0;
 	openmodes = S_IRWXU | S_IRWXG | S_IRWXO;
-	if (tempoutfd > 0)
+	if (tempoutfd > 1)
 		close(tempoutfd);
 	if (redir->id == 3)
 		openflags = O_WRONLY | O_CREAT | O_TRUNC;
@@ -109,11 +111,19 @@ void	handle_redirs(t_token *token, char **envp)
 		token->outfd = tempoutfd;
 }
 
+void	cycle_tokens(t_token *token, char **envp)
+{
+	while (token)
+	{
+		handle_redirs(token, envp);
+		token = token->next;
+	}
+}
+
 void	children(t_token *token, char **envp)
 {
 	char	**args;
 
-	handle_redirs(token, envp);
 	dup2(token->infd, 0);
 	dup2(token->outfd, 1);
 	if (token->infd != 0)
@@ -127,23 +137,23 @@ void	children(t_token *token, char **envp)
 
 void	fork_and_execute(t_token *token, char **envp)
 {
-	int pid;
-	int pipefds[2];
-	int wpid;
+	int	pid;
+	int	pipefds[2];
+	int	wpid;
 
 	pid = 1;
-	while(pid && token->next)
+	while (pid && token->next)
 	{
 		pipe(pipefds);
-		token->outfd = pipefds[1];
-		token->next->infd = pipefds[0];
+		if (token->outfd == 1)
+			token->outfd = pipefds[1];
+		if (token->next->infd == 0)
+			token->next->infd = pipefds[0];
 		pid = fork();
 		if (!pid)
 			close(pipefds[0]);
 		else
 		{
-			if (token->infd > 0)
-				close(token->infd);
 			close(pipefds[1]);
 			token = token->next;
 		}
@@ -160,7 +170,7 @@ void	fork_and_execute(t_token *token, char **envp)
 	}
 }
 
-void	exectests(t_token *token, char **envp) 
+void	exectests(t_token *token, char **envp)
 {
 	int	pid;
 	int	pipefds[2];
@@ -173,6 +183,9 @@ void	exectests(t_token *token, char **envp)
 		return ;
 	}
 	else
+	{
+		cycle_tokens(token, envp);
 		fork_and_execute(token, envp);
+	}
 	return ;
 }
