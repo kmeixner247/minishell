@@ -76,7 +76,7 @@ void	shell(char **envp)
 		{
 			token = parser(input, envp);
 			printtoken(token);
-			exectests(token);
+			exectests(token, envp);
 			printf("this is printing%s\n", input);
 		}
 		if (!input)
