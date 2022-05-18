@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 16:26:36 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/18 19:02:04 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/18 19:55:01 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ int	here_doc(char *delimiter)
 	line = readline("> ");
 	while (42)
 	{
-		if (ft_strlen(delimiter) == ft_strlen(line) && !ft_strncmp(delimiter, line, ft_strlen(line)) || !line)
+		if (ft_strlen(delimiter) == ft_strlen(line) && \
+			!ft_strncmp(delimiter, line, ft_strlen(line)) || !line)
 			break ;
 		write(writefd, line, ft_strlen(line));
 		write(writefd, "\n", 1);
@@ -90,7 +91,7 @@ int	redir_output(t_redir *redir, int tempoutfd)
 	return (tempoutfd);
 }
 
-void	handle_redirs(t_token *token, char **envp)
+void	handle_redirs_single(t_token *token, char **envp)
 {
 	int		tempinfd;
 	int		tempoutfd;
@@ -111,11 +112,11 @@ void	handle_redirs(t_token *token, char **envp)
 		token->outfd = tempoutfd;
 }
 
-void	cycle_tokens(t_token *token, char **envp)
+void	handle_redirs(t_token *token, char **envp)
 {
 	while (token)
 	{
-		handle_redirs(token, envp);
+		handle_redirs_single(token, envp);
 		token = token->next;
 	}
 }
@@ -135,6 +136,23 @@ void	children(t_token *token, char **envp)
 	exit(0);
 }
 
+int	assign_pipes(t_token *token, int pipefds[2])
+{
+	int	pid;
+
+	pipe(pipefds);
+	if (token->outfd == 1)
+		token->outfd = pipefds[1];
+	if (token->next->infd == 0)
+		token->next->infd = pipefds[0];
+	pid = fork();
+	if (!pid)
+		close(pipefds[0]);
+	else
+		close(pipefds[1]);
+	return (pid);
+}
+
 void	fork_and_execute(t_token *token, char **envp)
 {
 	int	pid;
@@ -144,19 +162,9 @@ void	fork_and_execute(t_token *token, char **envp)
 	pid = 1;
 	while (pid && token->next)
 	{
-		pipe(pipefds);
-		if (token->outfd == 1)
-			token->outfd = pipefds[1];
-		if (token->next->infd == 0)
-			token->next->infd = pipefds[0];
-		pid = fork();
-		if (!pid)
-			close(pipefds[0]);
-		else
-		{
-			close(pipefds[1]);
+		pid = assign_pipes(token, pipefds);
+		if (pid)
 			token = token->next;
-		}
 	}
 	if (pid)
 		pid = fork();
@@ -184,7 +192,7 @@ void	exectests(t_token *token, char **envp)
 	}
 	else
 	{
-		cycle_tokens(token, envp);
+		handle_redirs(token, envp);
 		fork_and_execute(token, envp);
 	}
 	return ;
