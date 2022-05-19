@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 16:26:36 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/19 11:44:42 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/19 13:07:37 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,16 +95,18 @@ void	handle_redirs_single(t_token *token, char **envp)
 {
 	int		tempinfd;
 	int		tempoutfd;
+	t_redir	*tmp;
 
+	tmp = token->redir;
 	tempinfd = -1;
 	tempoutfd = -1;
-	while (token->redir)
+	while (tmp)
 	{
-		if (token->redir->id == 1 || token->redir->id == 2)
-			tempinfd = redir_input(token->redir, tempinfd);
-		else if (token->redir->id == 3 || token->redir->id == 4)
-			tempoutfd = redir_output(token->redir, tempoutfd);
-		token->redir = token->redir->next;
+		if (tmp->id == 1 || tmp->id == 2)
+			tempinfd = redir_input(tmp, tempinfd);
+		else if (tmp->id == 3 || tmp->id == 4)
+			tempoutfd = redir_output(tmp, tempoutfd);
+		tmp = tmp->next;
 	}
 	if (tempinfd > 0)
 		token->infd = tempinfd;
@@ -114,10 +116,13 @@ void	handle_redirs_single(t_token *token, char **envp)
 
 void	handle_redirs(t_token *token, char **envp)
 {
-	while (token)
+	t_token	*tmp;
+	
+	tmp = token;
+	while (tmp)
 	{
-		handle_redirs_single(token, envp);
-		token = token->next;
+		handle_redirs_single(tmp, envp);
+		tmp = tmp->next;
 	}
 }
 
@@ -127,9 +132,9 @@ void	children(t_token *token, char **envp)
 
 	dup2(token->infd, 0);
 	dup2(token->outfd, 1);
-	if (token->infd != 0)
+	if (token->infd > 0)
 		close(token->infd);
-	if (token->outfd != 1)
+	if (token->outfd > 1)
 		close(token->outfd);
 	args = get_args(token);
 	if (check_char('/', args[0]))
@@ -162,7 +167,10 @@ void	fork_and_execute(t_token *token, char **envp)
 	int	pipefds[2];
 	int	wpid;
 
+	pipefds[0] = -1;
+	pipefds[1] = -1;
 	pid = 1;
+	wpid = 1;
 	while (pid && token->next)
 	{
 		pid = assign_pipes(token, pipefds);
@@ -175,7 +183,8 @@ void	fork_and_execute(t_token *token, char **envp)
 		children(token, envp);
 	else
 	{
-		close(pipefds[0]);
+		if (pipefds[0] > 0)
+			close(pipefds[0]);
 		while (wpid > 0)
 			wpid = wait(NULL);
 	}
@@ -202,7 +211,7 @@ void	exectests(t_token *token, char **envp)
 	int	wpid;
 
 	pid = 1;
-	if (!token->next && isbuiltin(token->args->arg))
+	if (!token->next && token->args && isbuiltin(token->args->arg))
 	{
 		fprintf(stderr, "%s dies das\n", token->args->arg);
 		return ;
