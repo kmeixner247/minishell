@@ -1,6 +1,6 @@
 NAME		= minishell
 GCC			= gcc
-FLAGS		= -Wall -Wextra -Werror -ggdb3 -O0
+FLAGS		= -Wall -Wextra -Werror -ggdb3 -O0 -g -fsaniziter=address
 SRC_PATH	= src
 LIBFT		= libft
 BI			= builtins/

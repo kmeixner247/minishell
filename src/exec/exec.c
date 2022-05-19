@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipesDONTUSETHIS.c                                 :+:      :+:    :+:   */
+/*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 16:26:36 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/19 19:12:47 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/19 21:19:06 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,10 @@ void	children(t_token *token, char **envp)
 	if (check_char('/', args[0]))
 		execve(args[0], args, envp);
 	else
+	{
+		fprintf(stderr, "trying paths for %s\n", args[0]);
 		try_paths(args, envp);
+	}	
 	exit(0);
 }
 
@@ -91,7 +94,7 @@ void	fork_and_execute(t_token *token, char **envp)
 		children(token, envp);
 	else
 	{
-		if (pipefds[0] > 0)
+		if (pipefds[0] > 1)
 			close(pipefds[0]);
 		while (wpid > 0)
 			wpid = wait(NULL);
@@ -102,7 +105,6 @@ void	exec(t_token *token, char **envp)
 {
 	int	pid;
 	int	pipefds[2];
-	int	wpid;
 
 	pid = 1;
 	if (!token->next && token->args && isbuiltin(token->args->arg))

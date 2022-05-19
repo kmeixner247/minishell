@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 11:30:02 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/17 11:36:42 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/19 20:10:40 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static void	env_delfirst(t_env **env)
 {
 	t_env	*tempenv;
-	
+
 	tempenv = *env;
 	*env = tempenv->next;
 	free(tempenv->var);

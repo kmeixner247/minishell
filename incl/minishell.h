@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 10:53:46 by jsubel            #+#    #+#             */
-/*   Updated: 2022/05/19 19:28:03 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/19 19:55:09 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ void	env(t_env *env);;
 t_env	*new_env(char *var);
 void	env_addback(t_env **start, t_env *new);
 t_env	*init_env(char **envp);
+char	**get_env(t_env *env);
 
 // export.c
 void	export(t_env **env, char**args);

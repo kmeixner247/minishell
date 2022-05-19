@@ -67,7 +67,24 @@ void	shell(char **envp)
 {
 	char	*input;
 	t_token	*token;
-	char	**tmp;
+	t_env	*justtestinglol;
+	char	**envvtest;
+	// justtestinglol = init_env(envp);
+	// envvtest = get_env(justtestinglol);
+	// int i = 0;
+	// while (envvtest[i])
+	// {
+	// 	printf("%s\n", envvtest[i]);
+	// 	i++;
+	// }
+	// printf("--------------------------------\n");
+	// i = 0;
+	// while (envp[i])
+	// {
+	// 	printf("%s\n", envp[i]);
+	// 	i++;
+	// }
+
 	input = readline("minishell$");
 	while (42)
 	{
@@ -75,7 +92,7 @@ void	shell(char **envp)
 		if (input && *input && !prechecks(input))
 		{
 			token = parser(input, envp);
-			free(input);
+			// free(input);
 			// printtoken(token);
 			exec(token, envp);
 			// printf("this is printing%s\n", input);

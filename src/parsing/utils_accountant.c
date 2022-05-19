@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 13:20:32 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/19 19:00:44 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/19 20:36:34 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ char	*get_env_value(char *str, char **envp, int doubflag)
 
 	i = 0;
 	size = 0;
-	tmp = ft_strjoin2(tmp, "=");
+	tmp = ft_strjoin(str, "=");
 	while (envp[i] && ft_strncmp(tmp, envp[i], ft_strlen(tmp)))
 		i++;
 	free(tmp);
