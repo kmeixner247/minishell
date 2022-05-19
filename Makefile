@@ -6,6 +6,7 @@ LIBFT		= libft
 BI			= builtins/
 PAR			= parsing/
 SRC_FILES 	=	main.c \
+				$(BI)builtin_handler.c \
 				$(BI)echo.c \
 				$(BI)pwd.c \
 				$(PAR)accountant.c \

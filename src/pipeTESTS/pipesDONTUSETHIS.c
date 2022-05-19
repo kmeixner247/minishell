@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 16:26:36 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/19 18:18:20 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/19 19:10:48 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,21 +32,6 @@ void	try_paths(char **args, char **envp)
 	}
 	fprintf(stderr, "Couldn't find command %s\n", args[0]);
 	free(paths);
-}
-
-
-
-
-void	handle_redirs(t_token *token, char **envp)
-{
-	t_token	*tmp;
-
-	tmp = token;
-	while (tmp)
-	{
-		handle_redirs_single(tmp, envp);
-		tmp = tmp->next;
-	}
 }
 
 void	children(t_token *token, char **envp)
@@ -111,20 +96,6 @@ void	fork_and_execute(t_token *token, char **envp)
 		while (wpid > 0)
 			wpid = wait(NULL);
 	}
-}
-
-int	isbuiltin(char *arg)
-{
-	if (!ft_strcmp(arg, "echo") || \
-		!ft_strcmp(arg, "cd") || \
-		!ft_strcmp(arg, "pwd") || \
-		!ft_strcmp(arg, "export") || \
-		!ft_strcmp(arg, "unset") || \
-		!ft_strcmp(arg, "env") || \
-		!ft_strcmp(arg, "exit"))
-		return (1);
-	else
-		return (0);
 }
 
 void	exectests(t_token *token, char **envp)

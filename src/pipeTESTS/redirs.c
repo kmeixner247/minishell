@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 18:17:00 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/19 18:18:27 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/19 19:05:08 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static int	redir_output(t_redir *redir, int tempoutfd)
 	return (tempoutfd);
 }
 
-void	handle_redirs_single(t_token *token, char **envp)
+static void	handle_redirs_single(t_token *token, char **envp)
 {
 	int		tempinfd;
 	int		tempoutfd;
@@ -61,4 +61,16 @@ void	handle_redirs_single(t_token *token, char **envp)
 		token->infd = tempinfd;
 	if (tempoutfd > 0)
 		token->outfd = tempoutfd;
+}
+
+void	handle_redirs(t_token *token, char **envp)
+{
+	t_token	*tmp;
+
+	tmp = token;
+	while (tmp)
+	{
+		handle_redirs_single(tmp, envp);
+		tmp = tmp->next;
+	}
 }

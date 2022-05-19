@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 10:53:46 by jsubel            #+#    #+#             */
-/*   Updated: 2022/05/19 18:18:34 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/19 19:11:08 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,9 @@ int			ft_exec_builtins(char **args);
 int			ft_echo(char **args);
 int			ft_pwd(char **args);
 
+// builtin-handler.c
+int			isbuiltin(char *arg);
+
 // parsing
 
 // parser.c
@@ -117,8 +120,8 @@ void		token_addback(t_token **start, t_token *new);
 int			check_char(unsigned char c, const char *str);
 
 void		exectests(t_token *token, char **envp);
-int	here_doc(char *delimiter, char **envp);
+int			here_doc(char *delimiter, char **envp);
 
 // redirs.c
-void	handle_redirs_single(t_token *token, char **envp);
+void		handle_redirs(t_token *token, char **envp);
 #endif
