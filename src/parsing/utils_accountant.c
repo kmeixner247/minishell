@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 13:20:32 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/16 15:07:25 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/19 19:00:44 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int	find_cash(char *str, int *doubflag)
 			sing *= -1;
 		if (str[pos] == 34 && sing == -1)
 			doub *= -1;
-		if (str[pos] == 36 && sing == -1)
+		if (str[pos] == 36 && sing == -1 && isalnum(str[pos + 1]))
 			break ;
 		pos++;
 	}
@@ -95,7 +95,7 @@ int	find_cash(char *str, int *doubflag)
 //Finds and returns the value of the variable $str in envp
 //Returns an allocated empty string if the variable doesn't exist
 //Also prepares quotes to be handled correctly by the quote remover
-char	*find_env_var(char *str, char **envp, int doubflag)
+char	*get_env_value(char *str, char **envp, int doubflag)
 {
 	int		size;
 	int		i;
@@ -104,44 +104,36 @@ char	*find_env_var(char *str, char **envp, int doubflag)
 
 	i = 0;
 	size = 0;
-	while (!check_char(str[size], "\'\" <>|$"))
-		size++;
-	tmp = ft_calloc(sizeof(char), size + 2);
-	ft_strlcpy(tmp, str, size + 1);
 	tmp = ft_strjoin2(tmp, "=");
-	while (envp[i] && ft_strncmp(tmp, envp[i], size + 1))
+	while (envp[i] && ft_strncmp(tmp, envp[i], ft_strlen(tmp)))
 		i++;
+	free(tmp);
 	if (!envp[i])
-		ret = ft_calloc(sizeof(char), 1);
+		return ("");
 	else
 	{
 		ret = assemble_var(envp[i]);
 		if (doubflag == 1)
 			ret = ft_strjoin3("\"", ft_strjoin2(ret, "\""));
 	}
-	free(tmp);
 	return (ret);
 }
 
-//finds the first environmental variable in str (recognized by a non-escaped $)
-//replaces the variable with its value while preparing the string for proper
-//quote removal and returns the resulting string
-char	*currency_exchange(char *str, char **envp)
+//returns the valid environmental variable name, starting at *str
+char	*find_env_varname(char *str, char **envp)
 {
-	char	*before;
-	char	*replace;
-	char	*after;
-	char	*result;
-	int		doubflag;
+	int		size;
+	char	*ret;
 
-	before = str;
-	str += find_cash(str, &doubflag);
-	*str = 0;
-	str++;
-	replace = find_env_var(str, envp, doubflag);
-	while (!check_char(*str, "\'\" <>|$"))
-		str++;
-	after = str;
-	result = ft_strjoin2(ft_strjoin(before, replace), after);
-	return (result);
+	size = 0;
+	if (ft_isdigit(*str))
+		size = 1;
+	else
+	{
+		while (isalnum(str[size]))
+			size++;
+	}
+	ret = ft_calloc(sizeof(char), size + 1);
+	ft_strlcpy(ret, str, size + 1);
+	return (ret);
 }

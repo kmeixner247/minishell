@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 10:53:46 by jsubel            #+#    #+#             */
-/*   Updated: 2022/05/17 11:35:31 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/19 19:28:03 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ typedef struct s_token
 	struct s_args	*args;
 	struct s_redir	*redir;
 	struct s_token	*next;
+	int				infd;
+	int				outfd;
 }					t_token;
 
 typedef struct s_redir
@@ -61,14 +63,33 @@ typedef struct s_env
 }					t_env;
 
 void		shell(char **envp);
-char		*readline(const char *);
+// char		*readline(const char *str);
 
-// execution
-int	ft_exec_builtins(char **args);
+
+/*---------------------------------------------------------------------------*/
+/*                                 EXECUTION                                 */
+/*---------------------------------------------------------------------------*/
+int			ft_exec_builtins(char **args);
 
 // builtins
-int	ft_echo(char **args);
-int	ft_pwd(char **args);
+int			ft_echo(char **args);
+int			ft_pwd(char **args);
+
+// builtin-handler.c
+int			isbuiltin(char *arg);
+
+// exec.c
+void		exec(t_token *token, char **envp);
+
+// here_doc.c
+int			here_doc(char *delimiter, char **envp);
+
+// redirs.c
+void		handle_redirs(t_token *token, char **envp);
+
+/*---------------------------------------------------------------------------*/
+/*                                  PARSING                                  */
+/*---------------------------------------------------------------------------*/
 
 
 // env.c
@@ -86,44 +107,49 @@ void	export(t_env **env, char**args);
 void	unset(t_env **env, char **args);
 
 // parsing
+// parser.c
+t_token		*parser(char *input, char **envp);
 
 // parser.c
 t_token *parser(char *input, char **envp);
 
 // accountant.c 
-void	meta_accountant(t_token *token, char **envp);
+void		meta_accountant(t_token *token, char **envp);
+char		*currency_exchange(char *str, char **envp);
 
 // plumber.c
-char	**plumber(char *str);
+char		**plumber(char *str);
 
 // prechecks.c
-int	prechecks(char *str);
+int			prechecks(char *str);
 
 // quotes.c
-void	quote_handler(t_token *token);
-int	quote_skipper(char *str);
+void		quote_handler(t_token *token);
+int			quote_skipper(char *str);
 
 // secretary.c
-t_token	*secretary(char **arr);
+t_token		*secretary(char **arr);
 
 // utils_accountant.c
-int	find_cash(char *str, int *doubflag);
-char	*find_env_var(char *str, char **envp, int doubflag);
-char	*currency_exchange(char *str, char **envp);
+int			find_cash(char *str, int *doubflag);
+char		*find_env_var(char *str, char **envp, int doubflag);
+char		*find_env_varname(char *str, char **envp);
+char		*get_env_value(char *str, char **envp, int doubflag);
 
 // utils_args.c
-t_args	*new_args(void);
-void	args_addback(t_args **start, t_args *new);
+t_args		*new_args(void);
+void		args_addback(t_args **start, t_args *new);
+char		**get_args(t_token *token);
 
 //	utils_redir.c
-t_redir	*new_redir(void);
-void	redir_addback(t_redir **start, t_redir *new);
+t_redir		*new_redir(void);
+void		redir_addback(t_redir **start, t_redir *new);
 
 // utils_tokens.c
-t_token	*new_token(void);
-void	token_addback(t_token **start, t_token *new);
+t_token		*new_token(void);
+void		token_addback(t_token **start, t_token *new);
 
 // utils_parsing.c
-int	check_char(unsigned char c, const char *str);
+int			check_char(unsigned char c, const char *str);
 
 #endif

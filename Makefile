@@ -4,8 +4,10 @@ FLAGS		= -Wall -Wextra -Werror -ggdb3 -O0
 SRC_PATH	= src
 LIBFT		= libft
 BI			= builtins/
+EXEC		= exec/
 PAR			= parsing/
 SRC_FILES 	=	main.c \
+				$(BI)builtin_handler.c \
 				$(BI)echo.c \
 				$(BI)env.c \
 				$(BI)export.c \
@@ -13,7 +15,11 @@ SRC_FILES 	=	main.c \
 				$(BI)unset.c \
 				$(BI)utils_env.c \
 				$(PAR)parser.c \
+				$(EXEC)exec.c \
+				$(EXEC)here_doc.c \
+				$(EXEC)redirs.c \
 				$(PAR)accountant.c \
+				$(PAR)parser.c \
 				$(PAR)plumber.c \
 				$(PAR)prechecks.c \
 				$(PAR)quotes.c \

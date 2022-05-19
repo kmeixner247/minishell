@@ -1,23 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.c                                           :+:      :+:    :+:   */
+/*   builtin_handler.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/16 15:23:32 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/17 16:16:53 by kmeixner         ###   ########.fr       */
+/*   Created: 2022/05/19 19:08:10 by kmeixner          #+#    #+#             */
+/*   Updated: 2022/05/19 19:08:23 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
-t_token	*parser(char *input, char **envp)
+int	isbuiltin(char *arg)
 {
-	t_token	*token;
-
-	token = secretary(plumber(input));
-	meta_accountant(token, envp);
-	quote_handler(token);
-	return (token);
+	if (!ft_strcmp(arg, "echo") || \
+		!ft_strcmp(arg, "cd") || \
+		!ft_strcmp(arg, "pwd") || \
+		!ft_strcmp(arg, "export") || \
+		!ft_strcmp(arg, "unset") || \
+		!ft_strcmp(arg, "env") || \
+		!ft_strcmp(arg, "exit"))
+		return (1);
+	else
+		return (0);
 }

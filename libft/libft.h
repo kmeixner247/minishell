@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 14:29:14 by jsubel            #+#    #+#             */
-/*   Updated: 2022/05/16 13:34:52 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/17 16:17:32 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <stdio.h>
+
 typedef struct s_list
 {
 	void			*content;
