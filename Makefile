@@ -4,11 +4,15 @@ FLAGS		= -Wall -Wextra -Werror -ggdb3 -O0
 SRC_PATH	= src
 LIBFT		= libft
 BI			= builtins/
+EXEC		= exec/
 PAR			= parsing/
 SRC_FILES 	=	main.c \
 				$(BI)builtin_handler.c \
 				$(BI)echo.c \
 				$(BI)pwd.c \
+				$(EXEC)exec.c \
+				$(EXEC)here_doc.c \
+				$(EXEC)redirs.c \
 				$(PAR)accountant.c \
 				$(PAR)parser.c \
 				$(PAR)plumber.c \
@@ -20,9 +24,6 @@ SRC_FILES 	=	main.c \
 				$(PAR)utils_redir.c \
 				$(PAR)utils_tokens.c \
 				$(PAR)utils_parsing.c \
-				pipeTESTS/pipesDONTUSETHIS.c \
-				pipeTESTS/here_doc.c \
-				pipeTESTS/redirs.c
 
 SRC			= $(addprefix $(SRC_PATH)/,$(SRC_FILES))
 

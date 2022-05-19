@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 16:26:36 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/19 19:10:48 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/19 19:12:47 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ void	fork_and_execute(t_token *token, char **envp)
 	}
 }
 
-void	exectests(t_token *token, char **envp)
+void	exec(t_token *token, char **envp)
 {
 	int	pid;
 	int	pipefds[2];

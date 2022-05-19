@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 10:53:46 by jsubel            #+#    #+#             */
-/*   Updated: 2022/05/19 19:11:08 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/19 19:18:26 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,10 @@ typedef struct s_env
 void		shell(char **envp);
 // char		*readline(const char *str);
 
-// execution
+
+/*---------------------------------------------------------------------------*/
+/*                                 EXECUTION                                 */
+/*---------------------------------------------------------------------------*/
 int			ft_exec_builtins(char **args);
 
 // builtins
@@ -75,7 +78,18 @@ int			ft_pwd(char **args);
 // builtin-handler.c
 int			isbuiltin(char *arg);
 
-// parsing
+// exec.c
+void		exec(t_token *token, char **envp);
+
+// here_doc.c
+int			here_doc(char *delimiter, char **envp);
+
+// redirs.c
+void		handle_redirs(t_token *token, char **envp);
+
+/*---------------------------------------------------------------------------*/
+/*                                  PARSING                                  */
+/*---------------------------------------------------------------------------*/
 
 // parser.c
 t_token		*parser(char *input, char **envp);
@@ -119,9 +133,4 @@ void		token_addback(t_token **start, t_token *new);
 // utils_parsing.c
 int			check_char(unsigned char c, const char *str);
 
-void		exectests(t_token *token, char **envp);
-int			here_doc(char *delimiter, char **envp);
-
-// redirs.c
-void		handle_redirs(t_token *token, char **envp);
 #endif
