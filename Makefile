@@ -5,9 +5,13 @@ SRC_PATH	= src
 LIBFT		= libft
 BI			= builtins/
 PAR			= parsing/
+EXEC		= exec/
 SRC_FILES 	=	main.c \
+				$(BI)cd.c \
 				$(BI)echo.c \
 				$(BI)pwd.c \
+				$(BI)utils_env.c \
+				$(EXEC)exec.c \
 				$(PAR)accountant.c \
 				$(PAR)parser.c \
 				$(PAR)plumber.c \

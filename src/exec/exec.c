@@ -1,26 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jsubel <jsubel@student.42wolfsburg.de >    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/16 10:01:32 by jsubel            #+#    #+#             */
-/*   Updated: 2022/05/19 12:35:27 by jsubel           ###   ########.fr       */
+/*   Created: 2022/05/16 09:35:21 by jsubel            #+#    #+#             */
+/*   Updated: 2022/05/19 13:04:41 by jsubel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
-int	ft_pwd(void)
+int	ft_exec_builtins(t_args *args, t_env *env)
 {
-	char	cwd[MAXPATHLEN];
+	int	result;
 
-	if (getcwd(cwd, MAXPATHLEN))
+	result = 0;
+	if (ft_strcmp(args->arg, "echo") == 0)
+		result = ft_echo(args);
+	if (ft_strcmp(args->arg, "pwd") == 0)
+		result = ft_pwd();
+	if (ft_strcmp(args->arg, "cd") == 0)
 	{
-		ft_putendl_fd(cwd, 1);
-		return (1);
+		printf("sheesh.\n");
+		result = ft_cd(args, env);
 	}
-	else
-		return (0);
+	return (result);
 }

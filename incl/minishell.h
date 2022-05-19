@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
+/*   By: jsubel <jsubel@student.42wolfsburg.de >    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 10:53:46 by jsubel            #+#    #+#             */
-/*   Updated: 2022/05/18 19:02:43 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/19 13:11:21 by jsubel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,17 @@
 # include <errno.h>
 # include "../libft/libft.h"
 # include <sys/param.h>	// max path len
+
+# ifndef MAX_DIR
+#  define MAX_DIR 1000
+# endif
+
+typedef struct s_shell
+{
+	struct s_token	*token;
+	struct s_env	*env;
+	char			*raw_input;
+}					t_shell;
 
 typedef struct s_token
 {
@@ -66,11 +77,18 @@ void		shell(char **envp);
 // char		*readline(const char *str);
 
 // execution
-int			ft_exec_builtins(char **args);
+int	ft_exec_builtins(t_args *args, t_env *env);
 
 // builtins
-int			ft_echo(char **args);
-int			ft_pwd(char **args);
+int	ft_echo(t_args *args);
+int	ft_pwd(void);
+int	ft_cd(t_args *args, t_env *env);
+
+//utils_env
+t_env	*new_env(char *var);
+void	env_addback(t_env **start, t_env *new);
+t_env	*init_env(char **envp);
+
 
 // parsing
 
@@ -114,6 +132,6 @@ void		token_addback(t_token **start, t_token *new);
 // utils_parsing.c
 int			check_char(unsigned char c, const char *str);
 
-void		exectests(t_token *token, char **envp);
+void	exectests(t_token *token, t_env *env, char **envp);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipesDONTUSETHIS.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
+/*   By: jsubel <jsubel@student.42wolfsburg.de >    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 16:26:36 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/19 11:44:42 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/19 13:00:39 by jsubel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,7 +195,7 @@ int	isbuiltin(char *arg)
 		return (0);
 }
 
-void	exectests(t_token *token, char **envp)
+void	exectests(t_token *token, t_env *env, char **envp)
 {
 	int	pid;
 	int	pipefds[2];
@@ -205,6 +205,8 @@ void	exectests(t_token *token, char **envp)
 	if (!token->next && isbuiltin(token->args->arg))
 	{
 		fprintf(stderr, "%s dies das\n", token->args->arg);
+		if (!ft_exec_builtins(token->args, env))
+			perror("executing builtins");
 		return ;
 	}
 	else
