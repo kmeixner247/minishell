@@ -75,6 +75,7 @@ void	shell(char **envp)
 		if (input && *input && !prechecks(input))
 		{
 			token = parser(input, envp);
+			free(input);
 			// printtoken(token);
 			exectests(token, envp);
 			// printf("this is printing%s\n", input);
@@ -83,5 +84,6 @@ void	shell(char **envp)
 			exit(1);
 		input = readline("minishell$");
 	}
+	free(input);
 	return ;
 }
