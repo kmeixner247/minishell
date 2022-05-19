@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 16:26:36 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/19 10:22:42 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/19 11:44:42 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,7 +188,7 @@ int	isbuiltin(char *arg)
 		!ft_strcmp(arg, "pwd") || \
 		!ft_strcmp(arg, "export") || \
 		!ft_strcmp(arg, "unset") || \
-		!ft_strcmp(arg, "env") ||
+		!ft_strcmp(arg, "env") || \
 		!ft_strcmp(arg, "exit"))
 		return (1);
 	else
