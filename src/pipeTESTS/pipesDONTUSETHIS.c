@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 16:26:36 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/18 19:55:01 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/19 10:22:42 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,10 @@ void	children(t_token *token, char **envp)
 	if (token->outfd != 1)
 		close(token->outfd);
 	args = get_args(token);
-	try_paths(args, envp);
+	if (check_char('/', args[0]))
+		execve(args[0], args, envp);
+	else
+		try_paths(args, envp);
 	exit(0);
 }
 
@@ -178,6 +181,20 @@ void	fork_and_execute(t_token *token, char **envp)
 	}
 }
 
+int	isbuiltin(char *arg)
+{
+	if (!ft_strcmp(arg, "echo") || \
+		!ft_strcmp(arg, "cd") || \
+		!ft_strcmp(arg, "pwd") || \
+		!ft_strcmp(arg, "export") || \
+		!ft_strcmp(arg, "unset") || \
+		!ft_strcmp(arg, "env") ||
+		!ft_strcmp(arg, "exit"))
+		return (1);
+	else
+		return (0);
+}
+
 void	exectests(t_token *token, char **envp)
 {
 	int	pid;
@@ -185,9 +202,9 @@ void	exectests(t_token *token, char **envp)
 	int	wpid;
 
 	pid = 1;
-	if (!token->next)
+	if (!token->next && isbuiltin(token->args->arg))
 	{
-		fprintf(stderr, "no pipes here\n");
+		fprintf(stderr, "%s dies das\n", token->args->arg);
 		return ;
 	}
 	else
