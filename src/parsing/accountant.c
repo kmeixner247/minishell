@@ -6,11 +6,34 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 16:23:55 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/16 14:39:46 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/19 18:13:36 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
+
+//finds the first environmental variable in str (recognized by a non-escaped $)
+//replaces the variable with its value while preparing the string for proper
+//quote removal and returns the resulting string
+char	*currency_exchange(char *str, char **envp)
+{
+	char	*before;
+	char	*replace;
+	char	*after;
+	int		doubflag;
+	char	*varname;
+
+	before = str;
+	str += find_cash(str, &doubflag);
+	*str = 0;
+	str++;
+	varname = find_env_varname(str, envp);
+	replace = get_env_value(varname, envp, doubflag);
+	str += ft_strlen(varname);
+	free(varname);
+	after = str;
+	return (ft_strjoin2(ft_strjoin(before, replace), after));
+}
 
 //handles all the dollars
 static char	*accountant(char *str, char **envp)

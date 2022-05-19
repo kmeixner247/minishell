@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 16:26:36 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/19 13:07:37 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/19 18:18:20 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,90 +34,13 @@ void	try_paths(char **args, char **envp)
 	free(paths);
 }
 
-int	here_doc(char *delimiter)
-{
-	int		writefd;
-	int		readfd;
-	char	*line;
-	char	*tempfilepath;
-	int		openflags;
 
-	openflags = O_WRONLY | O_CREAT | O_EXCL | O_TRUNC;
-	tempfilepath = ft_strjoin3("/tmp/minishell-thd", ft_itoa((int)&delimiter));
-	writefd = open(tempfilepath, openflags, 0600);
-	line = readline("> ");
-	while (42)
-	{
-		if (ft_strlen(delimiter) == ft_strlen(line) && \
-			!ft_strncmp(delimiter, line, ft_strlen(line)) || !line)
-			break ;
-		write(writefd, line, ft_strlen(line));
-		write(writefd, "\n", 1);
-		free(line);
-		line = readline("> ");
-	}
-	free(line);
-	readfd = open(tempfilepath, O_RDONLY);
-	close(writefd);
-	unlink(tempfilepath);
-	return (readfd);
-}
 
-int	redir_input(t_redir *redir, int tempinfd)
-{
-	if (tempinfd > 0)
-		close(tempinfd);
-	if (redir->id == 1)
-		tempinfd = open(redir->filename, O_RDONLY);
-	else if (redir->id == 2)
-		tempinfd = here_doc(redir->filename);
-	return (tempinfd);
-}
-
-int	redir_output(t_redir *redir, int tempoutfd)
-{
-	int		openflags;
-	mode_t	openmodes;
-
-	openflags = 0;
-	openmodes = S_IRWXU | S_IRWXG | S_IRWXO;
-	if (tempoutfd > 1)
-		close(tempoutfd);
-	if (redir->id == 3)
-		openflags = O_WRONLY | O_CREAT | O_TRUNC;
-	else if (redir->id == 4)
-		openflags = O_WRONLY | O_CREAT | O_APPEND;
-	tempoutfd = open(redir->filename, openflags, openmodes);
-	return (tempoutfd);
-}
-
-void	handle_redirs_single(t_token *token, char **envp)
-{
-	int		tempinfd;
-	int		tempoutfd;
-	t_redir	*tmp;
-
-	tmp = token->redir;
-	tempinfd = -1;
-	tempoutfd = -1;
-	while (tmp)
-	{
-		if (tmp->id == 1 || tmp->id == 2)
-			tempinfd = redir_input(tmp, tempinfd);
-		else if (tmp->id == 3 || tmp->id == 4)
-			tempoutfd = redir_output(tmp, tempoutfd);
-		tmp = tmp->next;
-	}
-	if (tempinfd > 0)
-		token->infd = tempinfd;
-	if (tempoutfd > 0)
-		token->outfd = tempoutfd;
-}
 
 void	handle_redirs(t_token *token, char **envp)
 {
 	t_token	*tmp;
-	
+
 	tmp = token;
 	while (tmp)
 	{

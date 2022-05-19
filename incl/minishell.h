@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 10:53:46 by jsubel            #+#    #+#             */
-/*   Updated: 2022/05/18 19:02:43 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/19 18:18:34 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ t_token		*parser(char *input, char **envp);
 
 // accountant.c 
 void		meta_accountant(t_token *token, char **envp);
+char		*currency_exchange(char *str, char **envp);
 
 // plumber.c
 char		**plumber(char *str);
@@ -96,7 +97,8 @@ t_token		*secretary(char **arr);
 // utils_accountant.c
 int			find_cash(char *str, int *doubflag);
 char		*find_env_var(char *str, char **envp, int doubflag);
-char		*currency_exchange(char *str, char **envp);
+char		*find_env_varname(char *str, char **envp);
+char		*get_env_value(char *str, char **envp, int doubflag);
 
 // utils_args.c
 t_args		*new_args(void);
@@ -115,5 +117,8 @@ void		token_addback(t_token **start, t_token *new);
 int			check_char(unsigned char c, const char *str);
 
 void		exectests(t_token *token, char **envp);
+int	here_doc(char *delimiter, char **envp);
 
+// redirs.c
+void	handle_redirs_single(t_token *token, char **envp);
 #endif
