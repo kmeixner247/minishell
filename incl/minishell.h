@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 10:53:46 by jsubel            #+#    #+#             */
-/*   Updated: 2022/05/20 16:43:23 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/20 16:48:00 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ void		unset(t_env **env, char **args);
 
 // parsing
 // parser.c
-t_token	*parser(char *input, t_env *env);
+t_token		*parser(char *input, t_env *env);
 
 // accountant.c 
 void		meta_accountant(t_token *token, char **envp);
