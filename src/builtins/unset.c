@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 11:30:02 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/19 20:10:40 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/20 16:23:01 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ void	unset(t_env **env, char **args)
 			env_delfirst(env);
 		else
 		{
-			while (tempenv->next && ft_strncmp(tempstr, tempenv->next->var, ft_strlen(tempstr)))
+			while (tempenv->next && ft_strncmp(tempstr, \
+					tempenv->next->var, ft_strlen(tempstr)))
 				tempenv = tempenv->next;
 			if (tempenv)
 				env_delnext(&tempenv);

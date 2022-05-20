@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 11:29:32 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/17 16:37:10 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/20 16:24:13 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ char	*next_lowest(t_env *env, char *previous)
 	lowest = temp;
 	while (env)
 	{
-		if (ft_strcmp(lowest, env->var) > 0 && ft_strcmp(previous, env->var) < 0)
+		if (ft_strcmp(lowest, env->var) > 0 && \
+			ft_strcmp(previous, env->var) < 0)
 			lowest = env->var;
 		env = env->next;
 	}
@@ -100,7 +101,8 @@ void	export(t_env **env, char**args)
 		while (args[i])
 		{
 			tempstr = ft_substr(args[i], 0, ft_strchr(args[i], '=') - args[i]);
-			while (tempenv && ft_strncmp(tempstr, tempenv->var, (ft_strlen(tempstr))))
+			while (tempenv && ft_strncmp(tempstr, \
+					tempenv->var, (ft_strlen(tempstr))))
 			{
 				tempenv = tempenv->next;
 			}	

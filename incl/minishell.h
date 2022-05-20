@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 10:53:46 by jsubel            #+#    #+#             */
-/*   Updated: 2022/05/20 16:17:23 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/20 16:25:26 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@
 # include <errno.h>
 # include "../libft/libft.h"
 # include <sys/param.h>	// max path len
-
 
 typedef struct s_shell
 {
@@ -74,7 +73,6 @@ typedef struct s_env
 void		shell(char **envp);
 // char		*readline(const char *str);
 
-
 /*---------------------------------------------------------------------------*/
 /*                                 EXECUTION                                 */
 /*---------------------------------------------------------------------------*/
@@ -99,29 +97,27 @@ void		handle_redirs(t_shell *shell);
 /*---------------------------------------------------------------------------*/
 /*                                  PARSING                                  */
 /*---------------------------------------------------------------------------*/
-
-
 // env.c
-void	env(t_env *env);
+void		env(t_env *env);
 
 // utils_env.c
-t_env	*new_env(char *var);
-void	env_addback(t_env **start, t_env *new);
-t_env	*init_env(char **envp);
-char	**get_env(t_env *env);
+t_env		*new_env(char *var);
+void		env_addback(t_env **start, t_env *new);
+t_env		*init_env(char **envp);
+char		**get_env(t_env *env);
 
 // export.c
-void	export(t_env **env, char**args);
+void		export(t_env **env, char**args);
 
 // unset.c
-void	unset(t_env **env, char **args);
+void		unset(t_env **env, char **args);
 
 // parsing
 // parser.c
 t_token		*parser(char *input, char **envp);
 
 // parser.c
-t_token *parser(char *input, char **envp);
+t_token		*parser(char *input, char **envp);
 
 // accountant.c 
 void		meta_accountant(t_token *token, char **envp);

@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 16:23:55 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/19 20:34:50 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/20 16:23:46 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ char	*currency_exchange(char *str, char **envp)
 	char	*after;
 	int		doubflag;
 	char	*varname;
+
 	before = str;
 	str += find_cash(str, &doubflag);
 	*str = 0;
