@@ -76,7 +76,7 @@ void	shell(char **envp)
 		if (input && *input && !prechecks(input))
 		{
 			shell->raw_input = input;
-			shell->token = parser(input, envp);
+			shell->token = parser(input, shell->env);
 			free(input);
 			// printtoken(token);
 			exec(shell);
