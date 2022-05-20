@@ -66,41 +66,26 @@ void	printtoken(t_token *token)
 void	shell(char **envp)
 {
 	char	*input;
-	t_token	*token;
-	t_env	*justtestinglol;
-	char	**envvtest;
-	// justtestinglol = init_env(envp);
-	// envvtest = get_env(justtestinglol);
-	// int i = 0;
-	// while (envvtest[i])
-	// {
-	// 	printf("%s\n", envvtest[i]);
-	// 	i++;
-	// }
-	// printf("--------------------------------\n");
-	// i = 0;
-	// while (envp[i])
-	// {
-	// 	printf("%s\n", envp[i]);
-	// 	i++;
-	// }
+	t_shell	*shell;
 
+	shell->env = init_env(envp);
 	input = readline("minishell$");
 	while (42)
 	{
 		add_history(input);
 		if (input && *input && !prechecks(input))
 		{
-			token = parser(input, envp);
-			// free(input);
+			shell->raw_input = input;
+			shell->token = parser(input, envp);
+			free(input);
 			// printtoken(token);
-			exec(token, envp);
-			// printf("this is printing%s\n", input);
+			exec(shell->token, envp);
 		}
 		if (!input)
 			exit(1);
 		input = readline("minishell$");
 	}
+	rl_clear_history();
 	free(input);
 	return ;
 }

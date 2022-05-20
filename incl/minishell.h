@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 10:53:46 by jsubel            #+#    #+#             */
-/*   Updated: 2022/05/19 19:55:09 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/20 15:59:17 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,15 @@
 # include <errno.h>
 # include "../libft/libft.h"
 # include <sys/param.h>	// max path len
+
+
+typedef struct s_shell
+{
+	struct t_token	*token;
+	struct t_env	*env;
+	int				lastreturn;
+	char			*raw_input;
+}					t_shell;
 
 typedef struct s_token
 {

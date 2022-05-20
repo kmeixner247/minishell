@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 16:26:36 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/19 21:19:06 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/20 15:59:12 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,11 @@ int	assign_pipes(t_token *token, int pipefds[2])
 	if (!pid)
 		close(pipefds[0]);
 	else
+	{
+		if (token->infd > 0)
+			close(token->infd);
 		close(pipefds[1]);
+	}		
 	return (pid);
 }
 
@@ -77,6 +81,7 @@ void	fork_and_execute(t_token *token, char **envp)
 	int	pid;
 	int	pipefds[2];
 	int	wpid;
+	int status;
 
 	pipefds[0] = -1;
 	pipefds[1] = -1;
@@ -97,7 +102,7 @@ void	fork_and_execute(t_token *token, char **envp)
 		if (pipefds[0] > 1)
 			close(pipefds[0]);
 		while (wpid > 0)
-			wpid = wait(NULL);
+			wpid = wait(&status);
 	}
 }
 
