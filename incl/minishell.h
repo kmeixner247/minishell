@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 10:53:46 by jsubel            #+#    #+#             */
-/*   Updated: 2022/05/20 15:59:17 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/20 16:17:23 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@
 
 typedef struct s_shell
 {
-	struct t_token	*token;
-	struct t_env	*env;
+	struct s_token	*token;
+	struct s_env	*env;
 	int				lastreturn;
 	char			*raw_input;
 }					t_shell;
@@ -88,13 +88,13 @@ int			ft_pwd(char **args);
 int			isbuiltin(char *arg);
 
 // exec.c
-void		exec(t_token *token, char **envp);
+void		exec(t_shell *shell);
 
 // here_doc.c
 int			here_doc(char *delimiter, char **envp);
 
 // redirs.c
-void		handle_redirs(t_token *token, char **envp);
+void		handle_redirs(t_shell *shell);
 
 /*---------------------------------------------------------------------------*/
 /*                                  PARSING                                  */
@@ -102,7 +102,7 @@ void		handle_redirs(t_token *token, char **envp);
 
 
 // env.c
-void	env(t_env *env);;
+void	env(t_env *env);
 
 // utils_env.c
 t_env	*new_env(char *var);

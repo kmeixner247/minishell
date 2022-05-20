@@ -79,7 +79,7 @@ void	shell(char **envp)
 			shell->token = parser(input, envp);
 			free(input);
 			// printtoken(token);
-			exec(shell->token, envp);
+			exec(shell);
 		}
 		if (!input)
 			exit(1);

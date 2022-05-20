@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 16:26:36 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/20 15:59:12 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/20 16:20:20 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,24 +34,24 @@ void	try_paths(char **args, char **envp)
 	free(paths);
 }
 
-void	children(t_token *token, char **envp)
+void	children(t_shell *shell)
 {
 	char	**args;
+	char	**envp;
 
-	dup2(token->infd, 0);
-	dup2(token->outfd, 1);
-	if (token->infd > 0)
-		close(token->infd);
-	if (token->outfd > 1)
-		close(token->outfd);
-	args = get_args(token);
+	envp = get_env(shell->env);
+	dup2(shell->token->infd, 0);
+	dup2(shell->token->outfd, 1);
+	if (shell->token->infd > 0)
+		close(shell->token->infd);
+	if (shell->token->outfd > 1)
+		close(shell->token->outfd);
+	args = get_args(shell->token);
 	if (check_char('/', args[0]))
 		execve(args[0], args, envp);
 	else
-	{
-		fprintf(stderr, "trying paths for %s\n", args[0]);
 		try_paths(args, envp);
-	}	
+	free(envp);
 	exit(0);
 }
 
@@ -76,7 +76,7 @@ int	assign_pipes(t_token *token, int pipefds[2])
 	return (pid);
 }
 
-void	fork_and_execute(t_token *token, char **envp)
+void	fork_and_execute(t_shell *shell)
 {
 	int	pid;
 	int	pipefds[2];
@@ -87,16 +87,16 @@ void	fork_and_execute(t_token *token, char **envp)
 	pipefds[1] = -1;
 	pid = 1;
 	wpid = 1;
-	while (pid && token->next)
+	while (pid && shell->token->next)
 	{
-		pid = assign_pipes(token, pipefds);
+		pid = assign_pipes(shell->token, pipefds);
 		if (pid)
-			token = token->next;
+			shell->token = shell->token->next;
 	}
 	if (pid)
 		pid = fork();
 	if (!pid)
-		children(token, envp);
+		children(shell);
 	else
 	{
 		if (pipefds[0] > 1)
@@ -106,11 +106,13 @@ void	fork_and_execute(t_token *token, char **envp)
 	}
 }
 
-void	exec(t_token *token, char **envp)
+void	exec(t_shell *shell)
 {
-	int	pid;
-	int	pipefds[2];
+	int		pid;
+	int		pipefds[2];
+	t_token	*token;
 
+	token = shell->token;
 	pid = 1;
 	if (!token->next && token->args && isbuiltin(token->args->arg))
 	{
@@ -119,8 +121,8 @@ void	exec(t_token *token, char **envp)
 	}
 	else
 	{
-		handle_redirs(token, envp);
-		fork_and_execute(token, envp);
+		handle_redirs(shell);
+		fork_and_execute(shell);
 	}
 	return ;
 }

@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 18:17:00 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/19 19:05:08 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/20 16:05:32 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,14 +63,17 @@ static void	handle_redirs_single(t_token *token, char **envp)
 		token->outfd = tempoutfd;
 }
 
-void	handle_redirs(t_token *token, char **envp)
+void	handle_redirs(t_shell *shell)
 {
 	t_token	*tmp;
+	char	**envv;
 
-	tmp = token;
+	envv = get_env(shell->env);
+	tmp = shell->token;
 	while (tmp)
 	{
-		handle_redirs_single(tmp, envp);
+		handle_redirs_single(tmp, envv);
 		tmp = tmp->next;
 	}
+	free(envv);
 }
