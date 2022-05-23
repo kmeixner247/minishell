@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 11:30:02 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/23 14:10:24 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/23 17:54:22 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	ft_unset(t_env **env, char **args)
 	{
 		tempenv = *env;
 		tempstr = ft_strjoin(args[i], "=");
-		if (!ft_strcmp(args[i], tempenv->var) ||
+		if (!ft_strcmp(args[i], tempenv->var) || \
 			!ft_strncmp(tempstr, tempenv->var, ft_strlen(tempstr)))
 			env_delfirst(env);
 		else
