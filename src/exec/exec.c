@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 09:35:21 by jsubel            #+#    #+#             */
-/*   Updated: 2022/05/23 14:55:52 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/23 19:24:51 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	children(t_shell *shell)
 	if (check_char('/', args[0]))
 		execve(args[0], args, envp);
 	else
-		try_paths(args, envp);
+		try_paths(shell, args, envp);
 	free(envp);
 	exit(1);
 }
