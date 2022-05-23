@@ -9,6 +9,7 @@ PAR			= parsing/
 EXEC		= exec/
 SRC_FILES 	=	main.c \
 				$(BI)builtin_handler.c \
+				$(BI)cd.c \
 				$(BI)echo.c \
 				$(BI)env.c \
 				$(BI)export.c \

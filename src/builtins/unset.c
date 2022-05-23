@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
+/*   By: jsubel <jsubel@student.42wolfsburg.de >    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 11:30:02 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/20 16:23:01 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/23 11:59:12 by jsubel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static void	env_delnext(t_env **env)
 	free(tempenv);
 }
 
-void	unset(t_env **env, char **args)
+int	ft_unset(t_env **env, char **args)
 {
 	t_env	*tempenv;
 	t_env	*tempenv2;
@@ -57,4 +57,5 @@ void	unset(t_env **env, char **args)
 		free(tempstr);
 		i++;
 	}
+	return (1);
 }

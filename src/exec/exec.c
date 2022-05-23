@@ -3,23 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-<<<<<<< HEAD
-/*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/17 16:26:36 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/20 16:28:46 by kmeixner         ###   ########.fr       */
-=======
 /*   By: jsubel <jsubel@student.42wolfsburg.de >    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 09:35:21 by jsubel            #+#    #+#             */
-/*   Updated: 2022/05/19 13:04:41 by jsubel           ###   ########.fr       */
->>>>>>> origin/builtins
+/*   Updated: 2022/05/23 11:58:46 by jsubel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
-<<<<<<< HEAD
 void	try_paths(char **args, char **envp)
 {
 	int		i;
@@ -80,7 +72,7 @@ int	assign_pipes(t_token *token, int pipefds[2])
 		if (token->infd > 0)
 			close(token->infd);
 		close(pipefds[1]);
-	}		
+	}
 	return (pid);
 }
 
@@ -124,6 +116,7 @@ void	exec(t_shell *shell)
 	if (!token->next && token->args && isbuiltin(token->args->arg))
 	{
 		fprintf(stderr, "%s dies das\n", token->args->arg);
+		ft_exec_builtins(token->args, shell->env);
 		return ;
 	}
 	else
@@ -132,7 +125,8 @@ void	exec(t_shell *shell)
 		fork_and_execute(shell);
 	}
 	return ;
-=======
+}
+
 int	ft_exec_builtins(t_args *args, t_env *env)
 {
 	int	result;
@@ -143,10 +137,12 @@ int	ft_exec_builtins(t_args *args, t_env *env)
 	if (ft_strcmp(args->arg, "pwd") == 0)
 		result = ft_pwd();
 	if (ft_strcmp(args->arg, "cd") == 0)
-	{
-		printf("sheesh.\n");
 		result = ft_cd(args, env);
-	}
+	if (ft_strcmp(args->arg, "env") == 0)
+		result = ft_env(env);
+	if (ft_strcmp(args->arg, "export") == 0)
+		result = ft_export(&env, get_env(env));
+	if (ft_strcmp(args->arg, "unset") == 0)
+		result = ft_unset(&env, get_env(env));
 	return (result);
->>>>>>> origin/builtins
 }

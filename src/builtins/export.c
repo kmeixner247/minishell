@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
+/*   By: jsubel <jsubel@student.42wolfsburg.de >    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 11:29:32 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/20 16:24:13 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/23 11:55:58 by jsubel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ void	print_alphabetical(t_env *env)
 //only alphanumerical
 //dirty exceptions?
 
-void	export(t_env **env, char**args)
+int	ft_export(t_env **env, char**args)
 {
 	char	*tempstr;
 	t_env	*newenv;
@@ -105,7 +105,7 @@ void	export(t_env **env, char**args)
 					tempenv->var, (ft_strlen(tempstr))))
 			{
 				tempenv = tempenv->next;
-			}	
+			}
 			free(tempstr);
 			if (tempenv)
 			{
@@ -120,4 +120,5 @@ void	export(t_env **env, char**args)
 			i++;
 		}
 	}
+	return (1);
 }

@@ -69,17 +69,27 @@ void	shell(char **envp)
 	t_shell	*shell;
 
 	shell->env = init_env(envp);
+	// int i= 0;
+	// while (envp[i])
+	// 	printf("%s\n", envp[i++]);
+
 	input = readline("minishell$");
 	while (42)
 	{
-		add_history(shell.raw_input);
-		if (shell.raw_input && *(shell.raw_input) && !prechecks(shell.raw_input))
+		add_history(input);
+		if (input && *input && !prechecks(input))
 		{
-<<<<<<< HEAD
 			shell->raw_input = input;
 			shell->token = parser(input, shell->env);
 			free(input);
-			// printtoken(token);
+			// printtoken(shell->token);
 			exec(shell);
-=======
-			shell.token = parser(shell.raw_input, envp);
+		}
+		if (!input)
+			exit(1);
+		input = readline("minishell$");
+	}
+	rl_clear_history();
+	free(input);
+	return ;
+}

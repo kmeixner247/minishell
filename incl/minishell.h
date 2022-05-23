@@ -6,11 +6,7 @@
 /*   By: jsubel <jsubel@student.42wolfsburg.de >    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 10:53:46 by jsubel            #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2022/05/20 16:48:00 by kmeixner         ###   ########.fr       */
-=======
-/*   Updated: 2022/05/19 13:11:21 by jsubel           ###   ########.fr       */
->>>>>>> origin/builtins
+/*   Updated: 2022/05/23 11:59:02 by jsubel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,12 +76,15 @@ void		shell(char **envp);
 /*---------------------------------------------------------------------------*/
 /*                                 EXECUTION                                 */
 /*---------------------------------------------------------------------------*/
-int			ft_exec_builtins(char **args);
+int	ft_exec_builtins(t_args *args, t_env *env);
 
 // builtins
 int	ft_echo(t_args *args);
 int	ft_pwd(void);
 int	ft_cd(t_args *args, t_env *env);
+int	ft_env(t_env *env);
+int	ft_export(t_env **env, char**args);
+int	ft_unset(t_env **env, char **args);
 
 //utils_env
 t_env	*new_env(char *var);
