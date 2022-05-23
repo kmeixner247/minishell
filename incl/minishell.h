@@ -6,7 +6,7 @@
 /*   By: jsubel <jsubel@student.42wolfsburg.de >    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 10:53:46 by jsubel            #+#    #+#             */
-/*   Updated: 2022/05/23 14:47:17 by jsubel           ###   ########.fr       */
+/*   Updated: 2022/05/23 17:51:26 by jsubel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,13 @@
 # include <errno.h>
 # include "../libft/libft.h"
 # include <sys/param.h>	// max path len
+
+# define	ERR_TEMPLATE		"Error: message goes here"
+# define	ERR_EXPORT			"not a valid identifier"
+# define	ERR_EXIT_COUNT		"too many arguments"
+# define	ERRNO_EXIT_COUNT	10
+# define	ERR_EXIT_ISNUM		"argument is not numeric"
+# define	ERRNO_EXIT_ISNUM	11
 
 
 typedef struct s_shell
@@ -77,12 +84,13 @@ void		shell(char **envp);
 /*---------------------------------------------------------------------------*/
 /*                                 EXECUTION                                 */
 /*---------------------------------------------------------------------------*/
-int	ft_exec_builtins(t_shell *shell);
+
+int	ft_exec_builtins(t_shell *shell, t_args *args, t_env *env);
 
 // builtins
 int	ft_echo(t_args *args);
 int	ft_pwd(void);
-int	ft_cd(t_args *args, t_env *env);
+int	ft_cd(t_shell *shell, t_args *args, t_env *env);
 int	ft_env(t_env *env);
 int	ft_export(t_env **env, char**args);
 int	ft_unset(t_env **env, char **args);
@@ -90,7 +98,7 @@ int	ft_unset(t_env **env, char **args);
 //exit
 int		ft_exit_minishell(t_shell *shell);
 void	ft_error_minishell(t_token *token);
-void	ft_error_msg(char *msg);
+void	ft_error_msg(t_shell *shell, char *msg, int err_num);
 //utils_env
 t_env	*new_env(char *var);
 void	env_addback(t_env **start, t_env *new);
@@ -107,6 +115,9 @@ int			here_doc(char *delimiter, char **envp);
 
 // redirs.c
 void		handle_redirs(t_shell *shell);
+
+// free.c
+void	ft_free_everything(t_shell *shell);
 
 /*---------------------------------------------------------------------------*/
 /*                                  PARSING                                  */
@@ -156,7 +167,7 @@ char		*get_env_value(char *str, char **envp, int doubflag);
 // utils_args.c
 t_args		*new_args(void);
 void		args_addback(t_args **start, t_args *new);
-char		**get_args(t_token *token);
+char		**get_args(t_args *args);
 int			ft_nbr_args(t_args *args);
 //	utils_redir.c
 t_redir		*new_redir(void);

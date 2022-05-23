@@ -6,7 +6,7 @@
 /*   By: jsubel <jsubel@student.42wolfsburg.de >    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 09:35:21 by jsubel            #+#    #+#             */
-/*   Updated: 2022/05/23 15:00:47 by jsubel           ###   ########.fr       */
+/*   Updated: 2022/05/23 17:43:26 by jsubel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,7 @@ void	try_paths(t_shell *shell, char **args, char **envp)
 		free(paths[i]);
 		i++;
 	}
-	//fprintf(stderr, "Couldn't find command %s\n", args[0]);
-	ft_error_msg(args[0]);
+	fprintf(stderr, "Couldn't find command %s\n", args[0]);
 	free(paths);
 }
 
@@ -47,7 +46,7 @@ void	children(t_shell *shell)
 		close(shell->token->infd);
 	if (shell->token->outfd > 1)
 		close(shell->token->outfd);
-	args = get_args(shell->token);
+	args = get_args(shell->token->args);
 	if (check_char('/', args[0]))
 		execve(args[0], args, envp);
 	else
@@ -117,7 +116,7 @@ void	exec(t_shell *shell)
 	if (!token->next && token->args && isbuiltin(token->args->arg))
 	{
 		fprintf(stderr, "%s dies das\n", token->args->arg);
-		ft_exec_builtins(shell);
+		ft_exec_builtins(shell, token->args, shell->env);
 		return ;
 	}
 	else
@@ -128,22 +127,24 @@ void	exec(t_shell *shell)
 	return ;
 }
 
-int	ft_exec_builtins(t_shell *shell)
+int	ft_exec_builtins(t_shell *shell, t_args *args, t_env *env)
 {
 	int	result;
 
 	result = 0;
-	if (ft_strcmp(shell->token->args->arg, "echo") == 0)
-		result = ft_echo(shell->token->args);
-	if (ft_strcmp(shell->token->args->arg, "pwd") == 0)
+	if (ft_strcmp(args->arg, "echo") == 0)
+		result = ft_echo(args);
+	if (ft_strcmp(args->arg, "pwd") == 0)
 		result = ft_pwd();
-	if (ft_strcmp(shell->token->args->arg, "cd") == 0)
-		result = ft_cd(shell->token->args, shell->env);
-	if (ft_strcmp(shell->token->args->arg, "env") == 0)
-		result = ft_env(shell->env);
-	if (ft_strcmp(shell->token->args->arg, "export") == 0)
-		result = ft_export(&(shell->env), get_env(shell->env));
-	if (ft_strcmp(shell->token->args->arg, "unset") == 0)
-		result = ft_unset(&(shell->env), get_env(shell->env));
+	if (ft_strcmp(args->arg, "cd") == 0)
+		result = ft_cd(shell, args, env);
+	if (ft_strcmp(args->arg, "env") == 0)
+		result = ft_env(env);
+	if (ft_strcmp(args->arg, "export") == 0)
+		result = ft_export(&env, get_args(args));
+	if (ft_strcmp(args->arg, "unset") == 0)
+		result = ft_unset(&env, get_args(args));
+	if (ft_strcmp(args->arg, "exit") == 0)
+		result = ft_exit_minishell(shell);
 	return (result);
 }
