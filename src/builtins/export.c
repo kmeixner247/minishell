@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsubel <jsubel@student.42wolfsburg.de >    +#+  +:+       +#+        */
+/*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 11:29:32 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/23 11:55:58 by jsubel           ###   ########.fr       */
+/*   Updated: 2022/05/23 13:04:54 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,21 +92,33 @@ int	ft_export(t_env **env, char**args)
 
 	tempenv = *env;
 	if (!args[1])
-	{
 		print_alphabetical(*env);
-	}
 	else
 	{
 		i = 1;
 		while (args[i])
 		{
-			tempstr = ft_substr(args[i], 0, ft_strchr(args[i], '=') - args[i]);
-			while (tempenv && ft_strncmp(tempstr, \
-					tempenv->var, (ft_strlen(tempstr))))
+			if (check_char('=', args[i]))
+				tempstr = ft_substr(args[i], 0, ft_strchr(args[i], '=') - args[i] - 1);
+			else
+				tempstr = ft_strdup(args[i]);
+			while (tempenv)
 			{
+				if (!ft_strncmp(args[i], tempenv->var, ft_strlen(args[i])) && (tempenv->var))
+					break ;
+				if (!ft_strncmp)
 				tempenv = tempenv->next;
 			}
+			tempstr = ft_substr(args[i], 0, ft_strchr(args[i], '=') - args[i]);
+			while (tempenv && !strcmp(args[i], tempenv->var) && \
+				!strncmp(tempstr, tempenv->var, ft_strlen(tempstr)))
+				tempenv = tempenv->next;
 			free(tempstr);
+			if (check_char('=', args[i]))
+				tempstr = ft_substr(args[i], 0, ft_strchr(args[i], '=') - args[i]);
+			else
+				tempstr = ft_strdup(args[i]);
+			while (tempenv && !ft_strncmp(tempstr, tempenv->var, ft_strlen(tempstr)))
 			if (tempenv)
 			{
 				free(tempenv->var);

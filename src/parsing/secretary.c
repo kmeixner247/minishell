@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 11:37:40 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/16 14:40:31 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/23 13:16:16 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,5 +116,6 @@ t_token	*secretary(char **arr)
 		token_addback(&token, newtoken);
 		i++;
 	}
+	free(arr);
 	return (token);
 }
