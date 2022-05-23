@@ -6,7 +6,7 @@
 /*   By: jsubel <jsubel@student.42wolfsburg.de >    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 10:53:46 by jsubel            #+#    #+#             */
-/*   Updated: 2022/05/23 17:51:26 by jsubel           ###   ########.fr       */
+/*   Updated: 2022/05/23 18:02:11 by jsubel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,7 @@ t_env		*new_env(char *var);
 void		env_addback(t_env **start, t_env *new);
 t_env		*init_env(char **envp);
 char		**get_env(t_env *env);
+int			free_env(t_env *env);
 
 // export.c
 void		export(t_env **env, char**args);
@@ -179,5 +180,6 @@ void		token_addback(t_token **start, t_token *new);
 
 // utils_parsing.c
 int			check_char(unsigned char c, const char *str);
+int			parsing_cleanup(t_token *token);
 
 #endif

@@ -25,6 +25,7 @@ SRC_FILES 	=	main.c \
 				$(PAR)accountant.c \
 				$(PAR)parser.c \
 				$(PAR)plumber.c \
+				$(PAR)parsing_cleanup.c \
 				$(PAR)prechecks.c \
 				$(PAR)quotes.c \
 				$(PAR)secretary.c \
