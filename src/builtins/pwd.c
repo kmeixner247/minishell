@@ -6,13 +6,13 @@
 /*   By: jsubel <jsubel@student.42wolfsburg.de >    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 10:01:32 by jsubel            #+#    #+#             */
-/*   Updated: 2022/05/16 11:34:42 by jsubel           ###   ########.fr       */
+/*   Updated: 2022/05/19 12:35:27 by jsubel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
-int	ft_pwd(char **args)
+int	ft_pwd(void)
 {
 	char	cwd[MAXPATHLEN];
 

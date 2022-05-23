@@ -3,26 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
+/*   By: jsubel <jsubel@student.42wolfsburg.de >    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 09:24:27 by jsubel            #+#    #+#             */
-/*   Updated: 2022/05/17 16:17:01 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/23 08:49:20 by jsubel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
-int	ft_nbr_args(char **args)
+int	ft_nbr_args(t_args *args)
 {
 	int	nbr;
 
 	nbr = 0;
-	while (args[nbr])
+	while (args)
+	{
+		args = args->next;
 		nbr++;
+	}
 	return (nbr);
 }
 
-int	ft_echo(char **args)
+int	ft_echo(t_args *args)
 {
 	int	i;
 	int	flag_n;
@@ -31,17 +34,18 @@ int	ft_echo(char **args)
 	flag_n = 0;
 	if (ft_nbr_args(args) > 1)
 	{
-		if (ft_strcmp(args[0], "-n") == 0)
+		args = args->next;
+		if (ft_strcmp(args->arg, "-n") == 0)
 		{
 			flag_n = 1;
-			i++;
+			args = args->next;
 		}
-		while (args[i])
+		while (args)
 		{
-			ft_putstr_fd(args[i], 1);
-			if (args[i + 1] && args[i][0] != '\0')
+			ft_putstr_fd(args->arg, 1);
+			if (args->next && args->arg)
 				write(1, " ", 1);
-			i++;
+			args = args->next;
 		}
 	}
 	if (flag_n == 0)

@@ -3,15 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+<<<<<<< HEAD
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 16:26:36 by kmeixner          #+#    #+#             */
 /*   Updated: 2022/05/20 16:28:46 by kmeixner         ###   ########.fr       */
+=======
+/*   By: jsubel <jsubel@student.42wolfsburg.de >    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/16 09:35:21 by jsubel            #+#    #+#             */
+/*   Updated: 2022/05/19 13:04:41 by jsubel           ###   ########.fr       */
+>>>>>>> origin/builtins
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
+<<<<<<< HEAD
 void	try_paths(char **args, char **envp)
 {
 	int		i;
@@ -124,4 +132,21 @@ void	exec(t_shell *shell)
 		fork_and_execute(shell);
 	}
 	return ;
+=======
+int	ft_exec_builtins(t_args *args, t_env *env)
+{
+	int	result;
+
+	result = 0;
+	if (ft_strcmp(args->arg, "echo") == 0)
+		result = ft_echo(args);
+	if (ft_strcmp(args->arg, "pwd") == 0)
+		result = ft_pwd();
+	if (ft_strcmp(args->arg, "cd") == 0)
+	{
+		printf("sheesh.\n");
+		result = ft_cd(args, env);
+	}
+	return (result);
+>>>>>>> origin/builtins
 }

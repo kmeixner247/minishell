@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
+/*   By: jsubel <jsubel@student.42wolfsburg.de >    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 10:53:46 by jsubel            #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2022/05/20 16:48:00 by kmeixner         ###   ########.fr       */
+=======
+/*   Updated: 2022/05/19 13:11:21 by jsubel           ###   ########.fr       */
+>>>>>>> origin/builtins
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +83,15 @@ void		shell(char **envp);
 int			ft_exec_builtins(char **args);
 
 // builtins
-int			ft_echo(char **args);
-int			ft_pwd(char **args);
+int	ft_echo(t_args *args);
+int	ft_pwd(void);
+int	ft_cd(t_args *args, t_env *env);
+
+//utils_env
+t_env	*new_env(char *var);
+void	env_addback(t_env **start, t_env *new);
+t_env	*init_env(char **envp);
+
 
 // builtin-handler.c
 int			isbuiltin(char *arg);
@@ -116,7 +127,7 @@ void		unset(t_env **env, char **args);
 // parser.c
 t_token		*parser(char *input, t_env *env);
 
-// accountant.c 
+// accountant.c
 void		meta_accountant(t_token *token, char **envp);
 char		*currency_exchange(char *str, char **envp);
 

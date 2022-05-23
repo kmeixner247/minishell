@@ -72,20 +72,14 @@ void	shell(char **envp)
 	input = readline("minishell$");
 	while (42)
 	{
-		add_history(input);
-		if (input && *input && !prechecks(input))
+		add_history(shell.raw_input);
+		if (shell.raw_input && *(shell.raw_input) && !prechecks(shell.raw_input))
 		{
+<<<<<<< HEAD
 			shell->raw_input = input;
 			shell->token = parser(input, shell->env);
 			free(input);
 			// printtoken(token);
 			exec(shell);
-		}
-		if (!input)
-			exit(1);
-		input = readline("minishell$");
-	}
-	rl_clear_history();
-	free(input);
-	return ;
-}
+=======
+			shell.token = parser(shell.raw_input, envp);
