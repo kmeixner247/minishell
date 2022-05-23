@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsubel <jsubel@student.42wolfsburg.de >    +#+  +:+       +#+        */
+/*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 09:35:21 by jsubel            #+#    #+#             */
-/*   Updated: 2022/05/23 11:58:46 by jsubel           ###   ########.fr       */
+/*   Updated: 2022/05/23 12:08:04 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	children(t_shell *shell)
 		close(shell->token->infd);
 	if (shell->token->outfd > 1)
 		close(shell->token->outfd);
-	args = get_args(shell->token);
+	args = get_args(shell->token->args);
 	if (check_char('/', args[0]))
 		execve(args[0], args, envp);
 	else
@@ -141,8 +141,8 @@ int	ft_exec_builtins(t_args *args, t_env *env)
 	if (ft_strcmp(args->arg, "env") == 0)
 		result = ft_env(env);
 	if (ft_strcmp(args->arg, "export") == 0)
-		result = ft_export(&env, get_env(env));
+		result = ft_export(&env, get_args(args));
 	if (ft_strcmp(args->arg, "unset") == 0)
-		result = ft_unset(&env, get_env(env));
+		result = ft_unset(&env, get_args(args));
 	return (result);
 }

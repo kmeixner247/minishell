@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 14:07:48 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/18 19:02:17 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/23 12:07:30 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,13 @@ void	args_addback(t_args **start, t_args *new)
 	temp->next = new;
 }
 
-char	**get_args(t_token *token)
+char	**get_args(t_args *args)
 {
 	t_args	*tempargs;
 	char	**retarr;
 	int		i;
 
-	tempargs = token->args;
+	tempargs = args;
 	i = 0;
 	while (tempargs)
 	{
@@ -53,7 +53,7 @@ char	**get_args(t_token *token)
 		tempargs = tempargs->next;
 	}
 	retarr = ft_calloc(sizeof(char *), i + 1);
-	tempargs = token->args;
+	tempargs = args;
 	i = 0;
 	while (tempargs)
 	{

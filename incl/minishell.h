@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsubel <jsubel@student.42wolfsburg.de >    +#+  +:+       +#+        */
+/*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 10:53:46 by jsubel            #+#    #+#             */
-/*   Updated: 2022/05/23 11:59:02 by jsubel           ###   ########.fr       */
+/*   Updated: 2022/05/23 12:07:09 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ int	ft_unset(t_env **env, char **args);
 t_env	*new_env(char *var);
 void	env_addback(t_env **start, t_env *new);
 t_env	*init_env(char **envp);
-
+char		**get_env(t_env *env);
 
 // builtin-handler.c
 int			isbuiltin(char *arg);
@@ -107,21 +107,6 @@ void		handle_redirs(t_shell *shell);
 /*---------------------------------------------------------------------------*/
 /*                                  PARSING                                  */
 /*---------------------------------------------------------------------------*/
-// env.c
-void		env(t_env *env);
-
-// utils_env.c
-t_env		*new_env(char *var);
-void		env_addback(t_env **start, t_env *new);
-t_env		*init_env(char **envp);
-char		**get_env(t_env *env);
-
-// export.c
-void		export(t_env **env, char**args);
-
-// unset.c
-void		unset(t_env **env, char **args);
-
 // parsing
 // parser.c
 t_token		*parser(char *input, t_env *env);
@@ -152,7 +137,7 @@ char		*get_env_value(char *str, char **envp, int doubflag);
 // utils_args.c
 t_args		*new_args(void);
 void		args_addback(t_args **start, t_args *new);
-char		**get_args(t_token *token);
+char		**get_args(t_args *args);
 
 //	utils_redir.c
 t_redir		*new_redir(void);
