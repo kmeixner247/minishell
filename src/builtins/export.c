@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 11:29:32 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/23 15:43:31 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/23 17:52:55 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,12 +110,40 @@ char	*get_varname(char *arg)
 	return (ret);
 }
 
-int	ft_export(t_env **env, char**args)
+void	add_or_update_var(char *arg, t_env *env)
 {
 	char	*tempstr;
 	t_env	*newenv;
+
+	tempstr = get_varname(arg);
+	while (env)
+	{
+		if (!ft_strncmp(tempstr, env->var, ft_strlen(tempstr)) && \
+			(arg[ft_strlen(tempstr)] == 61 || !arg[ft_strlen(tempstr)]))
+			break ;
+		env = env->next;
+	}
+	free(tempstr);
+	if (env)
+	{
+		if (check_char('=', arg))
+		{
+			free(env->var);
+			env->var = ft_strdup(arg);
+		}
+	}
+	else
+	{
+		newenv = new_env(arg);
+		env_addback(env, newenv);
+	}
+}
+
+int	ft_export(t_env **env, char**args)
+{
 	t_env	*tempenv;
 	int		i;
+	int		status;
 
 	tempenv = *env;
 	if (!args[1])
@@ -125,30 +153,15 @@ int	ft_export(t_env **env, char**args)
 		i = 1;
 		while (args[i])
 		{
-			tempstr = get_varname(args[i]);
-			while (tempenv)
+			if (!isvalid_varname(args[i]))
 			{
-				if (!ft_strncmp(tempstr, tempenv->var, ft_strlen(tempstr)) && \
-					(args[i][ft_strlen(tempstr)] == 61 || !args[i][ft_strlen(tempstr)]))
-					break ;
-				tempenv = tempenv->next;
+				// ft_error_msg();
+				printf("Bad variable name! Bad variable name!\n");
+				status = 1;
 			}
-			free(tempstr);
-			if (tempenv)
-			{
-				if (check_char('=', args[i]))
-				{
-					free(tempenv->var);
-					tempenv->var = ft_strdup(args[i]);
-				}
-			}
-			else
-			{
-				newenv = new_env(args[i]);
-				env_addback(env, newenv);
-			}
+			add_or_update_var(args[i], env);
 			i++;
 		}
 	}
-	return (1);
+	return (status);
 }
