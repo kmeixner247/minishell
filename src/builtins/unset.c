@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 11:30:02 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/23 18:11:40 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/23 20:02:46 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,45 +32,48 @@ static void	env_delnext(t_env **env)
 	free(tempenv);
 }
 
-int	ft_unset(t_env **env, char **args)
+static	void	find_and_unset(char *arg, t_env **env, int varlen)
 {
 	t_env	*tempenv;
-	t_env	*tempenv2;
-	char	*tempstr;
+
+	tempenv = *env;
+	if (!ft_strncmp(arg, tempenv->var, varlen) && \
+		(tempenv->var[varlen] == 61 || !tempenv->var[varlen]))
+		env_delfirst(env);
+	else
+	{
+		while (tempenv->next)
+		{
+			if (!ft_strncmp(arg, tempenv->next->var, varlen) && \
+				(tempenv->next->var[varlen] == 61 || \
+				!tempenv->next->var[varlen]))
+				break ;
+			tempenv = tempenv->next;
+		}
+		if (tempenv->next)
+			env_delnext(&tempenv);
+	}
+}
+
+int	ft_unset(t_env **env, char **args)
+{
 	int		i;
 	int		status;
+	t_env	*tempenv;
 
 	status = 0;
 	i = 1;
 	while (args[i])
 	{
 		tempenv = *env;
-		tempstr = ft_strjoin(args[i], "=");
-		if (!ft_strcmp(args[i], tempenv->var) || \
-			!ft_strncmp(tempstr, tempenv->var, ft_strlen(tempstr)))
-			env_delfirst(env);
-		else
+		if (!is_valid_varname(args[i]))
 		{
-			while (tempenv->next && \
-			ft_strcmp(args[i], tempenv->next->var) && \
-			ft_strncmp(tempstr, tempenv->next->var, ft_strlen(tempstr)))
-				tempenv = tempenv->next;
-			if (tempenv)
-				env_delnext(&tempenv);
+			printf("Bad variable name! BAD VARIABLE NAME!!\n");
+			status = 1;
 		}
-		free(tempstr);
+		else
+			find_and_unset(args[i], env, ft_strlen(args[i]));
 		i++;
 	}
-	return (1);
-}
-
-int	ft_unset(t_env **env, char **args)
-{
-	int	i;
-
-	i = 0;
-	while (args[i])
-	{
-		
-	}
+	return (status);
 }
