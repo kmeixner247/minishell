@@ -6,7 +6,7 @@
 /*   By: jsubel <jsubel@student.42wolfsburg.de >    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 09:24:27 by jsubel            #+#    #+#             */
-/*   Updated: 2022/05/19 12:41:57 by jsubel           ###   ########.fr       */
+/*   Updated: 2022/05/23 08:49:20 by jsubel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	ft_echo(t_args *args)
 		while (args)
 		{
 			ft_putstr_fd(args->arg, 1);
-			if (args->next && args->arg != "")
+			if (args->next && args->arg)
 				write(1, " ", 1);
 			args = args->next;
 		}
