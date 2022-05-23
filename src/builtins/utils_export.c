@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 18:00:28 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/23 18:13:12 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/23 19:32:37 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,14 +83,14 @@ void	print_alphabetical(t_env *env)
 int	is_valid_varname(char *arg)
 {
 	if (!ft_isalpha(*arg) && *arg != 95)
-		return (1);
+		return (0);
 	arg++;
 	while (*arg && (isalnum(*arg) || *arg == 95))
 		arg++;
 	if (*arg)
-		return (1);
-	else
 		return (0);
+	else
+		return (1);
 }
 
 char	*get_varname(char *arg)

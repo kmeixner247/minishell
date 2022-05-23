@@ -6,31 +6,31 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 11:29:32 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/23 18:06:21 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/23 19:46:10 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
-int	add_or_update_var(char *arg, t_env *env)
+void	add_or_update_var(char *arg, t_env **env)
 {
-	char	*tempstr;
 	t_env	*newenv;
+	t_env	*tempenv;
 
-	while (env)
+	tempenv = *env;
+	while (tempenv)
 	{
-		if (!ft_strncmp(tempstr, env->var, ft_strlen(tempstr)) && \
-			(arg[ft_strlen(tempstr)] == 61 || !arg[ft_strlen(tempstr)]))
+		if (!ft_strncmp(arg, tempenv->var, ft_strlen(arg)) && \
+			(arg[ft_strlen(arg)] == 61 || !arg[ft_strlen(arg)]))
 			break ;
-		env = env->next;
+		tempenv = tempenv->next;
 	}
-	free(tempstr);
-	if (env)
+	if (tempenv)
 	{
 		if (check_char('=', arg))
 		{
-			free(env->var);
-			env->var = ft_strdup(arg);
+			free(tempenv->var);
+			tempenv->var = ft_strdup(arg);
 		}
 	}
 	else
@@ -42,12 +42,10 @@ int	add_or_update_var(char *arg, t_env *env)
 
 int	ft_export(t_env **env, char**args)
 {
-	t_env	*tempenv;
 	int		i;
 	int		status;
 	char	*tempstr;
 
-	tempenv = *env;
 	if (!args[1])
 		print_alphabetical(*env);
 	else
@@ -56,9 +54,8 @@ int	ft_export(t_env **env, char**args)
 		while (args[i])
 		{
 			tempstr = get_varname(args[i]);
-			if (!isvalid_varname(tempstr))
+			if (!is_valid_varname(tempstr))
 			{
-				// ft_error_msg();
 				printf("Bad variable name! Bad variable name!\n");
 				status = 1;
 			}
