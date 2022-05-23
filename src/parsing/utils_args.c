@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_args.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
+/*   By: jsubel <jsubel@student.42wolfsburg.de >    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 14:07:48 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/18 19:02:17 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/23 12:34:17 by jsubel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,4 +63,17 @@ char	**get_args(t_token *token)
 	}
 	retarr[i] = NULL;
 	return (retarr);
+}
+
+int	ft_nbr_args(t_args *args)
+{
+	int	nbr;
+
+	nbr = 0;
+	while (args)
+	{
+		args = args->next;
+		nbr++;
+	}
+	return (nbr);
 }

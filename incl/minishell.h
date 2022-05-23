@@ -6,7 +6,7 @@
 /*   By: jsubel <jsubel@student.42wolfsburg.de >    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 10:53:46 by jsubel            #+#    #+#             */
-/*   Updated: 2022/05/23 11:59:02 by jsubel           ###   ########.fr       */
+/*   Updated: 2022/05/23 14:47:17 by jsubel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@
 # include <errno.h>
 # include "../libft/libft.h"
 # include <sys/param.h>	// max path len
+
 
 typedef struct s_shell
 {
@@ -76,7 +77,7 @@ void		shell(char **envp);
 /*---------------------------------------------------------------------------*/
 /*                                 EXECUTION                                 */
 /*---------------------------------------------------------------------------*/
-int	ft_exec_builtins(t_args *args, t_env *env);
+int	ft_exec_builtins(t_shell *shell);
 
 // builtins
 int	ft_echo(t_args *args);
@@ -86,11 +87,14 @@ int	ft_env(t_env *env);
 int	ft_export(t_env **env, char**args);
 int	ft_unset(t_env **env, char **args);
 
+//exit
+int		ft_exit_minishell(t_shell *shell);
+void	ft_error_minishell(t_token *token);
+void	ft_error_msg(char *msg);
 //utils_env
 t_env	*new_env(char *var);
 void	env_addback(t_env **start, t_env *new);
 t_env	*init_env(char **envp);
-
 
 // builtin-handler.c
 int			isbuiltin(char *arg);
@@ -153,7 +157,7 @@ char		*get_env_value(char *str, char **envp, int doubflag);
 t_args		*new_args(void);
 void		args_addback(t_args **start, t_args *new);
 char		**get_args(t_token *token);
-
+int			ft_nbr_args(t_args *args);
 //	utils_redir.c
 t_redir		*new_redir(void);
 void		redir_addback(t_redir **start, t_redir *new);

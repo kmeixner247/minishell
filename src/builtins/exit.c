@@ -1,41 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jsubel <jsubel@student.42wolfsburg.de >    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/16 09:24:27 by jsubel            #+#    #+#             */
-/*   Updated: 2022/05/23 12:34:28 by jsubel           ###   ########.fr       */
+/*   Created: 2022/05/23 12:01:04 by jsubel            #+#    #+#             */
+/*   Updated: 2022/05/23 14:59:15 by jsubel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
-int	ft_echo(t_args *args)
+/**
+* @brief cleanly terminate and exit the program
+* Check arguments of invocation:
+*	if no argument, exit with global error number
+*	if one numeric argument, exit with that
+*	if more than one, throw error and don't exit
+*/
+int	ft_exit_minishell(t_shell *shell)
 {
-	int	i;
-	int	flag_n;
+	int	nbr_args;
 
-	i = 0;
-	flag_n = 0;
-	if (ft_nbr_args(args) > 1)
-	{
-		args = args->next;
-		if (ft_strcmp(args->arg, "-n") == 0)
-		{
-			flag_n = 1;
-			args = args->next;
-		}
-		while (args)
-		{
-			ft_putstr_fd(args->arg, 1);
-			if (args->next && args->arg)
-				write(1, " ", 1);
-			args = args->next;
-		}
-	}
-	if (flag_n == 0)
-		write(1, "\n", 1);
+	nbr_args = ft_nbr_args(shell->token->args);
+	
 	return (1);
+}
+
+void	ft_error_msg(char *msg)
+{
+	char *tmp;
+
+	tmp = ft_strjoin("minishell: ", msg);
+	perror(tmp);
 }

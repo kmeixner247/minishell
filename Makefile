@@ -12,6 +12,7 @@ SRC_FILES 	=	main.c \
 				$(BI)cd.c \
 				$(BI)echo.c \
 				$(BI)env.c \
+				$(BI)exit.c \
 				$(BI)export.c \
 				$(BI)pwd.c \
 				$(BI)unset.c \

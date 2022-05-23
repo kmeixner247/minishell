@@ -6,7 +6,7 @@
 /*   By: jsubel <jsubel@student.42wolfsburg.de >    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 08:58:58 by jsubel            #+#    #+#             */
-/*   Updated: 2022/05/23 10:40:18 by jsubel           ###   ########.fr       */
+/*   Updated: 2022/05/23 15:12:10 by jsubel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,9 @@ int	ft_cd(t_args *args, t_env *env)
 	pwd_old = getcwd(pwd_old, MAXPATHLEN);
 	if (!pwd_old)
 		return (0);
-	if (chdir(args->next->arg) == 0)
+	if (chdir(args->next->arg) != 0)
+		ft_error_msg(args->next->arg);
+	else
 	{
 		pwd_new = getcwd(pwd_new, MAXPATHLEN);
 		ft_change_env_pwd(pwd_old, pwd_new, env);
