@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 11:27:56 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/19 20:10:20 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/23 12:23:55 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,4 +80,18 @@ char	**get_env(t_env *env)
 		i++;
 	}
 	return (envv);
+}
+
+int	free_env(t_env *env)
+{
+	t_env	*tmpenv;
+
+	while (env)
+	{
+		tmpenv = env;
+		env = env->next;
+		free(tmpenv->var);
+		free(tmpenv);
+	}
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 10:53:46 by jsubel            #+#    #+#             */
-/*   Updated: 2022/05/23 12:07:09 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/23 12:25:50 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,21 +76,22 @@ void		shell(char **envp);
 /*---------------------------------------------------------------------------*/
 /*                                 EXECUTION                                 */
 /*---------------------------------------------------------------------------*/
-int	ft_exec_builtins(t_args *args, t_env *env);
+int			ft_exec_builtins(t_args *args, t_env *env);
 
 // builtins
-int	ft_echo(t_args *args);
-int	ft_pwd(void);
-int	ft_cd(t_args *args, t_env *env);
-int	ft_env(t_env *env);
-int	ft_export(t_env **env, char**args);
-int	ft_unset(t_env **env, char **args);
+int			ft_echo(t_args *args);
+int			ft_pwd(void);
+int			ft_cd(t_args *args, t_env *env);
+int			ft_env(t_env *env);
+int			ft_export(t_env **env, char**args);
+int			ft_unset(t_env **env, char **args);
 
 //utils_env
-t_env	*new_env(char *var);
-void	env_addback(t_env **start, t_env *new);
-t_env	*init_env(char **envp);
+t_env		*new_env(char *var);
+void		env_addback(t_env **start, t_env *new);
+t_env		*init_env(char **envp);
 char		**get_env(t_env *env);
+int			free_env(t_env *env);
 
 // builtin-handler.c
 int			isbuiltin(char *arg);
@@ -107,9 +108,11 @@ void		handle_redirs(t_shell *shell);
 /*---------------------------------------------------------------------------*/
 /*                                  PARSING                                  */
 /*---------------------------------------------------------------------------*/
-// parsing
 // parser.c
 t_token		*parser(char *input, t_env *env);
+
+// parsing_cleanup.c
+int	parsing_cleanup(t_token *token);
 
 // accountant.c
 void		meta_accountant(t_token *token, char **envp);

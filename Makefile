@@ -22,6 +22,7 @@ SRC_FILES 	=	main.c \
 				$(EXEC)redirs.c \
 				$(PAR)accountant.c \
 				$(PAR)parser.c \
+				$(PAR)parsing_cleanup.c \
 				$(PAR)plumber.c \
 				$(PAR)prechecks.c \
 				$(PAR)quotes.c \
@@ -30,7 +31,7 @@ SRC_FILES 	=	main.c \
 				$(PAR)utils_args.c \
 				$(PAR)utils_redir.c \
 				$(PAR)utils_tokens.c \
-				$(PAR)utils_parsing.c \
+				$(PAR)utils_parsing.c
 
 SRC			= $(addprefix $(SRC_PATH)/,$(SRC_FILES))
 
