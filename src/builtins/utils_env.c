@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_env.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsubel <jsubel@student.42wolfsburg.de >    +#+  +:+       +#+        */
+/*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 11:27:56 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/23 08:37:57 by jsubel           ###   ########.fr       */
+/*   Updated: 2022/05/19 20:10:20 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,30 @@ t_env	*init_env(char **envp)
 		i++;
 	}
 	return (env);
+}
+
+char	**get_env(t_env *env)
+{
+	char	**envv;
+	t_env	*tmp;
+	int		i;
+
+	i = 0;
+	tmp = env;
+	while (tmp)
+	{
+		tmp = tmp->next;
+		i++;
+	}
+	envv = ft_calloc(sizeof(char *), i + 1);
+	envv[i] = NULL;
+	i = 0;
+	tmp = env;
+	while (tmp)
+	{
+		envv[i] = tmp->var;
+		tmp = tmp->next;
+		i++;
+	}
+	return (envv);
 }
