@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 11:30:02 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/23 17:54:22 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/23 18:11:40 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,9 @@ int	ft_unset(t_env **env, char **args)
 	t_env	*tempenv2;
 	char	*tempstr;
 	int		i;
+	int		status;
 
+	status = 0;
 	i = 1;
 	while (args[i])
 	{
@@ -60,4 +62,15 @@ int	ft_unset(t_env **env, char **args)
 		i++;
 	}
 	return (1);
+}
+
+int	ft_unset(t_env **env, char **args)
+{
+	int	i;
+
+	i = 0;
+	while (args[i])
+	{
+		
+	}
 }

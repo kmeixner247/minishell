@@ -6,13 +6,13 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 18:00:28 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/23 18:01:01 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/23 18:13:12 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
-void	print_variable(char *str)
+static void	print_variable(char *str)
 {
 	int	i;
 
@@ -39,7 +39,7 @@ void	print_variable(char *str)
 	ft_putstr_fd("\"\n", 1);
 }
 
-char	*next_lowest(t_env *env, char *previous)
+static char	*next_lowest(t_env *env, char *previous)
 {
 	char	*lowest;
 	char	*temp;
