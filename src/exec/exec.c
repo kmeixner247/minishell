@@ -6,13 +6,13 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 09:35:21 by jsubel            #+#    #+#             */
-/*   Updated: 2022/05/23 12:08:04 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/23 14:55:52 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
-void	try_paths(char **args, char **envp)
+void	try_paths(t_shell *shell, char **args, char **envp)
 {
 	int		i;
 	char	**paths;

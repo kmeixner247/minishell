@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 13:20:32 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/19 20:36:34 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/23 14:39:14 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,3 +137,5 @@ char	*find_env_varname(char *str, char **envp)
 	ft_strlcpy(ret, str, size + 1);
 	return (ret);
 }
+
+

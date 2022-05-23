@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 11:29:32 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/23 13:04:54 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/23 15:43:31 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,10 @@ void	print_variable(char *str)
 		i++;
 	}
 	if (!str[i])
+	{
+		ft_putchar_fd('\n', 1);
 		return ;
+	}	
 	ft_putchar_fd(str[i], 1);
 	i++;
 	ft_putchar_fd('\"', 1);
@@ -77,11 +80,35 @@ void	print_alphabetical(t_env *env)
 	}
 }
 
-//still need to export empty variables
 //still need to protect variable names
 //can't start with number
 //only alphanumerical
 //dirty exceptions?
+int	is_valid_varname(char *arg)
+{
+	if (!ft_isalpha(*arg) && *arg != 95)
+		return (1);
+	arg++;
+	while (*arg && (isalnum(*arg) || *arg == 95))
+		arg++;
+	if (*arg)
+		return (1);
+	else
+		return (0);
+}
+
+char	*get_varname(char *arg)
+{
+	int		i;
+	char	*ret;
+
+	i = 0;
+	while (arg[i] && arg[i] != 61)
+		i++;
+	ret = ft_calloc(sizeof(char), i + 1);
+	ft_strlcpy(ret, arg, i + 1);
+	return (ret);
+}
 
 int	ft_export(t_env **env, char**args)
 {
@@ -98,31 +125,22 @@ int	ft_export(t_env **env, char**args)
 		i = 1;
 		while (args[i])
 		{
-			if (check_char('=', args[i]))
-				tempstr = ft_substr(args[i], 0, ft_strchr(args[i], '=') - args[i] - 1);
-			else
-				tempstr = ft_strdup(args[i]);
+			tempstr = get_varname(args[i]);
 			while (tempenv)
 			{
-				if (!ft_strncmp(args[i], tempenv->var, ft_strlen(args[i])) && (tempenv->var))
+				if (!ft_strncmp(tempstr, tempenv->var, ft_strlen(tempstr)) && \
+					(args[i][ft_strlen(tempstr)] == 61 || !args[i][ft_strlen(tempstr)]))
 					break ;
-				if (!ft_strncmp)
 				tempenv = tempenv->next;
 			}
-			tempstr = ft_substr(args[i], 0, ft_strchr(args[i], '=') - args[i]);
-			while (tempenv && !strcmp(args[i], tempenv->var) && \
-				!strncmp(tempstr, tempenv->var, ft_strlen(tempstr)))
-				tempenv = tempenv->next;
 			free(tempstr);
-			if (check_char('=', args[i]))
-				tempstr = ft_substr(args[i], 0, ft_strchr(args[i], '=') - args[i]);
-			else
-				tempstr = ft_strdup(args[i]);
-			while (tempenv && !ft_strncmp(tempstr, tempenv->var, ft_strlen(tempstr)))
 			if (tempenv)
 			{
-				free(tempenv->var);
-				tempenv->var = ft_strdup(args[i]);
+				if (check_char('=', args[i]))
+				{
+					free(tempenv->var);
+					tempenv->var = ft_strdup(args[i]);
+				}
 			}
 			else
 			{
