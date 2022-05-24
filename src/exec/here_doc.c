@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 14:38:55 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/24 13:10:25 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/24 14:36:22 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,19 +79,22 @@ static char	*currency_exchange_hd(t_shell *shell, char *str, char **envp)
 
 //this accountant is a simplified version of the main one, as it
 //doesn't have to handle single quotes
-static char	*accountant_hd(t_shell *shell, char *str, char **envp)
+static char	*accountant_hd(t_shell *shell, char *str)
 {
 	char	*tmp;
+	char	**envp;
 
+	envp = get_env(shell->env);
 	tmp = str;
 	while (find_cash_hd(str) >= 0)
 		str = currency_exchange_hd(shell, str, envp);
 	if (tmp != str)
 		free(tmp);
+	free(envp);
 	return (str);
 }
 
-int	here_doc(t_shell *shell, char *delimiter, char **envp)
+int	here_doc(t_shell *shell, char *delimiter)
 {
 	int		fds[2];
 	char	*line;
@@ -106,7 +109,7 @@ int	here_doc(t_shell *shell, char *delimiter, char **envp)
 	{
 		if (!line || !ft_strcmp(delimiter, line))
 			break ;
-		line = accountant_hd(shell, line, envp);
+		line = accountant_hd(shell, line);
 		write(fds[1], line, ft_strlen(line));
 		write(fds[1], "\n", 1);
 		free(line);

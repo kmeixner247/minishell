@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 10:53:46 by jsubel            #+#    #+#             */
-/*   Updated: 2022/05/24 14:10:45 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/24 14:52:22 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,10 +88,10 @@ int			ft_exec_builtins(t_shell *shell);
 // builtins
 int			ft_echo(t_args *args);
 int			ft_pwd(void);
-int			ft_cd(t_shell *shell, t_args *args, t_env *env);
+int			ft_cd(t_shell *shell, t_args *args);
 int			ft_env(t_env *env);
-int			ft_export(t_env **env, char **args);
-int			ft_unset(t_env **env, char **args);
+int			ft_export(t_shell *shell);
+int			ft_unset(t_shell *shell);
 
 //exit
 int			ft_exit_minishell(t_shell *shell);
@@ -117,7 +117,7 @@ int			isbuiltin(char *arg);
 void		exec(t_shell *shell);
 
 // here_doc.c
-int			here_doc(t_shell *shell, char *delimiter, char **envp);
+int			here_doc(t_shell *shell, char *delimiter);
 
 // redirs.c
 void		handle_redirs(t_shell *shell);

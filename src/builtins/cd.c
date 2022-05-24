@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 08:58:58 by jsubel            #+#    #+#             */
-/*   Updated: 2022/05/24 10:11:07 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/24 14:40:42 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 static void		ft_change_env_pwd(char *pwd_old, char *pwd_new, t_env *env);
 static t_env	*ft_find_element(t_env *env, char *str);
-static int		ft_cd_no_args(t_shell *shell, char *pwd_old, t_env *env);
+static int		ft_cd_no_args(t_shell *shell, char *pwd_old);
 
-int	ft_cd(t_shell *shell, t_args *args, t_env *env)
+int	ft_cd(t_shell *shell, t_args *args)
 {
 	char	*pwd_old;
 	char	*pwd_new;
@@ -28,13 +28,13 @@ int	ft_cd(t_shell *shell, t_args *args, t_env *env)
 	if (!pwd_old)
 		return (0);
 	if (args->next == NULL)
-		return (ft_cd_no_args(shell, pwd_old, env));
+		return (ft_cd_no_args(shell, pwd_old));
 	if (chdir(args->next->arg) != 0)
 		ft_error_msg(shell, args->next->arg, 0);
 	else
 	{
 		pwd_new = getcwd(pwd_new, MAXPATHLEN);
-		ft_change_env_pwd(pwd_old, pwd_new, env);
+		ft_change_env_pwd(pwd_old, pwd_new, shell->env);
 	}
 	return (1);
 }
@@ -78,15 +78,15 @@ static t_env	*ft_find_element(t_env *env, char *str)
 	return (tmp);
 }
 
-static int	ft_cd_no_args(t_shell *shell, char *pwd_old, t_env *env)
+static int	ft_cd_no_args(t_shell *shell, char *pwd_old)
 {
 	t_env	*home;
 	char	*pwd_home;
 
-	home = ft_find_element(env, "HOME");
+	home = ft_find_element(shell->env, "HOME");
 	pwd_home = ft_substr(home->var, 5, ft_strlen(home->var) - 5);
 	if (chdir(pwd_home) != 0)
 		ft_error_msg(shell, "cd: ", 0);
-	ft_change_env_pwd(pwd_old, pwd_home, env);
+	ft_change_env_pwd(pwd_old, pwd_home, shell->env);
 	return (1);
 }

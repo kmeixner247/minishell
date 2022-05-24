@@ -6,20 +6,20 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 18:17:00 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/24 13:04:03 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/24 14:37:34 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
-static int	redir_input(t_shell *shell, t_redir *redir, int tempinfd, char **envp)
+static int	redir_input(t_shell *shell, t_redir *redir, int tempinfd)
 {
 	if (tempinfd > 0)
 		close(tempinfd);
 	if (redir->id == 1)
 		tempinfd = open(redir->filename, O_RDONLY);
 	else if (redir->id == 2)
-		tempinfd = here_doc(shell, redir->filename, envp);
+		tempinfd = here_doc(shell, redir->filename);
 	return (tempinfd);
 }
 
@@ -52,7 +52,7 @@ static void	handle_redirs_single(t_shell *shell, t_token *token, char **envp)
 	while (tmp)
 	{
 		if (tmp->id == 1 || tmp->id == 2)
-			tempinfd = redir_input(shell, tmp, tempinfd, envp);
+			tempinfd = redir_input(shell, tmp, tempinfd);
 		else if (tmp->id == 3 || tmp->id == 4)
 			tempoutfd = redir_output(tmp, tempoutfd);
 		tmp = tmp->next;

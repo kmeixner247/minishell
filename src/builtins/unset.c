@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 11:30:02 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/23 20:02:46 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/24 14:52:13 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,25 +55,28 @@ static	void	find_and_unset(char *arg, t_env **env, int varlen)
 	}
 }
 
-int	ft_unset(t_env **env, char **args)
+int	ft_unset(t_shell *shell)
 {
 	int		i;
 	int		status;
 	t_env	*tempenv;
+	char	**args;
 
+	args = get_args(shell->token->args);
 	status = 0;
 	i = 1;
 	while (args[i])
 	{
-		tempenv = *env;
+		tempenv = shell->env;
 		if (!is_valid_varname(args[i]))
 		{
 			printf("Bad variable name! BAD VARIABLE NAME!!\n");
 			status = 1;
 		}
 		else
-			find_and_unset(args[i], env, ft_strlen(args[i]));
+			find_and_unset(args[i], &(shell->env), ft_strlen(args[i]));
 		i++;
 	}
+	free(args);
 	return (status);
 }

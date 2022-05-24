@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 11:29:32 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/24 10:11:46 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/24 15:02:17 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ void	add_or_update_var(char *arg, t_env **env)
 	while (tempenv)
 	{
 		if (!ft_strncmp(arg, tempenv->var, ft_strlen(arg)) && \
-			(arg[ft_strlen(arg)] == 61 || !arg[ft_strlen(arg)]))
+			(tempenv->var[ft_strlen(arg)] == 61 || \
+			!tempenv->var[ft_strlen(arg)]))
 			break ;
 		tempenv = tempenv->next;
 	}
@@ -40,30 +41,43 @@ void	add_or_update_var(char *arg, t_env **env)
 	}
 }
 
-int	ft_export(t_env **env, char**args)
+int	search_env(t_shell *shell, char **args)
 {
 	int		i;
 	int		status;
 	char	*tempstr;
 
-	if (!args[1])
-		print_alphabetical(*env);
-	else
+	i = 1;
+	status = 0;
+	while (args[i])
 	{
-		i = 1;
-		while (args[i])
+		tempstr = get_varname(args[i]);
+		if (!is_valid_varname(tempstr))
 		{
-			tempstr = get_varname(args[i]);
-			if (!is_valid_varname(tempstr))
-			{
-				printf("Bad variable name! Bad variable name!\n");
-				status = 1;
-			}
-			else
-				add_or_update_var(args[i], env);
-			free(tempstr);
-			i++;
+			printf("BAD\n");
+			status = 1;
 		}
+		else
+			add_or_update_var(args[i], &(shell->env));
+		free(tempstr);
+		i++;
 	}
+	return (status);
+}
+
+int	ft_export(t_shell *shell)
+{
+	int		i;
+	int		status;
+	char	*tempstr;
+	char	**args;
+
+	status = 0;
+	args = get_args(shell->token->args);
+	if (!args[1])
+		print_alphabetical(shell->env);
+	else
+		status = search_env(shell, args);
+	free(args);
 	return (status);
 }
