@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 11:29:32 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/24 15:02:17 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/24 15:03:46 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	add_or_update_var(char *arg, t_env **env)
 	}
 }
 
-int	search_env(t_shell *shell, char **args)
+static int	search_env(t_shell *shell, char **args)
 {
 	int		i;
 	int		status;

@@ -43,6 +43,7 @@ void	printtoken(t_token *token)
 	while (token)
 	{
 		printf("-------------NEW TOKEN------------\n");
+		printf("PID: %d\n", token->pid);
 		args = token->args;
 		printf("---------------ARGS---------------\n");
 		while (args)
@@ -65,8 +66,8 @@ void	printtoken(t_token *token)
 
 void	shell(char **envp)
 {
-	char	*input;
-	t_shell	*shell;
+	char				*input;
+	t_shell				*shell;
 
 	shell = ft_calloc(sizeof(t_shell), 1);
 	shell->env = init_env(envp);
@@ -79,11 +80,12 @@ void	shell(char **envp)
 			shell->raw_input = input;
 			parser(shell, input);
 			exec(shell);
+			printtoken(shell->token);
 			parsing_cleanup(shell->token);
 			free(input);
 		}
 		if (!input)
-			exit(1);
+			break ;
 		input = readline("minishell$ ");
 	}
 	rl_clear_history();

@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 10:53:46 by jsubel            #+#    #+#             */
-/*   Updated: 2022/05/24 14:52:22 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/24 16:05:54 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ typedef struct s_token
 	struct s_args	*args;
 	struct s_redir	*redir;
 	struct s_token	*next;
+	int				pid;
 	int				infd;
 	int				outfd;
 }					t_token;

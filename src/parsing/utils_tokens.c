@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 14:09:39 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/18 12:20:49 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/24 16:07:21 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ t_token	*new_token(void)
 	newtoken->next = NULL;
 	newtoken->infd = 0;
 	newtoken->outfd = 1;
+	newtoken->pid = -1;
 	return (newtoken);
 }
 

@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 09:35:21 by jsubel            #+#    #+#             */
-/*   Updated: 2022/05/24 14:52:28 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/24 16:22:27 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ void	children(t_shell *shell)
 	args = get_args(shell->token->args);
 	if (isbuiltin(args[0]))
 	{
-		ft_exec_builtins(shell);
-		exit(0);
+		free(envp);
+		exit(ft_exec_builtins(shell));
 	}
 	else if (check_char('/', args[0]))
 		execve(args[0], args, envp);
@@ -60,17 +60,15 @@ void	children(t_shell *shell)
 	exit(127);
 }
 
-int	assign_pipes(t_token *token, int pipefds[2])
+void	assign_pipes(t_token *token, int pipefds[2])
 {
-	int	pid;
-
 	pipe(pipefds);
 	if (token->outfd == 1)
 		token->outfd = pipefds[1];
 	if (token->next->infd == 0)
 		token->next->infd = pipefds[0];
-	pid = fork();
-	if (!pid)
+	token->pid = fork();
+	if (!token->pid)
 		close(pipefds[0]);
 	else
 	{
@@ -78,52 +76,53 @@ int	assign_pipes(t_token *token, int pipefds[2])
 			close(token->infd);
 		close(pipefds[1]);
 	}
-	return (pid);
+}
+
+int	fuck_you_norminette(t_shell *shell)
+{
+	int	wpid;
+
+	wpid = wait(&shell->lastreturn);
+	if (wpid > 0)
+		shell->lastreturn = WEXITSTATUS(shell->lastreturn);
+	return (wpid);
 }
 
 void	fork_and_execute(t_shell *shell)
 {
-	int	pid;
 	int	pipefds[2];
 	int	wpid;
 
 	pipefds[0] = -1;
 	pipefds[1] = -1;
-	pid = 1;
 	wpid = 1;
-	while (pid && shell->token->next)
+	while (shell->token->pid && shell->token->next)
 	{
-		pid = assign_pipes(shell->token, pipefds);
-		if (pid)
+		assign_pipes(shell->token, pipefds);
+		if (shell->token->pid)
 			shell->token = shell->token->next;
 	}
-	if (pid)
-		pid = fork();
-	if (!pid)
+	if (shell->token->pid)
+		shell->token->pid = fork();
+	if (!shell->token->pid)
 		children(shell);
 	else
 	{
 		if (pipefds[0] > 1)
 			close(pipefds[0]);
 		while (wpid > 0)
-		{
-			wpid = wait(&shell->lastreturn);
-			shell->lastreturn = WEXITSTATUS(shell->lastreturn);
-		}
+			wpid = fuck_you_norminette(shell);
 	}
 }
 
 void	exec(t_shell *shell)
 {
-	int		pid;
-	int		pipefds[2];
 	t_token	*token;
 
 	token = shell->token;
-	pid = 1;
 	if (!token->next && token->args && isbuiltin(token->args->arg))
 	{
-		ft_exec_builtins(shell);
+		shell->lastreturn = ft_exec_builtins(shell);
 		return ;
 	}
 	else
