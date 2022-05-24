@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 13:20:32 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/24 12:55:24 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/24 12:57:25 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,8 @@ int	find_cash(char *str, int *doubflag)
 			sing *= -1;
 		if (str[pos] == 34 && sing == -1)
 			doub *= -1;
-		if (str[pos] == 36 && sing == -1 && (isalnum(str[pos + 1]) || str[pos + 1] == 95 || str[pos + 1] == 63))
+		if (str[pos] == 36 && sing == -1 && (isalnum(str[pos + 1]) || \
+			str[pos + 1] == 95 || str[pos + 1] == 63))
 			break ;
 		pos++;
 	}
