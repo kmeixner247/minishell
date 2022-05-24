@@ -12,6 +12,7 @@ SRC_FILES 	=	main.c \
 				$(BI)cd.c \
 				$(BI)echo.c \
 				$(BI)env.c \
+				$(BI)exit.c \
 				$(BI)export.c \
 				$(BI)pwd.c \
 				$(BI)unset.c \
@@ -19,12 +20,14 @@ SRC_FILES 	=	main.c \
 				$(BI)utils_export.c \
 				$(PAR)parser.c \
 				$(EXEC)exec.c \
+				$(EXEC)free.c \
 				$(EXEC)here_doc.c \
 				$(EXEC)redirs.c \
 				$(PAR)accountant.c \
 				$(PAR)parser.c \
 				$(PAR)parsing_cleanup.c \
 				$(PAR)plumber.c \
+				$(PAR)parsing_cleanup.c \
 				$(PAR)prechecks.c \
 				$(PAR)quotes.c \
 				$(PAR)secretary.c \

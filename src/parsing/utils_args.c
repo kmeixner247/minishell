@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 14:07:48 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/23 12:07:30 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/24 10:12:48 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,4 +63,17 @@ char	**get_args(t_args *args)
 	}
 	retarr[i] = NULL;
 	return (retarr);
+}
+
+int	ft_nbr_args(t_args *args)
+{
+	int	nbr;
+
+	nbr = 0;
+	while (args)
+	{
+		args = args->next;
+		nbr++;
+	}
+	return (nbr);
 }

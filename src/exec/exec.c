@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 09:35:21 by jsubel            #+#    #+#             */
-/*   Updated: 2022/05/23 19:24:51 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/24 10:12:35 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ void	exec(t_shell *shell)
 	if (!token->next && token->args && isbuiltin(token->args->arg))
 	{
 		fprintf(stderr, "%s dies das\n", token->args->arg);
-		ft_exec_builtins(token->args, shell->env);
+		ft_exec_builtins(shell, token->args, shell->env);
 		return ;
 	}
 	else
@@ -127,7 +127,7 @@ void	exec(t_shell *shell)
 	return ;
 }
 
-int	ft_exec_builtins(t_args *args, t_env *env)
+int	ft_exec_builtins(t_shell *shell, t_args *args, t_env *env)
 {
 	int	result;
 
@@ -137,12 +137,14 @@ int	ft_exec_builtins(t_args *args, t_env *env)
 	if (ft_strcmp(args->arg, "pwd") == 0)
 		result = ft_pwd();
 	if (ft_strcmp(args->arg, "cd") == 0)
-		result = ft_cd(args, env);
+		result = ft_cd(shell, args, env);
 	if (ft_strcmp(args->arg, "env") == 0)
 		result = ft_env(env);
 	if (ft_strcmp(args->arg, "export") == 0)
 		result = ft_export(&env, get_args(args));
 	if (ft_strcmp(args->arg, "unset") == 0)
 		result = ft_unset(&env, get_args(args));
+	if (ft_strcmp(args->arg, "exit") == 0)
+		result = ft_exit_minishell(shell);
 	return (result);
 }
