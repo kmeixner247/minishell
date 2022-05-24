@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 10:53:46 by jsubel            #+#    #+#             */
-/*   Updated: 2022/05/24 13:05:12 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/24 14:00:44 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ int			isbuiltin(char *arg);
 void		exec(t_shell *shell);
 
 // here_doc.c
-int	here_doc(t_shell *shell, char *delimiter, char **envp);
+int			here_doc(t_shell *shell, char *delimiter, char **envp);
 
 // redirs.c
 void		handle_redirs(t_shell *shell);
@@ -129,14 +129,14 @@ void		ft_free_everything(t_shell *shell);
 /*                                  PARSING                                  */
 /*---------------------------------------------------------------------------*/
 // parser.c
-void	parser(t_shell *shell, char *input, t_env *env);
+void		parser(t_shell *shell, char *input);
 
 // parsing_cleanup.c
 int			parsing_cleanup(t_token *token);
 
 // accountant.c
-void		meta_accountant(t_shell *shell, t_token *token, char **envp);
-char	*currency_exchange(t_shell *shell, char *str, char **envp);
+void		meta_accountant(t_shell *shell, char **envp);
+char		*currency_exchange(t_shell *shell, char *str, char **envp);
 
 // plumber.c
 char		**plumber(char *str);

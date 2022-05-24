@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 09:35:21 by jsubel            #+#    #+#             */
-/*   Updated: 2022/05/24 11:54:25 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/24 13:39:49 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,16 @@ void	children(t_shell *shell)
 		close(shell->token->outfd);
 	args = get_args(shell->token->args);
 	if (isbuiltin(args[0]))
+	{
 		ft_exec_builtins(shell, shell->token->args, shell->env);
+		exit(0);
+	}
 	else if (check_char('/', args[0]))
 		execve(args[0], args, envp);
 	else
 		try_paths(shell, args, envp);
 	free(envp);
-	exit(1);
+	exit(127);
 }
 
 int	assign_pipes(t_token *token, int pipefds[2])
@@ -103,7 +106,10 @@ void	fork_and_execute(t_shell *shell)
 		if (pipefds[0] > 1)
 			close(pipefds[0]);
 		while (wpid > 0)
+		{
 			wpid = wait(&shell->lastreturn);
+			shell->lastreturn = WEXITSTATUS(shell->lastreturn);
+		}
 	}
 }
 

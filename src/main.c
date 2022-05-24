@@ -70,21 +70,21 @@ void	shell(char **envp)
 
 	shell = ft_calloc(sizeof(t_shell), 1);
 	shell->env = init_env(envp);
-	input = readline("minishell$");
+	input = readline("minishell$ ");
 	while (42)
 	{
 		add_history(input);
 		if (input && *input && !prechecks(input))
 		{
 			shell->raw_input = input;
-			shell->token = parser(input, shell->env);
+			parser(shell, input);
 			exec(shell);
 			parsing_cleanup(shell->token);
 			free(input);
 		}
 		if (!input)
 			exit(1);
-		input = readline("minishell$");
+		input = readline("minishell$ ");
 	}
 	rl_clear_history();
 	free_env(shell->env);

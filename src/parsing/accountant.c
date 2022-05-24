@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 16:23:55 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/24 13:09:56 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/24 14:00:11 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,13 @@ static char	*accountant(t_shell *shell, char *str, char **envp)
 }
 
 //runs the accountant on all filenames and args of each token
-void	meta_accountant(t_shell *shell, t_token *token, char **envp)
+void	meta_accountant(t_shell *shell, char **envp)
 {
 	t_args	*args;
 	t_redir	*redir;
+	t_token	*token;
 
+	token = shell->token;
 	while (token)
 	{
 		args = token->args;
