@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 13:20:32 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/24 12:57:25 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/24 13:09:46 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ char	*get_env_value(char *str, char **envp, int doubflag)
 		i++;
 	free(tmp);
 	if (!envp[i])
-		return ("");
+		ret = ft_strdup("");
 	else
 	{
 		ret = assemble_var(envp[i]);

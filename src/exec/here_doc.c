@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 14:38:55 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/24 10:46:30 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/24 13:10:25 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ static int	find_cash_hd(char *str)
 	int	pos;
 
 	pos = 0;
-	while (str[pos] && !(str[pos] == 36 && isalnum(str[pos + 1])))
+	while (str[pos] && !(str[pos] == 36 && \
+		(isalnum(str[pos + 1]) || str[pos + 1] == 63 || str[pos + 1] == 95)))
 		pos++;
 	if (str[pos])
 		return (pos);
@@ -39,7 +40,7 @@ static char	*get_env_value_hd(char *str, char **envp)
 		i++;
 	free(tmp);
 	if (!envp[i])
-		return ("");
+		return (ft_strdup(""));
 	else
 	{
 		while (envp[i][j] != 61)
@@ -49,7 +50,7 @@ static char	*get_env_value_hd(char *str, char **envp)
 	}
 }
 
-static char	*currency_exchange_hd(char *str, char **envp)
+static char	*currency_exchange_hd(t_shell *shell, char *str, char **envp)
 {
 	char	*before;
 	char	*replace;
@@ -60,29 +61,37 @@ static char	*currency_exchange_hd(char *str, char **envp)
 	str += find_cash_hd(str);
 	*str = 0;
 	str++;
-	varname = find_env_varname(str, envp);
-	replace = get_env_value_hd(varname, envp);
-	str += ft_strlen(varname);
-	free(varname);
+	if (*str == 63)
+	{
+		replace = ft_strdup(ft_itoa(shell->lastreturn));
+		str++;
+	}
+	else
+	{
+		varname = find_env_varname(str, envp);
+		replace = get_env_value_hd(varname, envp);
+		str += ft_strlen(varname);
+		free(varname);
+	}
 	after = str;
-	return (ft_strjoin2(ft_strjoin(before, replace), after));
+	return (ft_strjoin2(ft_strjoin3(before, replace), after));
 }
 
 //this accountant is a simplified version of the main one, as it
 //doesn't have to handle single quotes
-static char	*accountant_hd(char *str, char **envp)
+static char	*accountant_hd(t_shell *shell, char *str, char **envp)
 {
 	char	*tmp;
 
 	tmp = str;
 	while (find_cash_hd(str) >= 0)
-		str = currency_exchange_hd(str, envp);
+		str = currency_exchange_hd(shell, str, envp);
 	if (tmp != str)
 		free(tmp);
 	return (str);
 }
 
-int	here_doc(char *delimiter, char **envp)
+int	here_doc(t_shell *shell, char *delimiter, char **envp)
 {
 	int		fds[2];
 	char	*line;
@@ -97,7 +106,7 @@ int	here_doc(char *delimiter, char **envp)
 	{
 		if (!line || !ft_strcmp(delimiter, line))
 			break ;
-		line = accountant_hd(line, envp);
+		line = accountant_hd(shell, line, envp);
 		write(fds[1], line, ft_strlen(line));
 		write(fds[1], "\n", 1);
 		free(line);

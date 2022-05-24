@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 16:23:55 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/24 12:54:58 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/24 13:09:56 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ char	*currency_exchange(t_shell *shell, char *str, char **envp)
 		free(varname);
 	}
 	after = str;
-	return (ft_strjoin2(ft_strjoin(before, replace), after));
+	return (ft_strjoin2(ft_strjoin3(before, replace), after));
 }
 
 //handles all the dollars

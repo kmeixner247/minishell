@@ -6,20 +6,20 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 18:17:00 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/20 16:05:32 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/24 13:04:03 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
-static int	redir_input(t_redir *redir, int tempinfd, char **envp)
+static int	redir_input(t_shell *shell, t_redir *redir, int tempinfd, char **envp)
 {
 	if (tempinfd > 0)
 		close(tempinfd);
 	if (redir->id == 1)
 		tempinfd = open(redir->filename, O_RDONLY);
 	else if (redir->id == 2)
-		tempinfd = here_doc(redir->filename, envp);
+		tempinfd = here_doc(shell, redir->filename, envp);
 	return (tempinfd);
 }
 
@@ -40,7 +40,7 @@ static int	redir_output(t_redir *redir, int tempoutfd)
 	return (tempoutfd);
 }
 
-static void	handle_redirs_single(t_token *token, char **envp)
+static void	handle_redirs_single(t_shell *shell, t_token *token, char **envp)
 {
 	int		tempinfd;
 	int		tempoutfd;
@@ -52,7 +52,7 @@ static void	handle_redirs_single(t_token *token, char **envp)
 	while (tmp)
 	{
 		if (tmp->id == 1 || tmp->id == 2)
-			tempinfd = redir_input(tmp, tempinfd, envp);
+			tempinfd = redir_input(shell, tmp, tempinfd, envp);
 		else if (tmp->id == 3 || tmp->id == 4)
 			tempoutfd = redir_output(tmp, tempoutfd);
 		tmp = tmp->next;
@@ -72,7 +72,7 @@ void	handle_redirs(t_shell *shell)
 	tmp = shell->token;
 	while (tmp)
 	{
-		handle_redirs_single(tmp, envv);
+		handle_redirs_single(shell, tmp, envv);
 		tmp = tmp->next;
 	}
 	free(envv);
