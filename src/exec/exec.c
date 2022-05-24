@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 09:35:21 by jsubel            #+#    #+#             */
-/*   Updated: 2022/05/24 16:22:27 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/24 17:07:01 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,23 +34,23 @@ void	try_paths(t_shell *shell, char **args, char **envp)
 	free(paths);
 }
 
-void	children(t_shell *shell)
+void	children(t_shell *shell, t_token *token)
 {
 	char	**args;
 	char	**envp;
 
 	envp = get_env(shell->env);
-	dup2(shell->token->infd, 0);
-	dup2(shell->token->outfd, 1);
-	if (shell->token->infd > 0)
-		close(shell->token->infd);
-	if (shell->token->outfd > 1)
-		close(shell->token->outfd);
-	args = get_args(shell->token->args);
+	dup2(token->infd, 0);
+	dup2(token->outfd, 1);
+	if (token->infd > 0)
+		close(token->infd);
+	if (token->outfd > 1)
+		close(token->outfd);
+	args = get_args(token->args);
 	if (isbuiltin(args[0]))
 	{
 		free(envp);
-		exit(ft_exec_builtins(shell));
+		exit(ft_exec_builtins(shell, token));
 	}
 	else if (check_char('/', args[0]))
 		execve(args[0], args, envp);
@@ -90,22 +90,24 @@ int	fuck_you_norminette(t_shell *shell)
 
 void	fork_and_execute(t_shell *shell)
 {
-	int	pipefds[2];
-	int	wpid;
+	int		pipefds[2];
+	int		wpid;
+	t_token	*token;
 
+	token = shell->token;
 	pipefds[0] = -1;
 	pipefds[1] = -1;
 	wpid = 1;
-	while (shell->token->pid && shell->token->next)
+	while (token->pid && token->next)
 	{
-		assign_pipes(shell->token, pipefds);
-		if (shell->token->pid)
-			shell->token = shell->token->next;
+		assign_pipes(token, pipefds);
+		if (token->pid)
+			token = token->next;
 	}
-	if (shell->token->pid)
-		shell->token->pid = fork();
-	if (!shell->token->pid)
-		children(shell);
+	if (token->pid)
+		token->pid = fork();
+	if (!token->pid)
+		children(shell, token);
 	else
 	{
 		if (pipefds[0] > 1)
@@ -122,7 +124,7 @@ void	exec(t_shell *shell)
 	token = shell->token;
 	if (!token->next && token->args && isbuiltin(token->args->arg))
 	{
-		shell->lastreturn = ft_exec_builtins(shell);
+		shell->lastreturn = ft_exec_builtins(shell, token);
 		return ;
 	}
 	else
@@ -133,12 +135,12 @@ void	exec(t_shell *shell)
 	return ;
 }
 
-int	ft_exec_builtins(t_shell *shell)
+int	ft_exec_builtins(t_shell *shell, t_token *token)
 {
 	int		result;
 	t_args	*args;
 
-	args = shell->token->args;
+	args = token->args;
 	result = 0;
 	if (ft_strcmp(args->arg, "echo") == 0)
 		result = ft_echo(args);

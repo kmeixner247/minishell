@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 10:53:46 by jsubel            #+#    #+#             */
-/*   Updated: 2022/05/24 16:05:54 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/24 17:06:28 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void		shell(char **envp);
 /*---------------------------------------------------------------------------*/
 /*                                 EXECUTION                                 */
 /*---------------------------------------------------------------------------*/
-int			ft_exec_builtins(t_shell *shell);
+int			ft_exec_builtins(t_shell *shell, t_token *token);
 
 // builtins
 int			ft_echo(t_args *args);
