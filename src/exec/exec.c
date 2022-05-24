@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 09:35:21 by jsubel            #+#    #+#             */
-/*   Updated: 2022/05/24 13:39:49 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/24 14:09:52 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	children(t_shell *shell)
 	args = get_args(shell->token->args);
 	if (isbuiltin(args[0]))
 	{
-		ft_exec_builtins(shell, shell->token->args, shell->env);
+		ft_exec_builtins(shell);
 		exit(0);
 	}
 	else if (check_char('/', args[0]))
@@ -123,7 +123,7 @@ void	exec(t_shell *shell)
 	pid = 1;
 	if (!token->next && token->args && isbuiltin(token->args->arg))
 	{
-		ft_exec_builtins(shell, token->args, shell->env);
+		ft_exec_builtins(shell);
 		return ;
 	}
 	else
@@ -134,23 +134,25 @@ void	exec(t_shell *shell)
 	return ;
 }
 
-int	ft_exec_builtins(t_shell *shell, t_args *args, t_env *env)
+int	ft_exec_builtins(t_shell *shell)
 {
-	int	result;
+	int		result;
+	t_args	*args;
 
+	args = shell->token->args;
 	result = 0;
 	if (ft_strcmp(args->arg, "echo") == 0)
 		result = ft_echo(args);
 	if (ft_strcmp(args->arg, "pwd") == 0)
 		result = ft_pwd();
 	if (ft_strcmp(args->arg, "cd") == 0)
-		result = ft_cd(shell, args, env);
+		result = ft_cd(shell, args, shell->env);
 	if (ft_strcmp(args->arg, "env") == 0)
-		result = ft_env(env);
+		result = ft_env(shell->env);
 	if (ft_strcmp(args->arg, "export") == 0)
-		result = ft_export(&env, get_args(args));
+		result = ft_export(&(shell->env), get_args(args));
 	if (ft_strcmp(args->arg, "unset") == 0)
-		result = ft_unset(&env, get_args(args));
+		result = ft_unset(&(shell->env), get_args(args));
 	if (ft_strcmp(args->arg, "exit") == 0)
 		result = ft_exit_minishell(shell);
 	return (result);
