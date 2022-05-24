@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 10:53:46 by jsubel            #+#    #+#             */
-/*   Updated: 2022/05/24 10:15:22 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/24 12:48:43 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,14 +129,14 @@ void		ft_free_everything(t_shell *shell);
 /*                                  PARSING                                  */
 /*---------------------------------------------------------------------------*/
 // parser.c
-t_token		*parser(char *input, t_env *env);
+void	parser(t_shell *shell, char *input, t_env *env);
 
 // parsing_cleanup.c
 int			parsing_cleanup(t_token *token);
 
 // accountant.c
-void		meta_accountant(t_token *token, char **envp);
-char		*currency_exchange(char *str, char **envp);
+void		meta_accountant(t_shell *shell, t_token *token, char **envp);
+char	*currency_exchange(t_shell *shell, char *str, char **envp);
 
 // plumber.c
 char		**plumber(char *str);
