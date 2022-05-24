@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 10:53:46 by jsubel            #+#    #+#             */
-/*   Updated: 2022/05/24 10:10:23 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/24 10:15:22 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ void		shell(char **envp);
 /*---------------------------------------------------------------------------*/
 /*                                 EXECUTION                                 */
 /*---------------------------------------------------------------------------*/
-int	ft_exec_builtins(t_shell *shell, t_args *args, t_env *env);
+int			ft_exec_builtins(t_shell *shell, t_args *args, t_env *env);
 
 // builtins
 int			ft_echo(t_args *args);
@@ -94,9 +94,9 @@ int			ft_export(t_env **env, char **args);
 int			ft_unset(t_env **env, char **args);
 
 //exit
-int		ft_exit_minishell(t_shell *shell);
-void	ft_error_minishell(t_token *token);
-void	ft_error_msg(t_shell *shell, char *msg, int err_num);
+int			ft_exit_minishell(t_shell *shell);
+void		ft_error_minishell(t_token *token);
+void		ft_error_msg(t_shell *shell, char *msg, int err_num);
 
 // utils_env.c
 t_env		*new_env(char *var);
@@ -123,7 +123,7 @@ int			here_doc(char *delimiter, char **envp);
 void		handle_redirs(t_shell *shell);
 
 // free.c
-void	ft_free_everything(t_shell *shell);
+void		ft_free_everything(t_shell *shell);
 
 /*---------------------------------------------------------------------------*/
 /*                                  PARSING                                  */

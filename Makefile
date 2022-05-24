@@ -18,14 +18,12 @@ SRC_FILES 	=	main.c \
 				$(BI)unset.c \
 				$(BI)utils_env.c \
 				$(BI)utils_export.c \
-				$(PAR)parser.c \
 				$(EXEC)exec.c \
 				$(EXEC)free.c \
 				$(EXEC)here_doc.c \
 				$(EXEC)redirs.c \
 				$(PAR)accountant.c \
 				$(PAR)parser.c \
-				$(PAR)parsing_cleanup.c \
 				$(PAR)plumber.c \
 				$(PAR)parsing_cleanup.c \
 				$(PAR)prechecks.c \
