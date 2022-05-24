@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 14:38:55 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/19 19:02:00 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/24 10:46:30 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,8 +95,7 @@ int	here_doc(char *delimiter, char **envp)
 	line = readline("> ");
 	while (42)
 	{
-		if (ft_strlen(delimiter) == ft_strlen(line) && \
-			!ft_strncmp(delimiter, line, ft_strlen(line)) || !line)
+		if (!line || !ft_strcmp(delimiter, line))
 			break ;
 		line = accountant_hd(line, envp);
 		write(fds[1], line, ft_strlen(line));
