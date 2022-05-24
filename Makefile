@@ -16,6 +16,7 @@ SRC_FILES 	=	main.c \
 				$(BI)pwd.c \
 				$(BI)unset.c \
 				$(BI)utils_env.c \
+				$(BI)utils_export.c \
 				$(PAR)parser.c \
 				$(EXEC)exec.c \
 				$(EXEC)here_doc.c \

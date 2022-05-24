@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 10:53:46 by jsubel            #+#    #+#             */
-/*   Updated: 2022/05/23 14:30:18 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/23 18:13:24 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,12 +86,17 @@ int			ft_env(t_env *env);
 int			ft_export(t_env **env, char**args);
 int			ft_unset(t_env **env, char **args);
 
-//utils_env
+// utils_env.c
 t_env		*new_env(char *var);
 void		env_addback(t_env **start, t_env *new);
 t_env		*init_env(char **envp);
 char		**get_env(t_env *env);
 int			free_env(t_env *env);
+
+// utils_export.c
+char		*get_varname(char *arg);
+int			is_valid_varname(char *arg);
+void		print_alphabetical(t_env *env);
 
 // builtin-handler.c
 int			isbuiltin(char *arg);
@@ -112,7 +117,7 @@ void		handle_redirs(t_shell *shell);
 t_token		*parser(char *input, t_env *env);
 
 // parsing_cleanup.c
-int	parsing_cleanup(t_token *token);
+int			parsing_cleanup(t_token *token);
 
 // accountant.c
 void		meta_accountant(t_token *token, char **envp);
