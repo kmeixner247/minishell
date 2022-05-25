@@ -78,6 +78,7 @@ void	handle_signals(int sig)
 			printf("\n");
 			while (g_pids[i])
 			{
+				fprintf(stderr, "killing process %d\n", g_pids[0]);
 				kill(g_pids[i], SIGKILL);
 				i++;
 			}
@@ -122,6 +123,8 @@ void	shell(char **envp)
 			parser(shell, input);
 			exec(shell);
 			// printtoken(shell->token);
+			printf("cleaning pids\n");
+			g_pids[0] = 0;
 			free(g_pids);
 			g_pids = NULL;
 			parsing_cleanup(shell->token);

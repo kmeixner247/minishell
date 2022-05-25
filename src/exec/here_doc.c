@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 14:38:55 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/25 15:04:56 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/25 16:51:36 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,6 @@ int	here_doc(t_shell *shell, char *delimiter)
 	openflags = O_WRONLY | O_CREAT | O_EXCL | O_TRUNC;
 	tempfilepath = ft_strjoin3("/tmp/minishell-thd", ft_itoa((int)&delimiter));
 	fds[1] = open(tempfilepath, openflags, 0600);
-	g_pids = ft_calloc(2, sizeof(int));
 	pid = fork();
 	if (!pid)
 	{
@@ -147,7 +146,9 @@ int	here_doc(t_shell *shell, char *delimiter)
 	else
 	{
 		int status;
+		g_pids = ft_calloc(2, sizeof(int));
 		g_pids[0] = pid;
+		fprintf(stderr, "HD pid is %d\n", g_pids[0]);
 		close(fds[1]);
 		wait(&status);
 		if (!status)
