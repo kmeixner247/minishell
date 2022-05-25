@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
+/*   By: jsubel <jsubel@student.42wolfsburg.de >    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 10:53:46 by jsubel            #+#    #+#             */
-/*   Updated: 2022/05/23 18:13:24 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/25 10:07:38 by jsubel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int			ft_exec_builtins(t_args *args, t_env *env);
 // builtins
 int			ft_echo(t_args *args);
 int			ft_pwd(void);
-int			ft_cd(t_args *args, t_env *env);
+int			ft_cd(t_shell *shell, t_args *args, t_env *env);
 int			ft_env(t_env *env);
 int			ft_export(t_env **env, char**args);
 int			ft_unset(t_env **env, char **args);
@@ -109,6 +109,12 @@ int			here_doc(char *delimiter, char **envp);
 
 // redirs.c
 void		handle_redirs(t_shell *shell);
+
+// error.c
+void	ft_error_msg(t_shell *shell, char *msg, int err_num)
+
+// free.c
+void	ft_free_everything(t_shell *shell);
 
 /*---------------------------------------------------------------------------*/
 /*                                  PARSING                                  */
