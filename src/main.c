@@ -101,11 +101,11 @@ void	shell(char **envp)
 {
 	char				*input;
 	t_shell				*shell;
-	// struct sigaction	sa;
+	struct sigaction	sa;
 
-	// sa.sa_handler = &handle_signals;
-	// sigaction(SIGINT, &sa, NULL);
-	// sigaction(SIGQUIT, &sa, NULL);
+	sa.sa_handler = &handle_signals;
+	sigaction(SIGINT, &sa, NULL);
+	sigaction(SIGQUIT, &sa, NULL);
 	shell = ft_calloc(sizeof(t_shell), 1);
 	shell->env = init_env(envp);
 	while (42)

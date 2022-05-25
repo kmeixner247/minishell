@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
+/*   By: jsubel <jsubel@student.42wolfsburg.de >    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 08:58:58 by jsubel            #+#    #+#             */
-/*   Updated: 2022/05/25 13:09:14 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/25 13:32:59 by jsubel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,17 +51,17 @@ static void	ft_change_env_pwd(char *pwd_old, char *pwd_new, t_env *env)
 	if (old)
 	{
 		free(old->var);
-		pwd_old = ft_strjoin3("OLDPWD", pwd_old);
+		pwd_old = ft_strjoin("OLDPWD", pwd_old);
 		old->var = ft_strdup(pwd_old);
 	}
 	else
 	{
-		tmp = ft_strjoin3("OLDPWD=", pwd_old);
+		tmp = ft_strjoin("OLDPWD=", pwd_old);
 		env_addback(&env, new_env(tmp));
 		free(tmp);
 	}
 	free(new->var);
-	pwd_new = ft_strjoin3("PWD=", pwd_new);
+	pwd_new = ft_strjoin("PWD=", pwd_new);
 	new->var = ft_strdup(pwd_new);
 }
 
