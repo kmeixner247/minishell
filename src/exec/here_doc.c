@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 14:38:55 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/25 12:05:34 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/25 13:38:45 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,24 +100,36 @@ int	here_doc(t_shell *shell, char *delimiter)
 	char	*line;
 	char	*tempfilepath;
 	int		openflags;
-
+	int		pid;
 	openflags = O_WRONLY | O_CREAT | O_EXCL | O_TRUNC;
 	tempfilepath = ft_strjoin3("/tmp/minishell-thd", ft_itoa((int)&delimiter));
 	fds[1] = open(tempfilepath, openflags, 0600);
-	line = readline("> ");
-	while (!g_pids)
+	g_pids = ft_calloc(1, sizeof(int));
+	pid = fork();
+	if (!pid)
 	{
-		if (!line || !ft_strcmp(delimiter, line))
-			break ;
-		line = accountant_hd(shell, line);
-		write(fds[1], line, ft_strlen(line));
-		write(fds[1], "\n", 1);
-		free(line);
 		line = readline("> ");
+		while (42)
+		{
+			if (!line || !ft_strcmp(delimiter, line))
+				break ;
+			line = accountant_hd(shell, line);
+			write(fds[1], line, ft_strlen(line));
+			write(fds[1], "\n", 1);
+			free(line);
+			line = readline("> ");
+		}
+		free(line);
+		close(fds[1]);
+		exit(0);
 	}
-	free(line);
-	fds[0] = open(tempfilepath, O_RDONLY);
-	close(fds[1]);
-	unlink(tempfilepath);
+	else
+	{
+		g_pids[0] = pid;
+		close(fds[1]);
+		wait(NULL);
+		fds[0] = open(tempfilepath, O_RDONLY);
+		unlink(tempfilepath);
+	}
 	return (fds[0]);
 }
