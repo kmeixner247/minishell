@@ -6,7 +6,7 @@
 /*   By: jsubel <jsubel@student.42wolfsburg.de >    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 10:53:46 by jsubel            #+#    #+#             */
-/*   Updated: 2022/05/25 10:07:38 by jsubel           ###   ########.fr       */
+/*   Updated: 2022/05/25 10:10:57 by jsubel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,15 @@
 # include <errno.h>
 # include "../libft/libft.h"
 # include <sys/param.h>	// max path len
+
+# define	ERR_TEMPLATE		"Error: message goes here"
+# define	ERR_EXPORT			"not a valid identifier"
+# define	ERR_EXIT_COUNT		"too many arguments"
+# define	ERRNO_EXIT_COUNT	10
+# define	ERR_EXIT_ISNUM		"argument is not numeric"
+# define	ERRNO_EXIT_ISNUM	11
+
+
 
 typedef struct s_shell
 {
@@ -76,7 +85,8 @@ void		shell(char **envp);
 /*---------------------------------------------------------------------------*/
 /*                                 EXECUTION                                 */
 /*---------------------------------------------------------------------------*/
-int			ft_exec_builtins(t_args *args, t_env *env);
+
+int	ft_exec_builtins(t_shell *shell, t_args *args, t_env *env);
 
 // builtins
 int			ft_echo(t_args *args);
@@ -85,6 +95,7 @@ int			ft_cd(t_shell *shell, t_args *args, t_env *env);
 int			ft_env(t_env *env);
 int			ft_export(t_env **env, char**args);
 int			ft_unset(t_env **env, char **args);
+void		ft_exit_minishell(t_shell *shell);
 
 // utils_env.c
 t_env		*new_env(char *var);
@@ -111,7 +122,7 @@ int			here_doc(char *delimiter, char **envp);
 void		handle_redirs(t_shell *shell);
 
 // error.c
-void	ft_error_msg(t_shell *shell, char *msg, int err_num)
+void	ft_error_msg(t_shell *shell, char *msg, int err_num);
 
 // free.c
 void	ft_free_everything(t_shell *shell);

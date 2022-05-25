@@ -12,13 +12,16 @@ SRC_FILES 	=	main.c \
 				$(BI)cd.c \
 				$(BI)echo.c \
 				$(BI)env.c \
+				$(BI)exit.c \
 				$(BI)export.c \
 				$(BI)pwd.c \
 				$(BI)unset.c \
 				$(BI)utils_env.c \
 				$(BI)utils_export.c \
 				$(PAR)parser.c \
+				$(EXEC)error.c \
 				$(EXEC)exec.c \
+				$(EXEC)free.c \
 				$(EXEC)here_doc.c \
 				$(EXEC)redirs.c \
 				$(PAR)accountant.c \
