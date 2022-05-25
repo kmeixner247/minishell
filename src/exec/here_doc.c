@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 14:38:55 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/24 14:36:22 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/25 12:05:34 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ int	here_doc(t_shell *shell, char *delimiter)
 	tempfilepath = ft_strjoin3("/tmp/minishell-thd", ft_itoa((int)&delimiter));
 	fds[1] = open(tempfilepath, openflags, 0600);
 	line = readline("> ");
-	while (42)
+	while (!g_pids)
 	{
 		if (!line || !ft_strcmp(delimiter, line))
 			break ;

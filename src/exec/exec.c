@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 09:35:21 by jsubel            #+#    #+#             */
-/*   Updated: 2022/05/24 17:07:01 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/25 11:14:24 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,31 @@ int	fuck_you_norminette(t_shell *shell)
 	return (wpid);
 }
 
+void	write_pids(t_shell *shell)
+{
+	t_token	*tmptoken;
+	int		i;
+
+	if (g_pids)
+		free(g_pids);
+	i = 0;
+	tmptoken = shell->token;
+	while (tmptoken)
+	{
+		i++;
+		tmptoken = tmptoken->next;
+	}
+	g_pids = ft_calloc(sizeof(int), i + 1);
+	i = 0;
+	tmptoken = shell->token;
+	while (tmptoken)
+	{
+		g_pids[i] = tmptoken->pid;
+		i++;
+		tmptoken = tmptoken->next;
+	}
+}
+
 void	fork_and_execute(t_shell *shell)
 {
 	int		pipefds[2];
@@ -112,6 +137,7 @@ void	fork_and_execute(t_shell *shell)
 	{
 		if (pipefds[0] > 1)
 			close(pipefds[0]);
+		write_pids(shell);
 		while (wpid > 0)
 			wpid = fuck_you_norminette(shell);
 	}
@@ -124,6 +150,7 @@ void	exec(t_shell *shell)
 	token = shell->token;
 	if (!token->next && token->args && isbuiltin(token->args->arg))
 	{
+		g_pids = ft_calloc(sizeof(int), 1);
 		shell->lastreturn = ft_exec_builtins(shell, token);
 		return ;
 	}

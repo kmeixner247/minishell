@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 10:53:46 by jsubel            #+#    #+#             */
-/*   Updated: 2022/05/24 17:06:28 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/24 17:34:35 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@
 # define	ERRNO_EXIT_COUNT	10
 # define	ERR_EXIT_ISNUM		"argument is not numeric"
 # define	ERRNO_EXIT_ISNUM	11
+
+extern int *g_pids;
 
 typedef struct s_shell
 {

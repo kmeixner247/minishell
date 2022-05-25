@@ -12,6 +12,8 @@
 
 #include "../incl/minishell.h"
 
+int *g_pids = NULL;
+
 int	main(int argc, char **argv, char **envp)
 {
 	if (argc < 1 || argv[1])
@@ -64,33 +66,72 @@ void	printtoken(t_token *token)
 	}
 }
 
+void	handle_signals(int sig)
+{
+	int	i;
+
+	i = 0;
+	if (sig == SIGINT)
+	{
+		if (g_pids)
+		{
+			printf("\n");
+			while (g_pids[i])
+			{
+				kill(g_pids[i], SIGKILL);
+				i++;
+			}
+		}
+		else
+		{
+			printf("minishell$ %s  ", rl_line_buffer);
+			printf("\n");
+			rl_replace_line("", 0);
+			rl_on_new_line();
+			rl_redisplay();
+		}
+	}
+	if (sig == SIGQUIT)
+	{
+		printf("minishell$ %s  \b\b", rl_line_buffer);
+	}
+}
+
 void	shell(char **envp)
 {
 	char				*input;
 	t_shell				*shell;
+	struct sigaction	sa;
 
+	sa.sa_handler = &handle_signals;
+	sigaction(SIGINT, &sa, NULL);
+	sigaction(SIGQUIT, &sa, NULL);
 	shell = ft_calloc(sizeof(t_shell), 1);
 	shell->env = init_env(envp);
-	input = readline("minishell$ ");
 	while (42)
 	{
+		input = readline("minishell$ ");
+		if (!input)
+		{
+			write(1, "exit\n", 5);
+			break ;
+		}
 		add_history(input);
 		if (input && *input && !prechecks(input))
 		{
 			shell->raw_input = input;
 			parser(shell, input);
 			exec(shell);
-			printtoken(shell->token);
+			// printtoken(shell->token);
+			free(g_pids);
+			g_pids = NULL;
 			parsing_cleanup(shell->token);
-			free(input);
 		}
-		if (!input)
-			break ;
-		input = readline("minishell$ ");
+		free(input);
 	}
 	rl_clear_history();
 	free_env(shell->env);
-	free(input);
+	// free(input);
 	free(shell);
 	return ;
 }
