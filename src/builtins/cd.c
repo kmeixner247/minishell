@@ -6,7 +6,7 @@
 /*   By: jsubel <jsubel@student.42wolfsburg.de >    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 08:58:58 by jsubel            #+#    #+#             */
-/*   Updated: 2022/05/25 13:32:59 by jsubel           ###   ########.fr       */
+/*   Updated: 2022/05/25 15:04:07 by jsubel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ static void	ft_change_env_pwd(char *pwd_old, char *pwd_new, t_env *env)
 	free(new->var);
 	pwd_new = ft_strjoin("PWD=", pwd_new);
 	new->var = ft_strdup(pwd_new);
+	free(pwd_old);
+	free(pwd_new);
 }
 
 static t_env	*ft_find_element(t_env *env, char *str)
