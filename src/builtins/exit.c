@@ -6,7 +6,7 @@
 /*   By: jsubel <jsubel@student.42wolfsburg.de >    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 12:01:04 by jsubel            #+#    #+#             */
-/*   Updated: 2022/05/23 17:49:51 by jsubel           ###   ########.fr       */
+/*   Updated: 2022/05/25 09:19:11 by jsubel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,19 +21,28 @@ static int	ft_isnumeric(char *str);
 *	if one numeric argument, exit with that
 *	if more than one, throw error and don't exit
 */
-int	ft_exit_minishell(t_shell *shell)
+void	ft_exit_minishell(t_shell *shell)
 {
 	int	nbr_args;
+	int	exitcode;
 
+	exitcode = 0;
 	nbr_args = ft_nbr_args(shell->token->args);
 	if (nbr_args > 2)
+	{
 		ft_error_msg(shell, ERR_EXIT_COUNT, ERRNO_EXIT_COUNT);
+		return ;
+	}
 	else if (nbr_args == 2 && !(ft_isnumeric(shell->token->args->next->arg)))
+	{
 		ft_error_msg(shell, ERR_EXIT_ISNUM, ERRNO_EXIT_ISNUM);
-	else
-		shell->lastreturn = ft_atoi(shell->token->args->next->arg);
+		return ;
+	}
+	else if (nbr_args == 2)
+		exitcode = ft_atoi(shell->token->args->next->arg);
 	ft_free_everything(shell);
-	return (1);
+	rl_clear_history();
+	exit(exitcode);
 }
 
 /**

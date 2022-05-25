@@ -6,7 +6,7 @@
 /*   By: jsubel <jsubel@student.42wolfsburg.de >    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 09:35:21 by jsubel            #+#    #+#             */
-/*   Updated: 2022/05/23 17:43:26 by jsubel           ###   ########.fr       */
+/*   Updated: 2022/05/25 08:53:54 by jsubel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,6 +145,6 @@ int	ft_exec_builtins(t_shell *shell, t_args *args, t_env *env)
 	if (ft_strcmp(args->arg, "unset") == 0)
 		result = ft_unset(&env, get_args(args));
 	if (ft_strcmp(args->arg, "exit") == 0)
-		result = ft_exit_minishell(shell);
+		ft_exit_minishell(shell);
 	return (result);
 }

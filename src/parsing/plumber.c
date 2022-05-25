@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   plumber.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
+/*   By: jsubel <jsubel@student.42wolfsburg.de >    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 16:29:55 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/16 14:40:00 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/25 09:07:52 by jsubel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ char	**plumber(char *str)
 	int		i;
 
 	pipes = countpipes(str);
-	retarr = ft_calloc(sizeof(char *), pipes + 2);
+	retarr = ft_calloc(pipes + 2, sizeof(char *));
 	i = 0;
 	while (i <= pipes)
 	{

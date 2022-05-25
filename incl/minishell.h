@@ -6,7 +6,7 @@
 /*   By: jsubel <jsubel@student.42wolfsburg.de >    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 10:53:46 by jsubel            #+#    #+#             */
-/*   Updated: 2022/05/23 18:02:11 by jsubel           ###   ########.fr       */
+/*   Updated: 2022/05/25 08:56:22 by jsubel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ typedef struct s_shell
 	struct s_token	*token;
 	struct s_env	*env;
 	int				lastreturn;
-	char			*raw_input;
+	// char			*raw_input;
 }					t_shell;
 
 typedef struct s_token
@@ -96,7 +96,7 @@ int	ft_export(t_env **env, char**args);
 int	ft_unset(t_env **env, char **args);
 
 //exit
-int		ft_exit_minishell(t_shell *shell);
+void	ft_exit_minishell(t_shell *shell);
 void	ft_error_minishell(t_token *token);
 void	ft_error_msg(t_shell *shell, char *msg, int err_num);
 //utils_env

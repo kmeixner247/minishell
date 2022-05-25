@@ -68,6 +68,7 @@ void	shell(char **envp)
 	char	*input;
 	t_shell	*shell;
 
+	shell = ft_calloc(1, sizeof(t_shell *));
 	shell->env = init_env(envp);
 	// int i= 0;
 	// while (envp[i])
@@ -79,7 +80,7 @@ void	shell(char **envp)
 		add_history(input);
 		if (input && *input && !prechecks(input))
 		{
-			shell->raw_input = input;
+			// shell->raw_input = input;
 			shell->token = parser(input, shell->env);
 			free(input);
 			// printtoken(shell->token);

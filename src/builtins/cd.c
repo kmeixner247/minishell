@@ -6,7 +6,7 @@
 /*   By: jsubel <jsubel@student.42wolfsburg.de >    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 08:58:58 by jsubel            #+#    #+#             */
-/*   Updated: 2022/05/23 17:45:43 by jsubel           ###   ########.fr       */
+/*   Updated: 2022/05/25 09:23:31 by jsubel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ int	ft_cd(t_shell *shell, t_args *args, t_env *env)
 {
 	char	*pwd_old;
 	char	*pwd_new;
-	t_env	*home;
 
 	pwd_old = NULL;
 	pwd_new = NULL;
@@ -36,6 +35,8 @@ int	ft_cd(t_shell *shell, t_args *args, t_env *env)
 		pwd_new = getcwd(pwd_new, MAXPATHLEN);
 		ft_change_env_pwd(pwd_old, pwd_new, env);
 	}
+	free(pwd_old);
+	free(pwd_new);
 	return (1);
 }
 
@@ -62,6 +63,8 @@ static void	ft_change_env_pwd(char *pwd_old, char *pwd_new, t_env *env)
 	free(new->var);
 	pwd_new = ft_strjoin("PWD=", pwd_new);
 	new->var = ft_strdup(pwd_new);
+	free(pwd_old);
+	free(pwd_new);
 }
 
 static t_env	*ft_find_element(t_env *env, char *str)
@@ -88,5 +91,7 @@ static int	ft_cd_no_args(t_shell *shell, char *pwd_old, t_env *env)
 	if (chdir(pwd_home) != 0)
 		ft_error_msg(shell, "cd: ", 0);
 	ft_change_env_pwd(pwd_old, pwd_home, env);
+	free(pwd_home);
+	free(pwd_old);
 	return (1);
 }
