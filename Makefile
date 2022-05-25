@@ -18,6 +18,11 @@ SRC_FILES 	=	main.c \
 				$(BI)unset.c \
 				$(BI)utils_env.c \
 				$(BI)utils_export.c \
+<<<<<<< HEAD
+=======
+				$(PAR)parser.c \
+				$(EXEC)error.c \
+>>>>>>> main
 				$(EXEC)exec.c \
 				$(EXEC)free.c \
 				$(EXEC)here_doc.c \

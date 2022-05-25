@@ -119,7 +119,6 @@ void	shell(char **envp)
 		add_history(input);
 		if (input && *input && !prechecks(input))
 		{
-			shell->raw_input = input;
 			parser(shell, input);
 			exec(shell);
 			// printtoken(shell->token);
@@ -130,8 +129,7 @@ void	shell(char **envp)
 		free(input);
 	}
 	rl_clear_history();
-	free_env(shell->env);
-	// free(input);
-	free(shell);
+	ft_free_everything(shell);
+	free(input);
 	return ;
 }
