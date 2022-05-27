@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 18:17:00 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/25 14:38:03 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/26 17:26:48 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ static void	handle_redirs_single(t_shell *shell, t_token *token, char **envp)
 			tempoutfd = redir_output(tmp, tempoutfd);
 		tmp = tmp->next;
 	}
+	if (g_pids && tempinfd > 0)	//do i need this
+		close(tempinfd);
 	if (tempinfd > 0)
 		token->infd = tempinfd;
 	if (tempoutfd > 0)

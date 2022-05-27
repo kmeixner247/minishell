@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 14:38:55 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/25 16:51:36 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/27 11:44:30 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,22 +94,11 @@ static char	*accountant_hd(t_shell *shell, char *str)
 	return (str);
 }
 
-static char	*my_readline(void)
+void	git_out(int sig)
 {
-	char	c[2];
-	int		i;
-	char	*res;
-
-	res = ft_strdup("");
-	c[1] = 0;
-	i = 1;
-	while (i && *c != 10)
-	{
-		i = read(0, &c, 1);
-		if (*c != 10)
-			res = ft_strjoin2(res, c);
-	}
-	return (res);
+	printf("\n");
+	// rl_line_buffer = strdup("");
+	// write(0, "", 1);
 }
 
 int	here_doc(t_shell *shell, char *delimiter)
@@ -119,6 +108,7 @@ int	here_doc(t_shell *shell, char *delimiter)
 	char	*tempfilepath;
 	int		openflags;
 	int		pid;
+	int		status;
 
 	openflags = O_WRONLY | O_CREAT | O_EXCL | O_TRUNC;
 	tempfilepath = ft_strjoin3("/tmp/minishell-thd", ft_itoa((int)&delimiter));
@@ -126,8 +116,9 @@ int	here_doc(t_shell *shell, char *delimiter)
 	pid = fork();
 	if (!pid)
 	{
-		write(2, "> ", 2);
-		line = my_readline();
+		signal(SIGUSR1, git_out);
+		signal(SIGINT, SIG_DFL);
+		line = readline("> ");
 		while (42)
 		{
 			if (!line || !ft_strcmp(delimiter, line))
@@ -136,8 +127,7 @@ int	here_doc(t_shell *shell, char *delimiter)
 			write(fds[1], line, ft_strlen(line));
 			write(fds[1], "\n", 1);
 			free(line);
-			write(2, "> ", 2);
-			line = my_readline();
+			line = readline("> ");
 		}
 		free(line);
 		close(fds[1]);
@@ -145,18 +135,17 @@ int	here_doc(t_shell *shell, char *delimiter)
 	}
 	else
 	{
-		int status;
-		g_pids = ft_calloc(2, sizeof(int));
-		g_pids[0] = pid;
-		fprintf(stderr, "HD pid is %d\n", g_pids[0]);
+		g_pids = ft_calloc(3, sizeof(int));
+		g_pids[0] = -15;
+		g_pids[1] = pid;
 		close(fds[1]);
 		wait(&status);
 		if (!status)
 		{
 			free(g_pids);
 			g_pids = NULL;
+			fds[0] = open(tempfilepath, O_RDONLY);
 		}
-		fds[0] = open(tempfilepath, O_RDONLY);
 		unlink(tempfilepath);
 		return (fds[0]);
 	}

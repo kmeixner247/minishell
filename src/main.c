@@ -70,17 +70,22 @@ void	handle_signals(int sig)
 {
 	int	i;
 
+	ft_putstr_fd("hello\n", 2);
 	i = 0;
 	if (sig == SIGINT)
 	{
 		if (g_pids)
 		{
-			printf("\n");
-			while (g_pids[i])
+			if (g_pids[0] < 0)
+				kill(g_pids[1], SIGUSR1);
+			else
 			{
-				fprintf(stderr, "killing process %d\n", g_pids[0]);
-				kill(g_pids[i], SIGKILL);
-				i++;
+				printf("\n");
+				while (g_pids[i])
+				{
+					kill(g_pids[i], SIGKILL);
+					i++;
+				}
 			}
 		}
 		else
@@ -102,11 +107,9 @@ void	shell(char **envp)
 {
 	char				*input;
 	t_shell				*shell;
-	struct sigaction	sa;
 
-	sa.sa_handler = &handle_signals;
-	sigaction(SIGINT, &sa, NULL);
-	sigaction(SIGQUIT, &sa, NULL);
+	signal(SIGINT, handle_signals);
+	signal(SIGQUIT, handle_signals);
 	shell = ft_calloc(sizeof(t_shell), 1);
 	shell->env = init_env(envp);
 	while (42)
@@ -123,7 +126,6 @@ void	shell(char **envp)
 			parser(shell, input);
 			exec(shell);
 			// printtoken(shell->token);
-			printf("cleaning pids\n");
 			g_pids[0] = 0;
 			free(g_pids);
 			g_pids = NULL;
