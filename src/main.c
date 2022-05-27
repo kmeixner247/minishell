@@ -66,50 +66,14 @@ void	printtoken(t_token *token)
 	}
 }
 
-void	handle_signals(int sig)
-{
-	int	i;
-
-	ft_putstr_fd("hello\n", 2);
-	i = 0;
-	if (sig == SIGINT)
-	{
-		if (g_pids)
-		{
-			if (g_pids[0] < 0)
-				kill(g_pids[1], SIGUSR1);
-			else
-			{
-				printf("\n");
-				while (g_pids[i])
-				{
-					kill(g_pids[i], SIGKILL);
-					i++;
-				}
-			}
-		}
-		else
-		{
-			printf("minishell$ %s  ", rl_line_buffer);
-			printf("\n");
-			rl_replace_line("", 0);
-			rl_on_new_line();
-			rl_redisplay();
-		}
-	}
-	if (sig == SIGQUIT)
-	{
-		printf("minishell$ %s  \b\b", rl_line_buffer);
-	}
-}
 
 void	shell(char **envp)
 {
 	char				*input;
 	t_shell				*shell;
 
-	signal(SIGINT, handle_signals);
-	signal(SIGQUIT, handle_signals);
+	signal(SIGINT, handle_sigint);
+	signal(SIGQUIT, SIG_IGN);
 	shell = ft_calloc(sizeof(t_shell), 1);
 	shell->env = init_env(envp);
 	while (42)

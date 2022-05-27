@@ -18,12 +18,12 @@ SRC_FILES 	=	main.c \
 				$(BI)unset.c \
 				$(BI)utils_env.c \
 				$(BI)utils_export.c \
-				$(PAR)parser.c \
 				$(EXEC)error.c \
 				$(EXEC)exec.c \
 				$(EXEC)free.c \
 				$(EXEC)here_doc.c \
 				$(EXEC)redirs.c \
+				$(EXEC)utils_here_doc.c \
 				$(PAR)accountant.c \
 				$(PAR)parser.c \
 				$(PAR)plumber.c \
@@ -35,7 +35,8 @@ SRC_FILES 	=	main.c \
 				$(PAR)utils_args.c \
 				$(PAR)utils_redir.c \
 				$(PAR)utils_tokens.c \
-				$(PAR)utils_parsing.c
+				$(PAR)utils_parsing.c \
+				signals.c
 
 SRC			= $(addprefix $(SRC_PATH)/,$(SRC_FILES))
 
