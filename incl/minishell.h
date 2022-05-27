@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 10:53:46 by jsubel            #+#    #+#             */
-/*   Updated: 2022/05/27 17:51:04 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/27 19:05:31 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,6 @@ void		shell(char **envp);
 /*---------------------------------------------------------------------------*/
 /*                                 EXECUTION                                 */
 /*---------------------------------------------------------------------------*/
-int			ft_exec_builtins(t_shell *shell, t_token *token);
 
 // builtins
 int			ft_echo(t_args *args);
@@ -125,6 +124,12 @@ void		handle_heredocs(t_shell *shell);
 // utils_here_doc.c
 void		hd_newline(int sig);
 char		*accountant_hd(t_shell *shell, char *str);
+
+//utils_exec.c
+void		write_pids(t_shell *shell);
+void		assign_pipes(t_token *token, int pipefds[2]);
+void		try_paths(t_shell *shell, char **args, char **envp);
+int			ft_exec_builtins(t_shell *shell, t_token *token);
 
 // redirs.c
 void		handle_redirs_single(t_shell *shell, t_token *token);

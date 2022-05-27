@@ -23,6 +23,7 @@ SRC_FILES 	=	main.c \
 				$(EXEC)free.c \
 				$(EXEC)here_doc.c \
 				$(EXEC)redirs.c \
+				$(EXEC)utils_exec.c \
 				$(EXEC)utils_here_doc.c \
 				$(PAR)accountant.c \
 				$(PAR)parser.c \

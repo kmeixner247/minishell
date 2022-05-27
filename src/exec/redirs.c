@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 18:17:00 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/27 15:57:51 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/27 18:36:09 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,10 @@ void	handle_redirs_single(t_shell *shell, t_token *token)
 			tempoutfd = redir_output(tmp, tempoutfd);
 		tmp = tmp->next;
 	}
-	token->infd = tempinfd;
-	token->outfd = tempoutfd;
+	if (tempinfd > 0)
+		token->infd = tempinfd;
+	if (tempoutfd > 0)
+		token->outfd = tempoutfd;
 }
 
 // void	handle_redirs(t_shell *shell)
