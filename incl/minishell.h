@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 10:53:46 by jsubel            #+#    #+#             */
-/*   Updated: 2022/05/27 14:59:04 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/27 17:51:04 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,12 @@
 # include "../libft/libft.h"
 # include <sys/param.h>	// max path len
 
-# define	ERR_TEMPLATE		"Error: message goes here"
-# define	ERR_EXPORT			"not a valid identifier"
-# define	ERR_EXIT_COUNT		"too many arguments"
-# define	ERRNO_EXIT_COUNT	10
-# define	ERR_EXIT_ISNUM		"argument is not numeric"
-# define	ERRNO_EXIT_ISNUM	11
+# define ERR_TEMPLATE "Error: message goes here"
+# define ERR_EXPORT "not a valid identifier"
+# define ERR_EXIT_COUNT "too many arguments"
+# define ERRNO_EXIT_COUNT 10
+# define ERR_EXIT_ISNUM	 "argument is not numeric"
+# define ERRNO_EXIT_ISNUM 11
 
 extern int *g_pids;
 
