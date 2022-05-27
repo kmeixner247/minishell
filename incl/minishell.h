@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 10:53:46 by jsubel            #+#    #+#             */
-/*   Updated: 2022/05/27 12:49:50 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/27 14:59:04 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,14 +120,14 @@ int			isbuiltin(char *arg);
 void		exec(t_shell *shell);
 
 // here_doc.c
-int			here_doc(t_shell *shell, char *delimiter);
+void		handle_heredocs(t_shell *shell);
 
 // utils_here_doc.c
 void		hd_newline(int sig);
 char		*accountant_hd(t_shell *shell, char *str);
 
 // redirs.c
-void		handle_redirs(t_shell *shell);
+void		handle_redirs_single(t_shell *shell, t_token *token);
 
 // error.c
 void		ft_error_msg(t_shell *shell, char *msg, int err_num);

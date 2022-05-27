@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 14:38:55 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/27 12:19:05 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/27 15:00:05 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	here_doc_child(t_shell *shell, char *delimiter, int outfd)
 	close(outfd);
 }
 
-int	here_doc_parent(char *tempfilepath, int pid, int infd, int outfd)
+void	here_doc_parent(int pid, int outfd)
 {
 	int	status;
 
@@ -46,29 +46,49 @@ int	here_doc_parent(char *tempfilepath, int pid, int infd, int outfd)
 	{
 		free(g_pids);
 		g_pids = NULL;
-		infd = open(tempfilepath, O_RDONLY);
 	}
-	unlink(tempfilepath);
-	return (infd);
 }
 
-int	here_doc(t_shell *shell, char *delimiter)
+void	here_doc(t_shell *shell, t_redir *redir)
 {
-	int		fds[2];
-	char	*tempfilepath;
+	int		fd;
+	char	*path;
 	int		openflags;
 	int		pid;
-	int		status;
+	char	*delimiter;
 
 	openflags = O_WRONLY | O_CREAT | O_EXCL | O_TRUNC;
-	tempfilepath = ft_strjoin3("/tmp/minishell-thd", ft_itoa((int)&delimiter));
-	fds[1] = open(tempfilepath, openflags, 0600);
+	path = ft_strjoin3("/tmp/minishell-thd", ft_itoa((int)&(redir->filename)));
+	fd = open(path, openflags, 0600);
 	pid = fork();
 	if (!pid)
 	{
-		here_doc_child(shell, delimiter, fds[1]);
+		here_doc_child(shell, delimiter, fd);
 		exit(0);
 	}	
 	else
-		return (here_doc_parent(tempfilepath, pid, fds[0], fds[1]));
+	{
+		here_doc_parent(pid, fd);
+		redir->filename = strdup(path);
+		redir->id = 5;
+	}
+}
+
+void	handle_heredocs(t_shell *shell)
+{
+	t_token	*tmptoken;
+	t_redir	*tmpredir;
+
+	tmptoken = shell->token;
+	while (tmptoken)
+	{
+		tmpredir = tmptoken->redir;
+		while (tmpredir)
+		{
+			if (tmpredir->id == 2)
+				here_doc(shell, tmpredir);
+			tmpredir = tmpredir->next;
+		}
+		tmptoken = tmptoken->next;
+	}
 }

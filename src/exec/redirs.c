@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 18:17:00 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/27 12:54:54 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/27 15:57:51 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,9 @@ static int	redir_input(t_shell *shell, t_redir *redir, int tempinfd)
 {
 	if (tempinfd > 0)
 		close(tempinfd);
-	if (redir->id == 1)
-		tempinfd = open(redir->filename, O_RDONLY);
-	else if (redir->id == 2)
-		tempinfd = here_doc(shell, redir->filename);
+	tempinfd = open(redir->filename, O_RDONLY);
+	if (redir->id == 5)
+		unlink(redir->filename);
 	return (tempinfd);
 }
 
@@ -40,7 +39,7 @@ static int	redir_output(t_redir *redir, int tempoutfd)
 	return (tempoutfd);
 }
 
-static void	handle_redirs_single(t_shell *shell, t_token *token, char **envp)
+void	handle_redirs_single(t_shell *shell, t_token *token)
 {
 	int		tempinfd;
 	int		tempoutfd;
@@ -49,35 +48,29 @@ static void	handle_redirs_single(t_shell *shell, t_token *token, char **envp)
 	tmp = token->redir;
 	tempinfd = -1;
 	tempoutfd = -1;
-	while (tmp && !g_pids)
+	while (tmp)
 	{
-		if (tmp->id == 1 || tmp->id == 2)
+		if (tmp->id == 1 || tmp->id == 5)
 			tempinfd = redir_input(shell, tmp, tempinfd);
 		else if (tmp->id == 3 || tmp->id == 4)
 			tempoutfd = redir_output(tmp, tempoutfd);
 		tmp = tmp->next;
 	}
-	if (g_pids && tempinfd > 0)
-		close(tempinfd);
-	if (g_pids && tempoutfd > 0)
-		close(tempoutfd);
-	if (tempinfd > 0)
-		token->infd = tempinfd;
-	if (tempoutfd > 0)
-		token->outfd = tempoutfd;
+	token->infd = tempinfd;
+	token->outfd = tempoutfd;
 }
 
-void	handle_redirs(t_shell *shell)
-{
-	t_token	*tmp;
-	char	**envv;
+// void	handle_redirs(t_shell *shell)
+// {
+// 	t_token	*tmp;
+// 	char	**envv;
 
-	envv = get_env(shell->env);
-	tmp = shell->token;
-	while (tmp && !g_pids)
-	{
-		handle_redirs_single(shell, tmp, envv);
-		tmp = tmp->next;
-	}
-	free(envv);
-}
+// 	envv = get_env(shell->env);
+// 	tmp = shell->token;
+// 	while (tmp && !g_pids)
+// 	{
+// 		handle_redirs_single(shell, tmp, envv);
+// 		tmp = tmp->next;
+// 	}
+// 	free(envv);
+// }

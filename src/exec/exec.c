@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 09:35:21 by jsubel            #+#    #+#             */
-/*   Updated: 2022/05/25 15:01:59 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/27 15:59:04 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void	children(t_shell *shell, t_token *token)
 	char	**args;
 	char	**envp;
 
+	handle_redirs_single(shell, token);
 	envp = get_env(shell->env);
 	dup2(token->infd, 0);
 	dup2(token->outfd, 1);
@@ -63,10 +64,8 @@ void	children(t_shell *shell, t_token *token)
 void	assign_pipes(t_token *token, int pipefds[2])
 {
 	pipe(pipefds);
-	if (token->outfd == 1)
-		token->outfd = pipefds[1];
-	if (token->next->infd == 0)
-		token->next->infd = pipefds[0];
+	token->outfd = pipefds[1];
+	token->next->infd = pipefds[0];
 	token->pid = fork();
 	if (!token->pid)
 		close(pipefds[0]);
@@ -156,7 +155,7 @@ void	exec(t_shell *shell)
 	}
 	else
 	{
-		handle_redirs(shell);
+		handle_heredocs(shell);
 		if (!g_pids)
 			fork_and_execute(shell);
 	}
