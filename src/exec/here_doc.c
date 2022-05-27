@@ -6,118 +6,69 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 14:38:55 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/25 12:05:34 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/27 12:19:05 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
-static int	find_cash_hd(char *str)
+void	here_doc_child(t_shell *shell, char *delimiter, int outfd)
 {
-	int	pos;
+	char	*line;
 
-	pos = 0;
-	while (str[pos] && !(str[pos] == 36 && \
-		(isalnum(str[pos + 1]) || str[pos + 1] == 63 || str[pos + 1] == 95)))
-		pos++;
-	if (str[pos])
-		return (pos);
-	else
-		return (-1);
+	signal(SIGINT, SIG_DFL);
+	signal(SIGUSR1, hd_newline);
+	line = readline("> ");
+	while (42)
+	{
+		if (!line || !ft_strcmp(delimiter, line))
+			break ;
+		line = accountant_hd(shell, line);
+		write(outfd, line, ft_strlen(line));
+		write(outfd, "\n", 1);
+		free(line);
+		line = readline("> ");
+	}
+	free(line);
+	close(outfd);
 }
 
-static char	*get_env_value_hd(char *str, char **envp)
+int	here_doc_parent(char *tempfilepath, int pid, int infd, int outfd)
 {
-	int		size;
-	int		i;
-	int		j;
-	char	*tmp;
+	int	status;
 
-	i = 0;
-	j = 0;
-	tmp = ft_strjoin(str, "=");
-	while (envp[i] && ft_strncmp(tmp, envp[i], ft_strlen(tmp)))
-		i++;
-	free(tmp);
-	if (!envp[i])
-		return (ft_strdup(""));
-	else
+	g_pids = ft_calloc(3, sizeof(int));
+	g_pids[0] = -15;
+	g_pids[1] = pid;
+	close(outfd);
+	wait(&status);
+	if (!status)
 	{
-		while (envp[i][j] != 61)
-			j++;
-		j++;
-		return (envp[i] + j);
+		free(g_pids);
+		g_pids = NULL;
+		infd = open(tempfilepath, O_RDONLY);
 	}
-}
-
-static char	*currency_exchange_hd(t_shell *shell, char *str, char **envp)
-{
-	char	*before;
-	char	*replace;
-	char	*after;
-	char	*varname;
-
-	before = str;
-	str += find_cash_hd(str);
-	*str = 0;
-	str++;
-	if (*str == 63)
-	{
-		replace = ft_strdup(ft_itoa(shell->lastreturn));
-		str++;
-	}
-	else
-	{
-		varname = find_env_varname(str, envp);
-		replace = get_env_value_hd(varname, envp);
-		str += ft_strlen(varname);
-		free(varname);
-	}
-	after = str;
-	return (ft_strjoin2(ft_strjoin3(before, replace), after));
-}
-
-//this accountant is a simplified version of the main one, as it
-//doesn't have to handle single quotes
-static char	*accountant_hd(t_shell *shell, char *str)
-{
-	char	*tmp;
-	char	**envp;
-
-	envp = get_env(shell->env);
-	tmp = str;
-	while (find_cash_hd(str) >= 0)
-		str = currency_exchange_hd(shell, str, envp);
-	if (tmp != str)
-		free(tmp);
-	free(envp);
-	return (str);
+	unlink(tempfilepath);
+	return (infd);
 }
 
 int	here_doc(t_shell *shell, char *delimiter)
 {
 	int		fds[2];
-	char	*line;
 	char	*tempfilepath;
 	int		openflags;
+	int		pid;
+	int		status;
 
 	openflags = O_WRONLY | O_CREAT | O_EXCL | O_TRUNC;
 	tempfilepath = ft_strjoin3("/tmp/minishell-thd", ft_itoa((int)&delimiter));
 	fds[1] = open(tempfilepath, openflags, 0600);
-	line = readline("> ");
-	while (!g_pids)
+	pid = fork();
+	if (!pid)
 	{
-		if (!line || !ft_strcmp(delimiter, line))
-			break ;
-		line = accountant_hd(shell, line);
-		write(fds[1], line, ft_strlen(line));
-		write(fds[1], "\n", 1);
-		free(line);
-		line = readline("> ");
-	}
-	free(line);
-	fds[0] = open(tempfilepath, O_RDONLY);
-	close(fds[1]);
-	unlink(tempfilepath);
-	return (fds[0]);
+		here_doc_child(shell, delimiter, fds[1]);
+		exit(0);
+	}	
+	else
+		return (here_doc_parent(tempfilepath, pid, fds[0], fds[1]));
 }

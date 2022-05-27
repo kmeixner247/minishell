@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 10:53:46 by jsubel            #+#    #+#             */
-/*   Updated: 2022/05/25 12:58:30 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/27 12:49:50 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,14 +122,18 @@ void		exec(t_shell *shell);
 // here_doc.c
 int			here_doc(t_shell *shell, char *delimiter);
 
+// utils_here_doc.c
+void		hd_newline(int sig);
+char		*accountant_hd(t_shell *shell, char *str);
+
 // redirs.c
 void		handle_redirs(t_shell *shell);
 
 // error.c
-void	ft_error_msg(t_shell *shell, char *msg, int err_num);
+void		ft_error_msg(t_shell *shell, char *msg, int err_num);
 
 // free.c
-void	ft_free_everything(t_shell *shell);
+void		ft_free_everything(t_shell *shell);
 
 /*---------------------------------------------------------------------------*/
 /*                                  PARSING                                  */
@@ -180,5 +184,7 @@ void		token_addback(t_token **start, t_token *new);
 // utils_parsing.c
 int			check_char(unsigned char c, const char *str);
 int			parsing_cleanup(t_token *token);
+
+void		handle_sigint(int sig);
 
 #endif

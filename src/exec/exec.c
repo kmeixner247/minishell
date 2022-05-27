@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 09:35:21 by jsubel            #+#    #+#             */
-/*   Updated: 2022/05/25 13:00:09 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/25 15:01:59 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,7 +157,8 @@ void	exec(t_shell *shell)
 	else
 	{
 		handle_redirs(shell);
-		fork_and_execute(shell);
+		if (!g_pids)
+			fork_and_execute(shell);
 	}
 	return ;
 }

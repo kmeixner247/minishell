@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 18:17:00 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/24 14:37:34 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/27 12:54:54 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static void	handle_redirs_single(t_shell *shell, t_token *token, char **envp)
 	tmp = token->redir;
 	tempinfd = -1;
 	tempoutfd = -1;
-	while (tmp)
+	while (tmp && !g_pids)
 	{
 		if (tmp->id == 1 || tmp->id == 2)
 			tempinfd = redir_input(shell, tmp, tempinfd);
@@ -57,6 +57,10 @@ static void	handle_redirs_single(t_shell *shell, t_token *token, char **envp)
 			tempoutfd = redir_output(tmp, tempoutfd);
 		tmp = tmp->next;
 	}
+	if (g_pids && tempinfd > 0)
+		close(tempinfd);
+	if (g_pids && tempoutfd > 0)
+		close(tempoutfd);
 	if (tempinfd > 0)
 		token->infd = tempinfd;
 	if (tempoutfd > 0)
@@ -70,7 +74,7 @@ void	handle_redirs(t_shell *shell)
 
 	envv = get_env(shell->env);
 	tmp = shell->token;
-	while (tmp)
+	while (tmp && !g_pids)
 	{
 		handle_redirs_single(shell, tmp, envv);
 		tmp = tmp->next;

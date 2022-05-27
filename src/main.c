@@ -66,46 +66,14 @@ void	printtoken(t_token *token)
 	}
 }
 
-void	handle_signals(int sig)
-{
-	int	i;
-
-	i = 0;
-	if (sig == SIGINT)
-	{
-		if (g_pids)
-		{
-			printf("\n");
-			while (g_pids[i])
-			{
-				kill(g_pids[i], SIGKILL);
-				i++;
-			}
-		}
-		else
-		{
-			printf("minishell$ %s  ", rl_line_buffer);
-			printf("\n");
-			rl_replace_line("", 0);
-			rl_on_new_line();
-			rl_redisplay();
-		}
-	}
-	if (sig == SIGQUIT)
-	{
-		printf("minishell$ %s  \b\b", rl_line_buffer);
-	}
-}
 
 void	shell(char **envp)
 {
 	char				*input;
 	t_shell				*shell;
-	// struct sigaction	sa;
 
-	// sa.sa_handler = &handle_signals;
-	// sigaction(SIGINT, &sa, NULL);
-	// sigaction(SIGQUIT, &sa, NULL);
+	signal(SIGINT, handle_sigint);
+	signal(SIGQUIT, SIG_IGN);
 	shell = ft_calloc(sizeof(t_shell), 1);
 	shell->env = init_env(envp);
 	while (42)
@@ -122,6 +90,7 @@ void	shell(char **envp)
 			parser(shell, input);
 			exec(shell);
 			// printtoken(shell->token);
+			g_pids[0] = 0;
 			free(g_pids);
 			g_pids = NULL;
 			parsing_cleanup(shell->token);
