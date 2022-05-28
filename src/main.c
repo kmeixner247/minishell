@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 10:40:30 by jsubel            #+#    #+#             */
-/*   Updated: 2022/05/27 17:49:21 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/28 11:59:48 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,14 @@ int	main(int argc, char **argv, char **envp)
 }
 
 //	this is just temporarily here for testing
-void	printtoken(t_token *token)
+void	printtoken(t_token **tokenn)
 {
 	t_args	*args;
 	t_redir	*redir;
+	t_token *token;
 
+	printf("test\n");
+	token = *tokenn;
 	while (token)
 	{
 		printf("-------------NEW TOKEN------------\n");

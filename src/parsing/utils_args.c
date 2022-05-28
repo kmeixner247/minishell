@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 14:07:48 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/25 12:53:42 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/28 10:27:14 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,4 +76,14 @@ int	ft_nbr_args(t_args *args)
 		nbr++;
 	}
 	return (nbr);
+}
+
+void	args_delfirst(t_args **args)
+{
+	t_args	*tmp;
+
+	tmp = (*args)->next;
+	free((*args)->arg);
+	free (*args);
+	*args = tmp;
 }

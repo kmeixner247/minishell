@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 14:38:55 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/27 17:42:01 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/27 21:40:00 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ void	here_doc(t_shell *shell, t_redir *redir)
 	int		pid;
 	char	*delimiter;
 
+	redir->filename = replace_string(redir->filename);
 	delimiter = redir->filename;
 	openflags = O_WRONLY | O_CREAT | O_EXCL | O_TRUNC;
 	path = ft_strjoin3("/tmp/minishell-thd", ft_itoa((int)&(redir->filename)));

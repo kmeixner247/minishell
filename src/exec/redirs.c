@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 18:17:00 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/27 18:36:09 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/27 21:46:20 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,10 @@ void	handle_redirs_single(t_shell *shell, t_token *token)
 	tempoutfd = -1;
 	while (tmp)
 	{
+		tmp->filename = accountant(shell, tmp->filename);
+		if (redir_wildcard(tmp))
+			exit(1);
+		tmp->filename = replace_string(tmp->filename);
 		if (tmp->id == 1 || tmp->id == 5)
 			tempinfd = redir_input(shell, tmp, tempinfd);
 		else if (tmp->id == 3 || tmp->id == 4)
@@ -61,18 +65,3 @@ void	handle_redirs_single(t_shell *shell, t_token *token)
 	if (tempoutfd > 0)
 		token->outfd = tempoutfd;
 }
-
-// void	handle_redirs(t_shell *shell)
-// {
-// 	t_token	*tmp;
-// 	char	**envv;
-
-// 	envv = get_env(shell->env);
-// 	tmp = shell->token;
-// 	while (tmp && !g_pids)
-// 	{
-// 		handle_redirs_single(shell, tmp, envv);
-// 		tmp = tmp->next;
-// 	}
-// 	free(envv);
-// }

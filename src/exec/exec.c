@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 09:35:21 by jsubel            #+#    #+#             */
-/*   Updated: 2022/05/27 19:03:46 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/28 12:18:52 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,9 @@ void	exec_children(t_shell *shell, t_token *token)
 
 	handle_redirs_single(shell, token);
 	envp = get_env(shell->env);
+	meta_accountant(shell, token);
+	meta_args_wildcard(token);
+	quote_handler(token);
 	dup2(token->infd, 0);
 	dup2(token->outfd, 1);
 	if (token->infd > 0)
@@ -84,13 +87,19 @@ void	exec(t_shell *shell)
 	token = shell->token;
 	if (!token->next && token->args && isbuiltin(token->args->arg))
 	{
+		handle_redirs_single(shell, token);
+		dup2(token->infd, 0);
+		dup2(token->outfd, 1);
 		g_pids = ft_calloc(sizeof(int), 1);
 		shell->lastreturn = ft_exec_builtins(shell, token);
+		if (token->infd > 0)
+			close(token->infd);
+		if (token->outfd > 1)
+			close(token->outfd);
 		return ;
 	}
 	else
 	{
-		handle_heredocs(shell);
 		if (!g_pids)
 			fork_and_execute(shell);
 	}

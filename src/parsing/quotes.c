@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 10:56:56 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/16 14:40:17 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/28 12:06:39 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static void	cutquotes(char *src, char *dest)
 	}
 }
 
-static char	*replace_string(char *str)
+char	*replace_string(char *str)
 {
 	char	*ret;
 
@@ -81,23 +81,12 @@ static char	*replace_string(char *str)
 void	quote_handler(t_token *token)
 {
 	t_args	*args;
-	t_redir	*redir;
 
-	while (token)
+	args = token->args;
+	while (args)
 	{
-		args = token->args;
-		while (args)
-		{
-			args->arg = replace_string(args->arg);
-			args = args->next;
-		}
-		redir = token->redir;
-		while (redir)
-		{
-			redir->filename = replace_string(redir->filename);
-			redir = redir->next;
-		}
-		token = token->next;
+		args->arg = replace_string(args->arg);
+		args = args->next;
 	}
 }
 

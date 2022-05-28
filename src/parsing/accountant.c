@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 16:23:55 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/24 14:00:11 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/28 11:45:23 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,13 @@ char	*currency_exchange(t_shell *shell, char *str, char **envp)
 }
 
 //handles all the dollars
-static char	*accountant(t_shell *shell, char *str, char **envp)
+char	*accountant(t_shell *shell, char *str)
 {
 	char	*tmp;
 	int		doubflag;
+	char	**envp;
 
+	envp = get_env(shell->env);
 	doubflag = -1;
 	tmp = str;
 	while (find_cash(str, &doubflag) >= 0)
@@ -59,27 +61,14 @@ static char	*accountant(t_shell *shell, char *str, char **envp)
 }
 
 //runs the accountant on all filenames and args of each token
-void	meta_accountant(t_shell *shell, char **envp)
+void	meta_accountant(t_shell *shell, t_token *token)
 {
-	t_args	*args;
-	t_redir	*redir;
-	t_token	*token;
+	t_args	*tmp;
 
-	token = shell->token;
-	while (token)
+	tmp = token->args;
+	while (tmp)
 	{
-		args = token->args;
-		while (args)
-		{
-			args->arg = accountant(shell, args->arg, envp);
-			args = args->next;
-		}
-		redir = token->redir;
-		while (redir)
-		{
-			redir->filename = accountant(shell, redir->filename, envp);
-			redir = redir->next;
-		}
-		token = token->next;
+		tmp->arg = accountant(shell, tmp->arg);
+		tmp = tmp->next;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 10:53:46 by jsubel            #+#    #+#             */
-/*   Updated: 2022/05/27 19:05:31 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/28 12:14:57 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,7 +150,8 @@ void		parser(t_shell *shell, char *input);
 int			parsing_cleanup(t_token *token);
 
 // accountant.c
-void		meta_accountant(t_shell *shell, char **envp);
+char		*accountant(t_shell *shell, char *str);
+void	meta_accountant(t_shell *shell, t_token *token);
 char		*currency_exchange(t_shell *shell, char *str, char **envp);
 
 // plumber.c
@@ -160,8 +161,9 @@ char		**plumber(char *str);
 int			prechecks(char *str);
 
 // quotes.c
-void		quote_handler(t_token *token);
+void	quote_handler(t_token *token);
 int			quote_skipper(char *str);
+char		*replace_string(char *str);
 
 // secretary.c
 t_token		*secretary(char **arr);
@@ -191,5 +193,12 @@ int			check_char(unsigned char c, const char *str);
 int			parsing_cleanup(t_token *token);
 
 void		handle_sigint(int sig);
+
+int	redir_wildcard(t_redir *redir);
+int	haswildcard(char *str);
+void	meta_args_wildcard(t_token *token);
+void	args_delfirst(t_args **args);
+void	printtoken(t_token **tokenn);
+
 
 #endif

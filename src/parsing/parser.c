@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 15:23:32 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/24 14:00:23 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/28 11:53:09 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	parser(t_shell *shell, char *input)
 
 	envp = get_env(shell->env);
 	shell->token = secretary(plumber(input));
-	meta_accountant(shell, envp);
+	handle_heredocs(shell);
 	free(envp);
-	quote_handler(shell->token);
+	// quote_handler(shell->token);
 }
