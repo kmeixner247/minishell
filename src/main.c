@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 10:40:30 by jsubel            #+#    #+#             */
-/*   Updated: 2022/05/28 11:59:48 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/29 18:57:04 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,8 @@ void	printtoken(t_token **tokenn)
 {
 	t_args	*args;
 	t_redir	*redir;
-	t_token *token;
+	t_token	*token;
 
-	printf("test\n");
 	token = *tokenn;
 	while (token)
 	{
@@ -87,20 +86,20 @@ void	shell(char **envp)
 			break ;
 		}
 		add_history(input);
-		if (input && *input && !prechecks(input))
+		if (input && *input && !prechecks(shell, input))
 		{
 			parser(shell, input);
 			exec(shell);
-			// printtoken(shell->token);
 			g_pids[0] = 0;
 			free(g_pids);
 			g_pids = NULL;
-			parsing_cleanup(shell->token);
+			parsing_cleanup(shell);
+			shell->token = NULL;
 		}
 		free(input);
 	}
 	rl_clear_history();
-	// ft_free_everything(shell);
+	ft_free_everything(shell);
 	free(input);
 	return ;
 }

@@ -6,13 +6,13 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 11:29:32 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/24 15:03:46 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/29 16:15:44 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
-void	add_or_update_var(char *arg, t_env **env)
+void	add_or_update_var(char *arg, char *name, t_env **env)
 {
 	t_env	*newenv;
 	t_env	*tempenv;
@@ -20,9 +20,9 @@ void	add_or_update_var(char *arg, t_env **env)
 	tempenv = *env;
 	while (tempenv)
 	{
-		if (!ft_strncmp(arg, tempenv->var, ft_strlen(arg)) && \
-			(tempenv->var[ft_strlen(arg)] == 61 || \
-			!tempenv->var[ft_strlen(arg)]))
+		if (!ft_strncmp(arg, tempenv->var, ft_strlen(name)) && \
+			(tempenv->var[ft_strlen(name)] == 61 || \
+			!tempenv->var[ft_strlen(name)]))
 			break ;
 		tempenv = tempenv->next;
 	}
@@ -54,11 +54,11 @@ static int	search_env(t_shell *shell, char **args)
 		tempstr = get_varname(args[i]);
 		if (!is_valid_varname(tempstr))
 		{
-			printf("BAD\n");
+			ft_error(shell, tempstr, ERRNO_EXPORT);
 			status = 1;
 		}
 		else
-			add_or_update_var(args[i], &(shell->env));
+			add_or_update_var(args[i], tempstr, &(shell->env));
 		free(tempstr);
 		i++;
 	}

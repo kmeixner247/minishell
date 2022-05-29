@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsubel <jsubel@student.42wolfsburg.de >    +#+  +:+       +#+        */
+/*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 10:01:32 by jsubel            #+#    #+#             */
-/*   Updated: 2022/05/19 12:35:27 by jsubel           ###   ########.fr       */
+/*   Updated: 2022/05/29 19:16:37 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ int	ft_pwd(void)
 	if (getcwd(cwd, MAXPATHLEN))
 	{
 		ft_putendl_fd(cwd, 1);
-		return (1);
+		return (0);
 	}
 	else
-		return (0);
+		return (1);
 }

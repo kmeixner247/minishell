@@ -6,16 +6,18 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 19:12:43 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/23 20:05:17 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/29 19:16:18 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
-int	ft_env(t_env *env)
+int	ft_env(t_shell *shell, t_args *args, t_env *env)
 {
 	t_env	*tempenv;
 
+	if (args->next)
+		ft_error_msg(shell, ERR_ENV_ARG, 1);
 	tempenv = env;
 	while (tempenv)
 	{
@@ -23,5 +25,5 @@ int	ft_env(t_env *env)
 			printf("%s\n", tempenv->var);
 		tempenv = tempenv->next;
 	}
-	return (1);
+	return (0);
 }

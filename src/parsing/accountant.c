@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 16:23:55 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/28 11:45:23 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/29 18:53:29 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ char	*accountant(t_shell *shell, char *str)
 		str = currency_exchange(shell, str, envp);
 	if (tmp != str)
 		free(tmp);
+	free(envp);
 	return (str);
 }
 

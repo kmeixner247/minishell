@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 10:53:46 by jsubel            #+#    #+#             */
-/*   Updated: 2022/05/28 12:14:57 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/29 18:59:47 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,23 @@
 
 # define ERR_TEMPLATE "Error: message goes here"
 # define ERR_EXPORT "not a valid identifier"
+# define ERRNO_EXPORT 17
 # define ERR_EXIT_COUNT "too many arguments"
 # define ERRNO_EXIT_COUNT 10
 # define ERR_EXIT_ISNUM	 "argument is not numeric"
 # define ERRNO_EXIT_ISNUM 11
+# define ERR_AMBIG "ambiguous redirect"
+# define ERRNO_AMBIG 12
+# define ERR_UNCLOSED_QUOTES "unclosed quotes"
+# define ERRNO_UNCLOSED_QUOTES 13
+# define ERR_PIPE_INPUT "no valid input before or after pipe"
+# define ERRNO_PIPE_INPUT 14
+# define ERR_REDIR_INPUT "no valid input after redirection"
+# define ERRNO_REDIR_INPUT 15
+# define ERR_NOT_FOUND "command not found"
+# define ERRNO_NOT_FOUND 127
+# define ERR_ENV_ARG "illegal argument in env"
+# define ERRNO_ENV_ARG 16
 
 extern int *g_pids;
 
@@ -88,7 +101,7 @@ void		shell(char **envp);
 /*---------------------------------------------------------------------------*/
 
 // builtins
-int			ft_echo(t_args *args);
+int			ft_echo(t_shell *shell, t_args *args);
 int			ft_pwd(void);
 int			ft_export(t_shell *shell);
 int			ft_unset(t_shell *shell);
@@ -96,7 +109,7 @@ int			ft_unset(t_shell *shell);
 //exit
 void		ft_error_minishell(t_token *token);
 int			ft_cd(t_shell *shell, t_args *args, t_env *env);
-int			ft_env(t_env *env);
+int			ft_env(t_shell *shell, t_args *args, t_env *env);
 
 void		ft_exit_minishell(t_shell *shell);
 
@@ -132,10 +145,12 @@ void		try_paths(t_shell *shell, char **args, char **envp);
 int			ft_exec_builtins(t_shell *shell, t_token *token);
 
 // redirs.c
-void		handle_redirs_single(t_shell *shell, t_token *token);
+int		handle_redirs_single(t_shell *shell, t_token *token);
 
 // error.c
-void		ft_error_msg(t_shell *shell, char *msg, int err_num);
+int			ft_error_msg(t_shell *shell, char *msg, int err_num);
+void		ft_error_handler(t_shell *shell, char *msg, int err_num);
+void		ft_error(t_shell *shell, char *arg, int error);
 
 // free.c
 void		ft_free_everything(t_shell *shell);
@@ -147,7 +162,7 @@ void		ft_free_everything(t_shell *shell);
 void		parser(t_shell *shell, char *input);
 
 // parsing_cleanup.c
-int			parsing_cleanup(t_token *token);
+int			parsing_cleanup(t_shell *shell);
 
 // accountant.c
 char		*accountant(t_shell *shell, char *str);
@@ -158,7 +173,7 @@ char		*currency_exchange(t_shell *shell, char *str, char **envp);
 char		**plumber(char *str);
 
 // prechecks.c
-int			prechecks(char *str);
+int			prechecks(t_shell *shell, char *str);
 
 // quotes.c
 void	quote_handler(t_token *token);
@@ -190,11 +205,10 @@ void		token_addback(t_token **start, t_token *new);
 
 // utils_parsing.c
 int			check_char(unsigned char c, const char *str);
-int			parsing_cleanup(t_token *token);
 
 void		handle_sigint(int sig);
 
-int	redir_wildcard(t_redir *redir);
+int	redir_wildcard(t_shell *shell, t_redir *redir);
 int	haswildcard(char *str);
 void	meta_args_wildcard(t_token *token);
 void	args_delfirst(t_args **args);

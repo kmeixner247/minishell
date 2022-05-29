@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 19:03:34 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/27 19:03:50 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/29 14:40:47 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ void	try_paths(t_shell *shell, char **args, char **envp)
 		free(paths[i]);
 		i++;
 	}
-	fprintf(stderr, "Couldn't find command %s\n", args[0]);
 	free(paths);
 }
 
@@ -83,13 +82,13 @@ int	ft_exec_builtins(t_shell *shell, t_token *token)
 	args = token->args;
 	result = 0;
 	if (ft_strcmp(args->arg, "echo") == 0)
-		result = ft_echo(args);
+		result = ft_echo(shell, args);
 	if (ft_strcmp(args->arg, "pwd") == 0)
 		result = ft_pwd();
 	if (ft_strcmp(args->arg, "cd") == 0)
 		result = ft_cd(shell, args, shell->env);
 	if (ft_strcmp(args->arg, "env") == 0)
-		result = ft_env(shell->env);
+		result = ft_env(shell, token->args, shell->env);
 	if (ft_strcmp(args->arg, "export") == 0)
 		result = ft_export(shell);
 	if (ft_strcmp(args->arg, "unset") == 0)

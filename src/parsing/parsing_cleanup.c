@@ -6,18 +6,20 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 11:16:50 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/24 10:12:45 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/29 18:59:10 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
-int	parsing_cleanup(t_token *token)
+int	parsing_cleanup(t_shell *shell)
 {
 	t_redir	*redirtmp;
 	t_args	*argstmp;
 	t_token	*tokentmp;
+	t_token *token;
 
+	token = shell->token;
 	while (token)
 	{
 		while (token->redir)
@@ -38,5 +40,6 @@ int	parsing_cleanup(t_token *token)
 		token = token->next;
 		free(tokentmp);
 	}
+	shell->token = NULL;
 	return (0);
 }

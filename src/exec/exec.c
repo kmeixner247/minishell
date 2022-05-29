@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 09:35:21 by jsubel            #+#    #+#             */
-/*   Updated: 2022/05/28 12:18:52 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/29 17:31:13 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ void	exec_children(t_shell *shell, t_token *token)
 	char	**args;
 	char	**envp;
 
-	handle_redirs_single(shell, token);
+	if (handle_redirs_single(shell, token))
+		exit(1);
 	envp = get_env(shell->env);
 	meta_accountant(shell, token);
 	meta_args_wildcard(token);
@@ -39,7 +40,7 @@ void	exec_children(t_shell *shell, t_token *token)
 	else
 		try_paths(shell, args, envp);
 	free(envp);
-	exit(127);
+	ft_error(shell, args[0], ERRNO_NOT_FOUND);
 }
 
 void	exec_parent(t_shell *shell, int fd)
@@ -87,10 +88,12 @@ void	exec(t_shell *shell)
 	token = shell->token;
 	if (!token->next && token->args && isbuiltin(token->args->arg))
 	{
-		handle_redirs_single(shell, token);
-		dup2(token->infd, 0);
-		dup2(token->outfd, 1);
 		g_pids = ft_calloc(sizeof(int), 1);
+		if (handle_redirs_single(shell, token))
+			return ;
+		meta_accountant(shell, token);
+		meta_args_wildcard(token);
+		quote_handler(token);
 		shell->lastreturn = ft_exec_builtins(shell, token);
 		if (token->infd > 0)
 			close(token->infd);

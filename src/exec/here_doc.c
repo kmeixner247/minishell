@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 14:38:55 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/27 21:40:00 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/29 19:08:41 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,11 @@ void	here_doc(t_shell *shell, t_redir *redir)
 	else
 	{
 		here_doc_parent(pid, fd);
+		free(redir->filename);
 		redir->filename = strdup(path);
 		redir->id = 5;
 	}
+	free(path);
 }
 
 void	handle_heredocs(t_shell *shell)

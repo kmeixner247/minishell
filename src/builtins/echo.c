@@ -3,26 +3,41 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsubel <jsubel@student.42wolfsburg.de >    +#+  +:+       +#+        */
+/*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 09:24:27 by jsubel            #+#    #+#             */
-/*   Updated: 2022/05/23 12:34:28 by jsubel           ###   ########.fr       */
+/*   Updated: 2022/05/29 13:35:38 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
-int	ft_echo(t_args *args)
+int	ft_echo_isvalidflag(char *str)
+{
+	if (!str || *str != 45)
+		return (0);
+	str++;
+	while (*str)
+	{
+		if (*str != 110)
+			return (0);
+		str++;
+	}
+	return (1);
+}
+
+int	ft_echo(t_shell *shell, t_args *args)
 {
 	int	i;
 	int	flag_n;
 
+	dup2(1, shell->token->outfd);
 	i = 0;
 	flag_n = 0;
 	if (ft_nbr_args(args) > 1)
 	{
 		args = args->next;
-		if (ft_strcmp(args->arg, "-n") == 0)
+		while (args && ft_echo_isvalidflag(args->arg))
 		{
 			flag_n = 1;
 			args = args->next;
@@ -37,5 +52,5 @@ int	ft_echo(t_args *args)
 	}
 	if (flag_n == 0)
 		write(1, "\n", 1);
-	return (1);
+	return (0);
 }

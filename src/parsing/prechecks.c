@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 16:30:07 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/16 14:52:28 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/29 17:03:13 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ static int	checkredirs(char *str)
 	return (0);
 }
 
-int	prechecks(char *str)
+int	prechecks(t_shell *shell, char *str)
 {
 	int	i;
 
@@ -79,13 +79,11 @@ int	prechecks(char *str)
 	while (*str == 32)
 		str++;
 	if (check_openquotes(str))
-		ft_putstr_fd("ERROR: Open quotes\n", 2);
-	else if (*str == 124)
-		ft_putstr_fd("ERROR: No valid input before pipe\n", 2);
-	else if (checkpipes(str))
-		ft_putstr_fd("ERROR: No valid input after pipe\n", 2);
+		ft_error_msg(shell, ERR_UNCLOSED_QUOTES, 1);
+	else if (*str == 124 || checkpipes(str))
+		ft_error_msg(shell, ERR_PIPE_INPUT, 1);
 	else if (checkredirs(str))
-		ft_putstr_fd("ERROR: No valid input after redirection\n", 2);
+		ft_error_msg(shell, ERR_REDIR_INPUT, 1);
 	else
 		return (0);
 	return (-1);

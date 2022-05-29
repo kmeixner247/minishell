@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 10:55:03 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/28 12:18:43 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/29 17:05:14 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,18 +61,19 @@ static int	match(char *arg1, char *arg2)
 
 t_args	*args_wildcard(t_args *args)
 {
-	t_args			*start;
-	DIR				*dir;
 	struct dirent	*dirent;
+	DIR				*dir;
 	t_args			*new;
+	t_args			*start;
 
 	start = new_args();
 	start->arg = strdup(args->arg);
+	new = NULL;
 	dir = opendir(".");
 	dirent = readdir(dir);
 	while (dirent)
 	{
-		if (!match(start->arg, dirent->d_name))
+		if (!match((args)->arg, dirent->d_name))
 		{
 			new = new_args();
 			new->arg = ft_strdup(dirent->d_name);
@@ -80,9 +81,9 @@ t_args	*args_wildcard(t_args *args)
 		}
 		dirent = readdir(dir);
 	}
-	closedir(dir);
-	if (start->next)
+	if (new)
 		args_delfirst(&start);
+	closedir(dir);
 	free(args->arg);
 	free(args);
 	return (start);
@@ -91,12 +92,12 @@ t_args	*args_wildcard(t_args *args)
 void	meta_args_wildcard(t_token *token)
 {
 	t_args	*tmp;
-	t_args	*previous;
 	t_args	*next;
+	t_args	*previous;
 
 	previous = NULL;
-	next = token->args->next;
 	tmp = token->args;
+	next = tmp->next;
 	while (tmp)
 	{
 		next = tmp->next;
@@ -105,15 +106,19 @@ void	meta_args_wildcard(t_token *token)
 			tmp = args_wildcard(tmp);
 			if (previous)
 				previous->next = tmp;
+			else
+				token->args = tmp;
 			if (next)
-				args_addback(&tmp, next);
+				args_addback(&token->args, next);
+			while (tmp && tmp->next != next)
+				tmp = tmp->next;
 		}
 		previous = tmp;
 		tmp = tmp->next;
 	}
 }
 
-int	redir_wildcard(t_redir *redir)
+int	redir_wildcard(t_shell *shell, t_redir *redir)
 {
 	DIR				*dir;
 	struct dirent	*dirent;
@@ -138,7 +143,7 @@ int	redir_wildcard(t_redir *redir)
 	{
 		free(strmatch);
 		closedir(dir);
-		printf("Ambiguous redirect\n");
+		ft_error(shell, redir->filename, ERRNO_AMBIG);
 		return (1);
 	}
 	free(redir->filename);

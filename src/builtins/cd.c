@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsubel <jsubel@student.42wolfsburg.de >    +#+  +:+       +#+        */
+/*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 08:58:58 by jsubel            #+#    #+#             */
-/*   Updated: 2022/05/25 15:04:07 by jsubel           ###   ########.fr       */
+/*   Updated: 2022/05/29 19:16:08 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	ft_cd(t_shell *shell, t_args *args, t_env *env)
 	}
 	free(pwd_old);
 	free(pwd_new);
-	return (1);
+	return (0);
 }
 
 static void	ft_change_env_pwd(char *pwd_old, char *pwd_new, t_env *env)
