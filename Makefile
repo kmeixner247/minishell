@@ -38,6 +38,7 @@ SRC_FILES 	=	main.c \
 				$(PAR)utils_tokens.c \
 				$(PAR)utils_parsing.c \
 				$(PAR)wildcard.c \
+				$(PAR)utils_wildcard.c \
 				signals.c
 
 SRC			= $(addprefix $(SRC_PATH)/,$(SRC_FILES))

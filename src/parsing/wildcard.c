@@ -3,35 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   wildcard.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
+/*   By: jsubel <jsubel@student.42wolfsburg.de >    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 10:55:03 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/29 17:05:14 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/30 15:22:00 by jsubel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
-int	haswildcard(char *str)
-{
-	int	sing;
-	int	doub;
-
-	sing = -1;
-	doub = -1;
-	while (*str)
-	{
-		if (*str == 39 && doub == -1)
-			sing *= -1;
-		else if (*str == 34 && sing == -1)
-			doub *= -1;
-		if (*str == 42 && sing == -1 && doub == -1)
-			return (1);
-		str++;
-	}
-	return (0);
-}
-
+/** @brief find matches for the wildcard characters
+ * @return -1 if wildcard is matched to a period,
+	0 if a match has been found
+	or a number other than 0 or -1 if there's a discrepancy
+*/
 static int	match(char *arg1, char *arg2)
 {
 	if (*arg1 == 42 && *arg2 == 46)
@@ -59,10 +44,18 @@ static int	match(char *arg1, char *arg2)
 	return (*arg1 - *arg2);
 }
 
+/**
+ * @brief make a new linked list of arguments with the expansion of wildcards
+ * @arg args argument list before expansion
+ * @param dir structure of open directory
+ * @param dirent struct containing the info from the opened directory
+ * @param start duplicated argument list with expanded wildcards
+ * @return list of arguments with expanded wildcards
+ */
 t_args	*args_wildcard(t_args *args)
 {
-	struct dirent	*dirent;
 	DIR				*dir;
+	struct dirent	*dirent;
 	t_args			*new;
 	t_args			*start;
 
@@ -84,11 +77,15 @@ t_args	*args_wildcard(t_args *args)
 	if (new)
 		args_delfirst(&start);
 	closedir(dir);
-	free(args->arg);
-	free(args);
+	ft_important_function(args);
 	return (start);
 }
 
+/**
+ * @brief expand token with wildcard to all possibilities
+ * @arg token token containing wildcards
+ * @param arg_ptrs pointers to different t_arg structs
+ */
 void	meta_args_wildcard(t_token *token)
 {
 	t_args	*tmp;
@@ -118,6 +115,14 @@ void	meta_args_wildcard(t_token *token)
 	}
 }
 
+static int	ft_ret_dirent(t_shell *shell, t_redir *redir, char *str, DIR *dir)
+{
+	free(str);
+	closedir(dir);
+	ft_error(shell, redir->filename, ERRNO_AMBIG);
+	return (1);
+}
+
 int	redir_wildcard(t_shell *shell, t_redir *redir)
 {
 	DIR				*dir;
@@ -140,12 +145,7 @@ int	redir_wildcard(t_shell *shell, t_redir *redir)
 	while (dirent && match(redir->filename, dirent->d_name))
 		dirent = readdir(dir);
 	if (dirent)
-	{
-		free(strmatch);
-		closedir(dir);
-		ft_error(shell, redir->filename, ERRNO_AMBIG);
-		return (1);
-	}
+		return (ft_ret_dirent(shell, redir, strmatch, dir));
 	free(redir->filename);
 	redir->filename = strmatch;
 	closedir(dir);

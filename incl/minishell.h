@@ -6,7 +6,7 @@
 /*   By: jsubel <jsubel@student.42wolfsburg.de >    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 10:53:46 by jsubel            #+#    #+#             */
-/*   Updated: 2022/05/30 11:52:03 by jsubel           ###   ########.fr       */
+/*   Updated: 2022/05/30 14:06:17 by jsubel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,8 @@ typedef struct s_shell
 }					t_shell;
 
 /**
- * @brief Token structure, containing the used commands, redirections,
- * file descriptors for infile and outfile and process id
+ * @brief Token structure, containing the used commands,
+ * redirections, file descriptors for infile and outfile and process id
  * @param args linked list of command and its args
  * @param redir linked list of any redirects that apply to this token
  * @param next pointer to next element of list
@@ -92,8 +92,10 @@ typedef struct s_token
 }					t_token;
 
 /**
- * @brief Redirection structure, containing information about any redirections for its token
- * @param id 1 for redirected input, 2 for here_doc, 3 for redirected output and 4 for append to file
+ * @brief Redirection structure, containing information
+ 	about any redirections for its token
+ * @param id 1 for redirected input, 2 for here_doc,
+ 	3 for redirected output and 4 for append to file
  * @param filename filename of redirection
  * @param next pointer to next element of list
  */
@@ -105,8 +107,10 @@ typedef struct s_redir
 }					t_redir;
 
 /**
- * @brief Arguments structure, containg the command and its flags and arguments to be executed
- * @param args each word of the command, separated by empty spaces, the first one being the command
+ * @brief Arguments structure, containg the command
+	and its flags and arguments to be executed
+ * @param args each word of the command, separated by empty spaces,
+ 	the first one being the command
  * @param next pointer to next element of list
  */
 typedef struct s_args
@@ -129,12 +133,14 @@ void		shell(char **envp);
 /*---------------------------------------------------------------------------*/
 
 // builtins
+
 int			ft_echo(t_shell *shell, t_args *args);
 int			ft_pwd(void);
 int			ft_export(t_shell *shell);
 int			ft_unset(t_shell *shell);
 
-//exit
+// exit
+
 void		ft_error_minishell(t_token *token);
 int			ft_cd(t_shell *shell, t_args *args, t_env *env);
 int			ft_env(t_shell *shell, t_args *args, t_env *env);
@@ -142,6 +148,7 @@ int			ft_env(t_shell *shell, t_args *args, t_env *env);
 void		ft_exit_minishell(t_shell *shell);
 
 // utils_env.c
+
 t_env		*new_env(char *var);
 void		env_addback(t_env **start, t_env *new);
 t_env		*init_env(char **envp);
@@ -149,97 +156,125 @@ char		**get_env(t_env *env);
 int			free_env(t_env *env);
 
 // utils_export.c
+
 char		*get_varname(char *arg);
 int			is_valid_varname(char *arg);
 void		print_alphabetical(t_env *env);
 
 // builtin-handler.c
+
 int			isbuiltin(char *arg);
 
 // exec.c
+
 void		exec(t_shell *shell);
 
 // here_doc.c
+
 void		handle_heredocs(t_shell *shell);
 
 // utils_here_doc.c
+
 void		hd_newline(int sig);
 char		*accountant_hd(t_shell *shell, char *str);
 
 //utils_exec.c
+
 void		write_pids(t_shell *shell);
 void		assign_pipes(t_token *token, int pipefds[2]);
 void		try_paths(t_shell *shell, char **args, char **envp);
 int			ft_exec_builtins(t_shell *shell, t_token *token);
 
 // redirs.c
+
 int			handle_redirs_single(t_shell *shell, t_token *token);
 
 // error.c
+
 int			ft_error_msg(t_shell *shell, char *msg, int err_num);
 void		ft_error_handler(t_shell *shell, char *msg, int err_num);
 void		ft_error(t_shell *shell, char *arg, int error);
 
 // free.c
+
 void		ft_free_everything(t_shell *shell);
 
 /*---------------------------------------------------------------------------*/
 /*                                  PARSING                                  */
 /*---------------------------------------------------------------------------*/
 // parser.c
+
 void		parser(t_shell *shell, char *input);
 
 // parsing_cleanup.c
+
 int			parsing_cleanup(t_shell *shell);
 
 // accountant.c
+
 char		*accountant(t_shell *shell, char *str);
 void		meta_accountant(t_shell *shell, t_token *token);
 char		*currency_exchange(t_shell *shell, char *str, char **envp);
 
 // plumber.c
+
 char		**plumber(char *str);
 
 // prechecks.c
+
 int			prechecks(t_shell *shell, char *str);
 
 // quotes.c
+
 void		quote_handler(t_token *token);
 int			quote_skipper(char *str);
 char		*replace_string(char *str);
 
 // secretary.c
+
 t_token		*secretary(char **arr);
 
 // utils_accountant.c
+
 int			find_cash(char *str, int *doubflag);
 char		*find_env_var(char *str, char **envp, int doubflag);
 char		*find_env_varname(char *str, char **envp);
 char		*get_env_value(char *str, char **envp, int doubflag);
 
 // utils_args.c
+
 t_args		*new_args(void);
 void		args_addback(t_args **start, t_args *new);
 char		**get_args(t_args *args);
 int			ft_nbr_args(t_args *args);
+void		args_delfirst(t_args **args);
 
 //	utils_redir.c
+
 t_redir		*new_redir(void);
 void		redir_addback(t_redir **start, t_redir *new);
 
 // utils_tokens.c
+
 t_token		*new_token(void);
 void		token_addback(t_token **start, t_token *new);
 
 // utils_parsing.c
+
 int			check_char(unsigned char c, const char *str);
 
 void		handle_sigint(int sig);
 
+// wildcard.c
+
 int			redir_wildcard(t_shell *shell, t_redir *redir);
-int			haswildcard(char *str);
 void		meta_args_wildcard(t_token *token);
-void		args_delfirst(t_args **args);
+
 void		printtoken(t_token **tokenn);
+
+// utils_wildcard.c
+
+int			haswildcard(char *str);
+void		ft_important_function(t_args *args);
 
 #endif

@@ -6,13 +6,13 @@
 /*   By: jsubel <jsubel@student.42wolfsburg.de >    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 09:35:21 by jsubel            #+#    #+#             */
-/*   Updated: 2022/05/30 11:34:45 by jsubel           ###   ########.fr       */
+/*   Updated: 2022/05/30 12:11:17 by jsubel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
-static void	ft_meta_meta(t_shell *shell, t_token *token)
+static void	ft_meta_acc_wild_quote(t_shell *shell, t_token *token)
 {
 	meta_accountant(shell, token);
 	meta_args_wildcard(token);
@@ -27,7 +27,7 @@ void	exec_children(t_shell *shell, t_token *token)
 	if (handle_redirs_single(shell, token))
 		exit(1);
 	envp = get_env(shell->env);
-	ft_meta_meta(shell, token);
+	ft_meta_acc_wild_quote(shell, token);
 	dup2(token->infd, 0);
 	dup2(token->outfd, 1);
 	if (token->infd > 0)
@@ -96,9 +96,7 @@ void	exec(t_shell *shell)
 		g_pids = ft_calloc(sizeof(int), 1);
 		if (handle_redirs_single(shell, token))
 			return ;
-		meta_accountant(shell, token);
-		meta_args_wildcard(token);
-		quote_handler(token);
+		ft_meta_acc_wild_quote(shell, token);
 		shell->lastreturn = ft_exec_builtins(shell, token);
 		if (token->infd > 0)
 			close(token->infd);

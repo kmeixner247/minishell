@@ -3,18 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
+/*   By: jsubel <jsubel@student.42wolfsburg.de >    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 10:07:09 by jsubel            #+#    #+#             */
-/*   Updated: 2022/05/29 17:14:23 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/30 15:21:16 by jsubel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
 /**
- * Takes a message and error number and prints out the corresponding error messages
- * If err_num is given the function, looks it up from header and sets lastreturn to it
+ * Takes a message and error number
+ * and prints out the corresponding error messages
+ * If err_num is given the function,
+ * looks it up from header and sets lastreturn to it
  *
 */
 int	ft_error_msg(t_shell *shell, char *msg, int err_num)
