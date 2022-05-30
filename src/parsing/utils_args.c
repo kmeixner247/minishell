@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_args.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
+/*   By: jsubel <jsubel@student.42wolfsburg.de >    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 14:07:48 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/28 20:09:57 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/30 11:17:22 by jsubel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

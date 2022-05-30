@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_here_doc.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
+/*   By: jsubel <jsubel@student.42wolfsburg.de >    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 12:04:21 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/27 14:38:43 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/30 10:07:34 by jsubel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

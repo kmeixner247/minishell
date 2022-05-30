@@ -3,14 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
+/*   By: jsubel <jsubel@student.42wolfsburg.de >    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 09:35:21 by jsubel            #+#    #+#             */
-/*   Updated: 2022/05/29 17:31:13 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/30 11:34:45 by jsubel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
+
+static void	ft_meta_meta(t_shell *shell, t_token *token)
+{
+	meta_accountant(shell, token);
+	meta_args_wildcard(token);
+	quote_handler(token);
+}
 
 void	exec_children(t_shell *shell, t_token *token)
 {
@@ -20,9 +27,7 @@ void	exec_children(t_shell *shell, t_token *token)
 	if (handle_redirs_single(shell, token))
 		exit(1);
 	envp = get_env(shell->env);
-	meta_accountant(shell, token);
-	meta_args_wildcard(token);
-	quote_handler(token);
+	ft_meta_meta(shell, token);
 	dup2(token->infd, 0);
 	dup2(token->outfd, 1);
 	if (token->infd > 0)

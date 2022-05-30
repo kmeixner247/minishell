@@ -3,16 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
+/*   By: jsubel <jsubel@student.42wolfsburg.de >    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 10:40:30 by jsubel            #+#    #+#             */
-/*   Updated: 2022/05/29 18:57:04 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/30 10:06:43 by jsubel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/minishell.h"
 
-int *g_pids = NULL;
+int	*g_pids = NULL;
+
+static void	ft_parse_and_execute(t_shell *shell, char *input)
+{
+	parser(shell, input);
+	exec(shell);
+	g_pids[0] = 0;
+	free(g_pids);
+	g_pids = NULL;
+	parsing_cleanup(shell);
+	shell->token = NULL;
+}
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -70,8 +81,8 @@ void	printtoken(t_token **tokenn)
 
 void	shell(char **envp)
 {
-	char				*input;
-	t_shell				*shell;
+	char	*input;
+	t_shell	*shell;
 
 	signal(SIGINT, handle_sigint);
 	signal(SIGQUIT, SIG_IGN);
@@ -87,15 +98,7 @@ void	shell(char **envp)
 		}
 		add_history(input);
 		if (input && *input && !prechecks(shell, input))
-		{
-			parser(shell, input);
-			exec(shell);
-			g_pids[0] = 0;
-			free(g_pids);
-			g_pids = NULL;
-			parsing_cleanup(shell);
-			shell->token = NULL;
-		}
+			ft_parse_and_execute(shell, input);
 		free(input);
 	}
 	rl_clear_history();

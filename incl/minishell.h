@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
+/*   By: jsubel <jsubel@student.42wolfsburg.de >    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 10:53:46 by jsubel            #+#    #+#             */
-/*   Updated: 2022/05/29 18:59:47 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/30 09:48:27 by jsubel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,13 @@
 
 extern int *g_pids;
 
+/**
+ * @brief Main structure holding all the other structs
+ * @param token one token per command, saved as a linked list
+ * @param env environmental variables, saved as a linked list
+ * @param lastreturn return of last process, saved for $?
+ * @param raw_input raw user input for safekeeping and debugging
+ */
 typedef struct s_shell
 {
 	struct s_token	*token;
@@ -64,6 +71,16 @@ typedef struct s_shell
 	char			*raw_input;
 }					t_shell;
 
+/**
+ * @brief Token structure, containing the used commands, redirections,
+ * file descriptors for infile and outfile and process id
+ * @param args linked list of command and its args
+ * @param redir linked list of any redirects that apply to this token
+ * @param next pointer to next element of list
+ * @param pid process id of token process
+ * @param infd file descriptor of the infile
+ * @param outfd file descriptor of the outfile
+ */
 typedef struct s_token
 {
 	struct s_args	*args;
@@ -74,6 +91,12 @@ typedef struct s_token
 	int				outfd;
 }					t_token;
 
+/**
+ * @brief Redirection structure, containing information about any redirections for its token
+ * @param id 1 for redirected input, 2 for here_doc, 3 for redirected output and 4 for append to file
+ * @param filename filename of redirection
+ * @param next pointer to next element of list
+ */
 typedef struct s_redir
 {
 	int				id;
@@ -81,6 +104,11 @@ typedef struct s_redir
 	struct s_redir	*next;
 }					t_redir;
 
+/**
+ * @brief Arguments structure, containg the command and its flags and arguments to be executed
+ * @param args each word of the command, separated by empty spaces, the first one being the command
+ * @param next pointer to next element of list
+ */
 typedef struct s_args
 {
 	char			*arg;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirs.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
+/*   By: jsubel <jsubel@student.42wolfsburg.de >    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 18:17:00 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/29 17:30:47 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/30 11:32:32 by jsubel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,14 @@ static int	redir_output(t_shell *shell, t_redir *redir, int tempoutfd)
 	return (tempoutfd);
 }
 
+static void	ft_change_fd(t_token *token, int tempinfd, int tempoutfd)
+{
+	if (tempinfd > 0)
+		token->infd = tempinfd;
+	if (tempoutfd > 0)
+		token->outfd = tempoutfd;
+}
+
 int	handle_redirs_single(t_shell *shell, t_token *token)
 {
 	int		tempinfd;
@@ -64,10 +72,7 @@ int	handle_redirs_single(t_shell *shell, t_token *token)
 			tempoutfd = redir_output(shell, tmp, tempoutfd);
 		tmp = tmp->next;
 	}
-	if (tempinfd > 0)
-		token->infd = tempinfd;
-	if (tempoutfd > 0)
-		token->outfd = tempoutfd;
+	ft_change_fd(token, tempinfd, tempoutfd);
 	if ((tempinfd == -1 || tempoutfd == -1))
 		return (1);
 	return (0);

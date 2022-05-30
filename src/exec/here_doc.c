@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
+/*   By: jsubel <jsubel@student.42wolfsburg.de >    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 14:38:55 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/29 19:08:41 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/30 10:07:44 by jsubel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	here_doc(t_shell *shell, t_redir *redir)
 	{
 		here_doc_child(shell, delimiter, fd);
 		exit(0);
-	}	
+	}
 	else
 	{
 		here_doc_parent(pid, fd);
