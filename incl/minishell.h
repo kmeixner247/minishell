@@ -6,7 +6,7 @@
 /*   By: jsubel <jsubel@student.42wolfsburg.de >    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 10:53:46 by jsubel            #+#    #+#             */
-/*   Updated: 2022/05/30 09:48:27 by jsubel           ###   ########.fr       */
+/*   Updated: 2022/05/30 11:52:03 by jsubel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@
 # define ERR_ENV_ARG "illegal argument in env"
 # define ERRNO_ENV_ARG 16
 
-extern int *g_pids;
+extern int	*g_pids;
 
 /**
  * @brief Main structure holding all the other structs
@@ -173,7 +173,7 @@ void		try_paths(t_shell *shell, char **args, char **envp);
 int			ft_exec_builtins(t_shell *shell, t_token *token);
 
 // redirs.c
-int		handle_redirs_single(t_shell *shell, t_token *token);
+int			handle_redirs_single(t_shell *shell, t_token *token);
 
 // error.c
 int			ft_error_msg(t_shell *shell, char *msg, int err_num);
@@ -194,7 +194,7 @@ int			parsing_cleanup(t_shell *shell);
 
 // accountant.c
 char		*accountant(t_shell *shell, char *str);
-void	meta_accountant(t_shell *shell, t_token *token);
+void		meta_accountant(t_shell *shell, t_token *token);
 char		*currency_exchange(t_shell *shell, char *str, char **envp);
 
 // plumber.c
@@ -204,7 +204,7 @@ char		**plumber(char *str);
 int			prechecks(t_shell *shell, char *str);
 
 // quotes.c
-void	quote_handler(t_token *token);
+void		quote_handler(t_token *token);
 int			quote_skipper(char *str);
 char		*replace_string(char *str);
 
@@ -236,11 +236,10 @@ int			check_char(unsigned char c, const char *str);
 
 void		handle_sigint(int sig);
 
-int	redir_wildcard(t_shell *shell, t_redir *redir);
-int	haswildcard(char *str);
-void	meta_args_wildcard(t_token *token);
-void	args_delfirst(t_args **args);
-void	printtoken(t_token **tokenn);
-
+int			redir_wildcard(t_shell *shell, t_redir *redir);
+int			haswildcard(char *str);
+void		meta_args_wildcard(t_token *token);
+void		args_delfirst(t_args **args);
+void		printtoken(t_token **tokenn);
 
 #endif
