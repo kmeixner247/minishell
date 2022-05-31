@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 10:53:46 by jsubel            #+#    #+#             */
-/*   Updated: 2022/05/31 16:06:44 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/31 20:05:18 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -276,5 +276,6 @@ void		printtoken(t_token **tokenn);
 
 int			haswildcard(char *str);
 void		ft_important_function(t_args *args);
+int			match(char *pattern, char *str);
 
 #endif

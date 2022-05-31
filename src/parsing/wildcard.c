@@ -3,46 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   wildcard.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsubel <jsubel@student.42wolfsburg.de >    +#+  +:+       +#+        */
+/*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 10:55:03 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/30 15:22:00 by jsubel           ###   ########.fr       */
+/*   Updated: 2022/05/31 20:03:02 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
-/** @brief find matches for the wildcard characters
- * @return -1 if wildcard is matched to a period,
-	0 if a match has been found
-	or a number other than 0 or -1 if there's a discrepancy
-*/
-static int	match(char *arg1, char *arg2)
-{
-	if (*arg1 == 42 && *arg2 == 46)
-		return (-1);
-	while (*arg1 && *arg2)
-	{
-		if (*arg1 == 42)
-		{
-			arg1++;
-			while (*arg2 && *arg1 != *arg2)
-				arg2++;
-		}
-		else if (*arg1 != *arg2)
-			break ;
-		else
-		{
-			if (*arg1)
-				arg1++;
-			if (*arg2)
-				arg2++;
-		}
-	}
-	while (*arg1 == 42)
-		arg1++;
-	return (*arg1 - *arg2);
-}
+
 
 /**
  * @brief make a new linked list of arguments with the expansion of wildcards

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_wildcard.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsubel <jsubel@student.42wolfsburg.de >    +#+  +:+       +#+        */
+/*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 13:58:46 by jsubel            #+#    #+#             */
-/*   Updated: 2022/05/30 15:22:05 by jsubel           ###   ########.fr       */
+/*   Updated: 2022/05/31 20:04:53 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,4 +44,54 @@ int	haswildcard(char *str)
 		str++;
 	}
 	return (0);
+}
+
+static void	norminette_smells_like_fish(char **pattern, char**str)
+{
+	while (**pattern && **str)
+	{
+		if (**pattern == 42)
+		{
+			while (**pattern == 42)
+				(*pattern)++;
+			if (!strchr(*pattern, 42))
+				break ;
+			while (**str && **pattern != **str)
+				(*str)++;
+		}
+		else if (**pattern != **str)
+			break ;
+		else
+		{
+			if (**pattern)
+				(*pattern)++;
+			if (**str)
+				(*str)++;
+		}
+	}
+}
+
+/** @brief find matches for the wildcard characters
+ * @return -1 if wildcard is matched to a period,
+	0 if a match has been found
+	or a number other than 0 or -1 if there's a discrepancy
+*/
+int	match(char *pattern, char *str)
+{
+	if (*pattern == 42 && *str == 46)
+		return (-1);
+	norminette_smells_like_fish(&pattern, &str);
+	while (*pattern == 42)
+		pattern++;
+	if (ft_strlen(pattern) > ft_strlen(str))
+		return (1);
+	while (*str)
+		str++;
+	str -= ft_strlen(pattern);
+	while (*pattern && *str && *pattern == *str)
+	{
+		pattern++;
+		str++;
+	}
+	return (*pattern - *str);
 }
