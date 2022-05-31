@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsubel <jsubel@student.42wolfsburg.de >    +#+  +:+       +#+        */
+/*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 10:53:46 by jsubel            #+#    #+#             */
-/*   Updated: 2022/05/30 14:06:17 by jsubel           ###   ########.fr       */
+/*   Updated: 2022/05/31 15:50:44 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,7 @@ void		shell(char **envp);
 
 // builtins
 
-int			ft_echo(t_shell *shell, t_args *args);
+int			ft_echo(t_shell *shell, t_token *token, t_args *args);
 int			ft_pwd(void);
 int			ft_export(t_shell *shell);
 int			ft_unset(t_shell *shell);

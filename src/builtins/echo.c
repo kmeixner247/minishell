@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 09:24:27 by jsubel            #+#    #+#             */
-/*   Updated: 2022/05/29 13:35:38 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/31 15:51:19 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,11 @@ int	ft_echo_isvalidflag(char *str)
 	return (1);
 }
 
-int	ft_echo(t_shell *shell, t_args *args)
+int	ft_echo(t_shell *shell, t_token *token, t_args *args)
 {
 	int	i;
 	int	flag_n;
 
-	dup2(1, shell->token->outfd);
 	i = 0;
 	flag_n = 0;
 	if (ft_nbr_args(args) > 1)
@@ -44,13 +43,13 @@ int	ft_echo(t_shell *shell, t_args *args)
 		}
 		while (args)
 		{
-			ft_putstr_fd(args->arg, 1);
+			ft_putstr_fd(args->arg, token->outfd);
 			if (args->next && args->arg)
-				write(1, " ", 1);
+				write(token->outfd, " ", 1);
 			args = args->next;
 		}
 	}
 	if (flag_n == 0)
-		write(1, "\n", 1);
+		write(token->outfd, "\n", 1);
 	return (0);
 }
