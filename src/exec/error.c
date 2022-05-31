@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsubel <jsubel@student.42wolfsburg.de >    +#+  +:+       +#+        */
+/*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 10:07:09 by jsubel            #+#    #+#             */
-/*   Updated: 2022/05/30 15:21:16 by jsubel           ###   ########.fr       */
+/*   Updated: 2022/05/31 23:12:21 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,16 @@ void	ft_error_ambig(t_shell *shell, char *arg)
 	free(tmp);
 }
 
+void	ft_error_isdir(t_shell *shell, char *arg)
+{
+	char	*tmp;
+
+	tmp = ft_strjoin(arg, ": ");
+	tmp = ft_strjoin2(tmp, ERR_ISDIR);
+	ft_error_msg(shell, tmp, 1);
+	free(tmp);
+}
+
 void	ft_error(t_shell *shell, char *arg, int error)
 {
 	if (error == ERRNO_NOT_FOUND)
@@ -78,4 +88,17 @@ void	ft_error(t_shell *shell, char *arg, int error)
 		ft_error_msg(shell, ERR_ENV_ARG, 1);
 	if (error == ERRNO_AMBIG)
 		ft_error_ambig(shell, arg);
+	if (error == ERRNO_ISDIR)
+		ft_error_isdir(shell, arg);
+}
+
+void	notfound_or_isdir(t_shell *shell, char *path)
+{
+	struct stat	statbuf;
+
+	stat(path, &statbuf);
+	if (S_ISDIR(statbuf.st_mode))
+		ft_error(shell, path, ERRNO_ISDIR);
+	else
+		ft_error(shell, path, ERRNO_NOT_FOUND);
 }

@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 10:53:46 by jsubel            #+#    #+#             */
-/*   Updated: 2022/05/31 22:16:23 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/31 23:12:38 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <sys/wait.h>	// waitpid, wait, wait3, wait4
 # include <signal.h>	// signal, sigaction, kill
 # include <sys/types.h>	// opendir, closedir
+# include <sys/stat.h>	// stat
 # include <dirent.h>	// readdir
 # include <stdio.h>		// perror
 # include <string.h>	// strerror
@@ -35,8 +36,6 @@
 # include <sys/param.h>	// max path len
 
 # define ERR_TEMPLATE "Error: message goes here"
-# define ERR_EXPORT "not a valid identifier"
-# define ERRNO_EXPORT 17
 # define ERR_EXIT_COUNT "too many arguments"
 # define ERRNO_EXIT_COUNT 10
 # define ERR_EXIT_ISNUM	 "argument is not numeric"
@@ -53,7 +52,10 @@
 # define ERRNO_NOT_FOUND 127
 # define ERR_ENV_ARG "illegal argument in env"
 # define ERRNO_ENV_ARG 16
-
+# define ERR_EXPORT "not a valid identifier"
+# define ERRNO_EXPORT 17
+# define ERR_ISDIR "is a directory"
+# define ERRNO_ISDIR 18
 extern int	*g_pids;
 
 /**
@@ -194,6 +196,7 @@ int			handle_redirs_single(t_shell *shell, t_token *token);
 int			ft_error_msg(t_shell *shell, char *msg, int err_num);
 void		ft_error_handler(t_shell *shell, char *msg, int err_num);
 void		ft_error(t_shell *shell, char *arg, int error);
+void		notfound_or_isdir(t_shell *shell, char *path);
 
 // free.c
 

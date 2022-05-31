@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 09:35:21 by jsubel            #+#    #+#             */
-/*   Updated: 2022/05/31 22:25:22 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/31 23:12:15 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ static void	ft_meta_acc_wild_quote(t_shell *shell, t_token *token)
 
 void	exec_children(t_shell *shell, t_token *token)
 {
-	char	**args;
-	char	**envp;
+	char		**args;
+	char		**envp;
 
 	if (handle_redirs_single(shell, token))
 		exit(1);
@@ -45,7 +45,7 @@ void	exec_children(t_shell *shell, t_token *token)
 	else
 		try_paths(shell, args, envp);
 	free(envp);
-	ft_error(shell, args[0], ERRNO_NOT_FOUND);
+	notfound_or_isdir(shell, args[0]);
 }
 
 void	exec_parent(t_shell *shell, int fd)
