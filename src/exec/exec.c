@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsubel <jsubel@student.42wolfsburg.de >    +#+  +:+       +#+        */
+/*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 09:35:21 by jsubel            #+#    #+#             */
-/*   Updated: 2022/05/30 12:11:17 by jsubel           ###   ########.fr       */
+/*   Updated: 2022/05/31 22:25:22 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ void	fork_and_execute(t_shell *shell)
 void	exec(t_shell *shell)
 {
 	t_token	*token;
+	int		tempfd;
 
 	token = shell->token;
 	if (!token->next && token->args && isbuiltin(token->args->arg))
@@ -97,17 +98,17 @@ void	exec(t_shell *shell)
 		if (handle_redirs_single(shell, token))
 			return ;
 		ft_meta_acc_wild_quote(shell, token);
+		tempfd = dup(1);
+		dup2(token->outfd, 1);
 		shell->lastreturn = ft_exec_builtins(shell, token);
 		if (token->infd > 0)
 			close(token->infd);
 		if (token->outfd > 1)
 			close(token->outfd);
+		dup2(tempfd, 1);
 		return ;
 	}
-	else
-	{
-		if (!g_pids)
-			fork_and_execute(shell);
-	}
+	else if (!g_pids)
+		fork_and_execute(shell);
 	return ;
 }
