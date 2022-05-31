@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 19:03:34 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/31 16:06:58 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/31 22:15:01 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,13 +78,16 @@ int	ft_exec_builtins(t_shell *shell, t_token *token)
 {
 	int		result;
 	t_args	*args;
+	int		tempfd;
 
+	tempfd = dup(1);
+	dup2(token->outfd, 1);
 	args = token->args;
 	result = 0;
 	if (ft_strcmp(args->arg, "echo") == 0)
-		result = ft_echo(shell, token, args);
+		result = ft_echo(shell, args);
 	if (ft_strcmp(args->arg, "pwd") == 0)
-		result = ft_pwd(token->outfd);
+		result = ft_pwd();
 	if (ft_strcmp(args->arg, "cd") == 0)
 		result = ft_cd(shell, args, shell->env);
 	if (ft_strcmp(args->arg, "env") == 0)
@@ -95,5 +98,6 @@ int	ft_exec_builtins(t_shell *shell, t_token *token)
 		result = ft_unset(shell);
 	if (ft_strcmp(args->arg, "exit") == 0)
 		ft_exit_minishell(shell);
+	dup2(tempfd, 1);
 	return (result);
 }

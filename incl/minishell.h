@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 10:53:46 by jsubel            #+#    #+#             */
-/*   Updated: 2022/05/31 20:05:18 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/31 22:16:23 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,8 +134,8 @@ void		shell(char **envp);
 
 // builtins
 
-int			ft_echo(t_shell *shell, t_token *token, t_args *args);
-int			ft_pwd(int outfd);
+int			ft_echo(t_shell *shell, t_args *args);
+int			ft_pwd(void);
 int			ft_export(t_shell *shell, t_token *token);
 int			ft_unset(t_shell *shell);
 
@@ -159,7 +159,7 @@ int			free_env(t_env *env);
 
 char		*get_varname(char *arg);
 int			is_valid_varname(char *arg);
-void		print_alphabetical(t_env *env, int outfd);
+void		print_alphabetical(t_env *env);
 
 // builtin-handler.c
 
