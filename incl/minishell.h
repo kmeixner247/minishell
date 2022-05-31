@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 10:53:46 by jsubel            #+#    #+#             */
-/*   Updated: 2022/05/31 16:05:11 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/31 16:06:44 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,7 @@ void		shell(char **envp);
 // builtins
 
 int			ft_echo(t_shell *shell, t_token *token, t_args *args);
-int			ft_pwd(void);
+int			ft_pwd(int outfd);
 int			ft_export(t_shell *shell, t_token *token);
 int			ft_unset(t_shell *shell);
 
