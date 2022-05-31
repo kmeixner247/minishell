@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 11:29:32 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/29 16:15:44 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/31 16:03:33 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ static int	search_env(t_shell *shell, char **args)
 	return (status);
 }
 
-int	ft_export(t_shell *shell)
+int	ft_export(t_shell *shell, t_token *token)
 {
 	int		i;
 	int		status;
@@ -75,7 +75,7 @@ int	ft_export(t_shell *shell)
 	status = 0;
 	args = get_args(shell->token->args);
 	if (!args[1])
-		print_alphabetical(shell->env);
+		print_alphabetical(shell->env, token->outfd);
 	else
 		status = search_env(shell, args);
 	free(args);

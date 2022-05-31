@@ -6,37 +6,37 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 18:00:28 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/23 19:32:37 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/31 16:05:00 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
-static void	print_variable(char *str)
+static void	print_variable(char *str, int outfd)
 {
 	int	i;
 
-	ft_putstr_fd("declare -x ", 1);
+	ft_putstr_fd("declare -x ", outfd);
 	i = 0;
 	while (str[i] && str[i] != 61)
 	{
-		ft_putchar_fd(str[i], 1);
+		ft_putchar_fd(str[i], outfd);
 		i++;
 	}
 	if (!str[i])
 	{
-		ft_putchar_fd('\n', 1);
+		ft_putchar_fd('\n', outfd);
 		return ;
 	}	
-	ft_putchar_fd(str[i], 1);
+	ft_putchar_fd(str[i], outfd);
 	i++;
-	ft_putchar_fd('\"', 1);
+	ft_putchar_fd('\"', outfd);
 	while (str[i])
 	{
-		ft_putchar_fd(str[i], 1);
+		ft_putchar_fd(str[i], outfd);
 		i++;
 	}
-	ft_putstr_fd("\"\n", 1);
+	ft_putstr_fd("\"\n", outfd);
 }
 
 static char	*next_lowest(t_env *env, char *previous)
@@ -58,7 +58,7 @@ static char	*next_lowest(t_env *env, char *previous)
 	return (lowest);
 }
 
-void	print_alphabetical(t_env *env)
+void	print_alphabetical(t_env *env, int outfd)
 {
 	int		n;
 	t_env	*tempenv;
@@ -74,7 +74,7 @@ void	print_alphabetical(t_env *env)
 	lowest = next_lowest(env, "");
 	while (n > 0)
 	{
-		print_variable(lowest);
+		print_variable(lowest, outfd);
 		lowest = next_lowest(env, lowest);
 		n--;
 	}

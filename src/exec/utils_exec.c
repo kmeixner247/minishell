@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 19:03:34 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/31 15:56:29 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/31 16:03:19 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ int	ft_exec_builtins(t_shell *shell, t_token *token)
 	if (ft_strcmp(args->arg, "env") == 0)
 		result = ft_env(shell, token);
 	if (ft_strcmp(args->arg, "export") == 0)
-		result = ft_export(shell);
+		result = ft_export(shell, token);
 	if (ft_strcmp(args->arg, "unset") == 0)
 		result = ft_unset(shell);
 	if (ft_strcmp(args->arg, "exit") == 0)
