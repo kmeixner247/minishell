@@ -6,13 +6,11 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 10:55:03 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/31 20:03:02 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/31 22:07:02 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
-
-
 
 /**
  * @brief make a new linked list of arguments with the expansion of wildcards
