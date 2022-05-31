@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 10:53:46 by jsubel            #+#    #+#             */
-/*   Updated: 2022/05/31 15:50:44 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/05/31 15:59:52 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,7 @@ int			ft_unset(t_shell *shell);
 
 void		ft_error_minishell(t_token *token);
 int			ft_cd(t_shell *shell, t_args *args, t_env *env);
-int			ft_env(t_shell *shell, t_args *args, t_env *env);
+int			ft_env(t_shell *shell, t_token *token);
 
 void		ft_exit_minishell(t_shell *shell);
 
