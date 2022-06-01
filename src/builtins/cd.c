@@ -6,7 +6,7 @@
 /*   By: jsubel <jsubel@student.42wolfsburg.de >    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 08:58:58 by jsubel            #+#    #+#             */
-/*   Updated: 2022/06/01 09:50:54 by jsubel           ###   ########.fr       */
+/*   Updated: 2022/06/01 15:58:43 by jsubel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,11 @@ int	ft_cd(t_shell *shell, t_args *args, t_env *env)
 	free(pwd_new);
 	return (0);
 }
+
+// 2 err:	too many args
+//			home not set
+//			old_pwd gone after cd
+//			excel: 430/431
 
 /**
  * @brief helper function to swap around the OLDPWD and PWD variables in env
