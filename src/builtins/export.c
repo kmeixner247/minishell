@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsubel <jsubel@student.42wolfsburg.de >    +#+  +:+       +#+        */
+/*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 11:29:32 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/06/01 10:01:26 by jsubel           ###   ########.fr       */
+/*   Updated: 2022/06/01 15:16:48 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static int	search_env(t_shell *shell, char **args)
 		tempstr = get_varname(args[i]);
 		if (!is_valid_varname(tempstr))
 		{
-			ft_error(shell, tempstr, ERRNO_EXPORT);
+			ft_error(shell, args[i], ERRNO_EXPORT);
 			status = 1;
 		}
 		else
