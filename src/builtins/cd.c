@@ -6,7 +6,7 @@
 /*   By: jsubel <jsubel@student.42wolfsburg.de >    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 08:58:58 by jsubel            #+#    #+#             */
-/*   Updated: 2022/06/01 15:58:43 by jsubel           ###   ########.fr       */
+/*   Updated: 2022/06/01 16:13:52 by jsubel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,11 +107,16 @@ static int	ft_cd_no_args(t_shell *shell, char *pwd_old, t_env *env)
 	char	*pwd_home;
 
 	home = ft_find_element(shell->env, "HOME");
+	if (!home)
+	{
+		ft_error_msg(shell, ERR_HOME_UNSET, ERRNO_HOME_UNSET);
+		return (ERRNO_HOME_UNSET);
+	}
 	pwd_home = ft_substr(home->var, 5, ft_strlen(home->var) - 5);
 	if (chdir(pwd_home) != 0)
 		ft_error_msg(shell, "cd: ", 0);
 	ft_change_env_pwd(pwd_old, pwd_home, env);
 	free(pwd_home);
 	free(pwd_old);
-	return (1);
+	return (0);
 }
