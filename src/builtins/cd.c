@@ -6,7 +6,7 @@
 /*   By: jsubel <jsubel@student.42wolfsburg.de >    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 08:58:58 by jsubel            #+#    #+#             */
-/*   Updated: 2022/06/01 16:46:17 by jsubel           ###   ########.fr       */
+/*   Updated: 2022/06/01 17:09:42 by jsubel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,14 @@ int	ft_cd(t_shell *shell, t_args *args, t_env *env)
 
 	pwd_old = NULL;
 	pwd_new = NULL;
-	// pwd_old = getcwd(pwd_old, MAXPATHLEN);
-	if (!(pwd_old = getcwd(pwd_old, MAXPATHLEN)))
+	pwd_old = getcwd(pwd_old, MAXPATHLEN);
+	if (args->next == NULL)
+		return (ft_cd_no_args(shell, pwd_old, env));
+	if (!pwd_old)
 	{
 		perror(ERR_PAR_DIR);
 		return (ERRNO_PAR_DIR);
 	}
-	if (args->next == NULL)
-		return (ft_cd_no_args(shell, pwd_old, env));
 	if (chdir(args->next->arg) != 0)
 		ft_error_msg(shell, args->next->arg, 0);
 	else
@@ -106,6 +106,9 @@ static int	ft_cd_no_args(t_shell *shell, char *pwd_old, t_env *env)
 	t_env	*home;
 	char	*pwd_home;
 
+	if (!pwd_old)
+		pwd_old = ft_substr(ft_find_element(shell->env, "PWD")->var, \
+			5, ft_strlen(ft_find_element(shell->env, "PWD")->var) - 5);
 	home = ft_find_element(shell->env, "HOME");
 	if (!home)
 	{
