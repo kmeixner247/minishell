@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 13:20:32 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/06/01 14:59:11 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/06/01 16:33:00 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,8 @@ int	find_cash(char *str, int *doubflag)
 		if (str[pos] == 34 && sing == -1)
 			doub *= -1;
 		if (str[pos] == 36 && sing == -1 && (isalnum(str[pos + 1]) || \
-			str[pos + 1] == 95 || str[pos + 1] == 63))
+			str[pos + 1] == 95 || str[pos + 1] == 63 || \
+			(str[pos + 1] == 34 && doub == -1) || str[pos + 1] == 39))
 			break ;
 		pos++;
 	}
@@ -104,6 +105,8 @@ char	*get_env_value(char *str, char **envp, int doubflag)
 	char	*ret;
 	char	*tmp;
 
+	if (!str || !*str)
+		return (ft_strdup(""));
 	i = 0;
 	size = 0;
 	tmp = ft_strjoin(str, "=");
