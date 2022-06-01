@@ -6,13 +6,14 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 13:20:32 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/24 13:09:46 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/06/01 14:59:11 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
 //writes *envvar into *ret, while enclosing ' into "" and vice versa
+//also encloses $ in ''
 static void	write_var(char *ret, char *envvar)
 {
 	int	i;
@@ -22,9 +23,9 @@ static void	write_var(char *ret, char *envvar)
 	j = 0;
 	while (envvar[i])
 	{
-		if (envvar[i] == 34 || envvar[i] == 39)
+		if (envvar[i] == 34 || envvar[i] == 39 || envvar[i] == 36)
 		{
-			if (envvar[i] == 34)
+			if (envvar[i] == 34 || envvar[i] == 36)
 				ret[j] = 39;
 			else if (envvar[i] == 39)
 				ret[j] = 34;
@@ -54,7 +55,7 @@ static char	*assemble_var(char *envvar)
 	j = 0;
 	while (envvar[i])
 	{
-		if (envvar[i] == 34 || envvar[i] == 39)
+		if (envvar[i] == 34 || envvar[i] == 39 || envvar[i] == 36)
 			j += 2;
 		i++;
 		j++;
