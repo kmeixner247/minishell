@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 10:53:46 by jsubel            #+#    #+#             */
-/*   Updated: 2022/05/31 23:12:38 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/06/01 15:15:30 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@
 # define ERRNO_EXPORT 17
 # define ERR_ISDIR "is a directory"
 # define ERRNO_ISDIR 18
+# define ERR_UNSET "not a valid identifier"
+# define ERRNO_UNSET 19
 extern int	*g_pids;
 
 /**

@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 10:07:09 by jsubel            #+#    #+#             */
-/*   Updated: 2022/05/31 23:12:21 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/06/01 15:16:26 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,17 @@ void	ft_error_export(t_shell *shell, char *arg)
 	free(tmp);
 }
 
+void	ft_error_unset(t_shell *shell, char *arg)
+{
+	char	*tmp;
+
+	tmp = ft_strjoin("unset: `", arg);
+	tmp = ft_strjoin2(tmp, "': ");
+	tmp = ft_strjoin2(tmp, ERR_EXPORT);
+	ft_error_msg(shell, tmp, 1);
+	free(tmp);
+}
+
 void	ft_error_ambig(t_shell *shell, char *arg)
 {
 	char	*tmp;
@@ -90,6 +101,8 @@ void	ft_error(t_shell *shell, char *arg, int error)
 		ft_error_ambig(shell, arg);
 	if (error == ERRNO_ISDIR)
 		ft_error_isdir(shell, arg);
+	if (error == ERRNO_UNSET)
+		ft_error_unset(shell, arg);
 }
 
 void	notfound_or_isdir(t_shell *shell, char *path)

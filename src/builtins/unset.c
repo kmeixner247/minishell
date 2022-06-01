@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsubel <jsubel@student.42wolfsburg.de >    +#+  +:+       +#+        */
+/*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 11:30:02 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/06/01 10:12:29 by jsubel           ###   ########.fr       */
+/*   Updated: 2022/06/01 15:15:34 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int	ft_unset(t_shell *shell)
 		tempenv = shell->env;
 		if (!is_valid_varname(args[i]))
 		{
-			printf("Bad variable name! BAD VARIABLE NAME!!\n");
+			ft_error(shell, args[i], ERRNO_UNSET);
 			status = 1;
 		}
 		else
