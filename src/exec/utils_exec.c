@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 19:03:34 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/31 22:25:51 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/06/01 15:23:59 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,13 @@ void	try_paths(t_shell *shell, char **args, char **envp)
 	char	**paths;
 
 	i = 0;
-	while (ft_strncmp(envp[i], "PATH=", 5))
+	paths = NULL;
+	while (envp[i] && ft_strncmp(envp[i], "PATH=", 5))
 		i++;
-	paths = ft_split(envp[i], ':');
+	if (envp[i])
+		paths = ft_split(envp[i], ':');
 	i = 0;
-	while (paths[i])
+	while (paths && paths[i])
 	{
 		paths[i] = ft_strjoin2(paths[i], "/");
 		paths[i] = ft_strjoin2(paths[i], args[0]);
