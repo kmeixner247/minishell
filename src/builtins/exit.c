@@ -6,7 +6,7 @@
 /*   By: jsubel <jsubel@student.42wolfsburg.de >    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 12:01:04 by jsubel            #+#    #+#             */
-/*   Updated: 2022/06/01 09:55:16 by jsubel           ###   ########.fr       */
+/*   Updated: 2022/06/01 17:24:18 by jsubel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static int	ft_isnumeric(char *str)
 	i = 0;
 	while (str[i])
 	{
-		if (str[i] <= '0' || str[i] >= '9')
+		if (str[i] < '0' || str[i] > '9')
 			return (0);
 		i++;
 	}
