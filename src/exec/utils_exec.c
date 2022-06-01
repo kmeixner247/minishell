@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 19:03:34 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/06/01 15:23:59 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/06/01 16:44:22 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,8 @@ void	try_paths(t_shell *shell, char **args, char **envp)
 		paths[i] = ft_strjoin2(paths[i], "/");
 		paths[i] = ft_strjoin2(paths[i], args[0]);
 		execve(paths[i], args, envp);
+		if (errno == EACCES)
+			break ;
 		free(paths[i]);
 		i++;
 	}

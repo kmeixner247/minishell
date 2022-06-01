@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsubel <jsubel@student.42wolfsburg.de >    +#+  +:+       +#+        */
+/*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 10:07:09 by jsubel            #+#    #+#             */
-/*   Updated: 2022/06/01 16:00:36 by jsubel           ###   ########.fr       */
+/*   Updated: 2022/06/01 16:43:07 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,9 @@ void	notfound_or_isdir(t_shell *shell, char *path)
 
 	statbuf = ft_calloc(1, sizeof(struct stat));
 	stat(path, statbuf);
-	if (S_ISDIR(statbuf->st_mode))
+	if (errno == EACCES)
+		ft_error_msg(shell, shell->token->args->arg, 0);
+	else if (S_ISDIR(statbuf->st_mode))
 		ft_error(shell, path, ERRNO_ISDIR);
 	else
 		ft_error(shell, path, ERRNO_NOT_FOUND);
