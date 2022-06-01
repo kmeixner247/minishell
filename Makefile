@@ -57,5 +57,6 @@ clean:
 
 fclean: clean
 	rm $(LIBFT)/libft.a
+	rm -rf *.dSYM
 
 re: clean all
