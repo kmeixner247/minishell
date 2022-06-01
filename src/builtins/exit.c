@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
+/*   By: jsubel <jsubel@student.42wolfsburg.de >    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 12:01:04 by jsubel            #+#    #+#             */
-/*   Updated: 2022/05/25 12:51:48 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/06/01 09:55:16 by jsubel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static int	ft_isnumeric(char *str);
 /**
 * @brief cleanly terminate and exit the program
 * Check arguments of invocation:
-*	if no argument, exit with global error number
+*   if no argument, exit with global error number
 *	if one numeric argument, exit with that
 *	if more than one, throw error and don't exit
 */
@@ -45,6 +45,7 @@ void	ft_exit_minishell(t_shell *shell)
 	exit(exitcode);
 }
 
+/** @brief check if a string is fully numeric */
 static int	ft_isnumeric(char *str)
 {
 	int	i;

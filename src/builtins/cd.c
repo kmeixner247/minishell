@@ -6,7 +6,7 @@
 /*   By: jsubel <jsubel@student.42wolfsburg.de >    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 08:58:58 by jsubel            #+#    #+#             */
-/*   Updated: 2022/05/30 15:28:57 by jsubel           ###   ########.fr       */
+/*   Updated: 2022/06/01 09:50:54 by jsubel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,11 @@ static void		ft_change_env_pwd(char *pwd_old, char *pwd_new, t_env *env);
 static t_env	*ft_find_element(t_env *env, char *str);
 static int		ft_cd_no_args(t_shell *shell, char *pwd_old, t_env *env);
 
+/**
+ * @brief recode of change directory (cd) builtin
+ * @param pwd_old string to save working directory before changing
+ * @param pwd_new string to save working directory after changing
+ */
 int	ft_cd(t_shell *shell, t_args *args, t_env *env)
 {
 	char	*pwd_old;
@@ -40,6 +45,12 @@ int	ft_cd(t_shell *shell, t_args *args, t_env *env)
 	return (0);
 }
 
+/**
+ * @brief helper function to swap around the OLDPWD and PWD variables in env
+ * @param old env element holding the old pwd
+ * @param new env element holding the new pwd
+ * @param tmp temp string storage
+ */
 static void	ft_change_env_pwd(char *pwd_old, char *pwd_new, t_env *env)
 {
 	t_env	*old;
@@ -69,6 +80,7 @@ static void	ft_change_env_pwd(char *pwd_old, char *pwd_new, t_env *env)
 	free(pwd_new);
 }
 
+/** @brief find a certain element within env */
 static t_env	*ft_find_element(t_env *env, char *str)
 {
 	t_env	*tmp;
@@ -83,6 +95,7 @@ static t_env	*ft_find_element(t_env *env, char *str)
 	return (tmp);
 }
 
+/** @brief if cd gets called with no arguments, use this */
 static int	ft_cd_no_args(t_shell *shell, char *pwd_old, t_env *env)
 {
 	t_env	*home;

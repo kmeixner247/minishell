@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
+/*   By: jsubel <jsubel@student.42wolfsburg.de >    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 10:01:32 by jsubel            #+#    #+#             */
-/*   Updated: 2022/05/31 22:15:16 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/06/01 10:01:57 by jsubel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
+/** @brief print current working directory */
 int	ft_pwd(void)
 {
 	char	cwd[MAXPATHLEN];

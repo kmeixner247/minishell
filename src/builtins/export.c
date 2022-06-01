@@ -3,15 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
+/*   By: jsubel <jsubel@student.42wolfsburg.de >    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 11:29:32 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/31 22:16:13 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/06/01 10:01:26 by jsubel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
+/**
+ * @brief check if variable exists with the given name inside env
+ * and if it does, replace its value. If not, add a new var to
+ * the end of env
+ * */
 void	add_or_update_var(char *arg, char *name, t_env **env)
 {
 	t_env	*newenv;
@@ -41,6 +46,11 @@ void	add_or_update_var(char *arg, char *name, t_env **env)
 	}
 }
 
+/**
+ * @brief search through env variables to check
+ * if exported variable has a valid name and, if it does,
+ * add or update the corresponding variable
+ * */
 static int	search_env(t_shell *shell, char **args)
 {
 	int		i;
@@ -65,6 +75,11 @@ static int	search_env(t_shell *shell, char **args)
 	return (status);
 }
 
+/**
+ * @brief list or add new environmental variables for use in subprocesses
+ * of the shell
+ * @param status return 1 if error occured or 0 if everthing went well
+ */
 int	ft_export(t_shell *shell, t_token *token)
 {
 	int		i;

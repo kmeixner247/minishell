@@ -3,15 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
+/*   By: jsubel <jsubel@student.42wolfsburg.de >    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 19:12:43 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/31 22:14:39 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/06/01 09:45:11 by jsubel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
+/**
+ * @brief env builtin - prints out content
+ * of env variable
+ */
 int	ft_env(t_shell *shell, t_token *token)
 {
 	t_env	*tempenv;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
+/*   By: jsubel <jsubel@student.42wolfsburg.de >    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 11:30:02 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/24 14:52:13 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/06/01 10:12:29 by jsubel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,9 @@ static void	env_delnext(t_env **env)
 	free(tempenv);
 }
 
+/** @brief walk through each element of env and check if the
+ * variable is already set and, if it is, delete the corresponding
+ * element from the linked list */
 static	void	find_and_unset(char *arg, t_env **env, int varlen)
 {
 	t_env	*tempenv;
@@ -55,6 +58,10 @@ static	void	find_and_unset(char *arg, t_env **env, int varlen)
 	}
 }
 
+/**
+ * @brief unset variable from environment by checking if
+ * the name is valid and, if it is, then valling a function
+ * to find and delete the corresponding element of the linked list */
 int	ft_unset(t_shell *shell)
 {
 	int		i;

@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
+/*   By: jsubel <jsubel@student.42wolfsburg.de >    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 09:24:27 by jsubel            #+#    #+#             */
-/*   Updated: 2022/05/31 22:14:03 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/06/01 09:51:02 by jsubel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
+/** @brief check if current argument is a valid flag for echo */
 int	ft_echo_isvalidflag(char *str)
 {
 	if (!str || *str != 45)
@@ -26,6 +27,10 @@ int	ft_echo_isvalidflag(char *str)
 	return (1);
 }
 
+/**
+ * @brief echo function - print input to terminal
+ * @param flag_n flag to see if -n flag is used
+ */
 int	ft_echo(t_shell *shell, t_args *args)
 {
 	int	i;
