@@ -6,7 +6,7 @@
 /*   By: jsubel <jsubel@student.42wolfsburg.de >    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 08:58:58 by jsubel            #+#    #+#             */
-/*   Updated: 2022/06/01 16:13:52 by jsubel           ###   ########.fr       */
+/*   Updated: 2022/06/01 16:46:17 by jsubel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,12 @@ int	ft_cd(t_shell *shell, t_args *args, t_env *env)
 
 	pwd_old = NULL;
 	pwd_new = NULL;
-	pwd_old = getcwd(pwd_old, MAXPATHLEN);
-	if (!pwd_old)
-		return (0);
+	// pwd_old = getcwd(pwd_old, MAXPATHLEN);
+	if (!(pwd_old = getcwd(pwd_old, MAXPATHLEN)))
+	{
+		perror(ERR_PAR_DIR);
+		return (ERRNO_PAR_DIR);
+	}
 	if (args->next == NULL)
 		return (ft_cd_no_args(shell, pwd_old, env));
 	if (chdir(args->next->arg) != 0)
@@ -45,9 +48,6 @@ int	ft_cd(t_shell *shell, t_args *args, t_env *env)
 	return (0);
 }
 
-// 2 err:	too many args
-//			home not set
-//			old_pwd gone after cd
 //			excel: 430/431
 
 /**
@@ -69,7 +69,7 @@ static void	ft_change_env_pwd(char *pwd_old, char *pwd_new, t_env *env)
 	if (old)
 	{
 		free(old->var);
-		pwd_old = ft_strjoin("OLDPWD", pwd_old);
+		pwd_old = ft_strjoin("OLDPWD=", pwd_old);
 		old->var = ft_strdup(pwd_old);
 	}
 	else

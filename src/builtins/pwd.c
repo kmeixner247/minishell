@@ -6,7 +6,7 @@
 /*   By: jsubel <jsubel@student.42wolfsburg.de >    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 10:01:32 by jsubel            #+#    #+#             */
-/*   Updated: 2022/06/01 10:01:57 by jsubel           ###   ########.fr       */
+/*   Updated: 2022/06/01 16:41:17 by jsubel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,5 +23,8 @@ int	ft_pwd(void)
 		return (0);
 	}
 	else
+	{
+		perror(ERR_PAR_DIR);
 		return (1);
+	}
 }

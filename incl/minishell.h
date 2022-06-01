@@ -6,7 +6,7 @@
 /*   By: jsubel <jsubel@student.42wolfsburg.de >    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 10:53:46 by jsubel            #+#    #+#             */
-/*   Updated: 2022/06/01 16:11:16 by jsubel           ###   ########.fr       */
+/*   Updated: 2022/06/01 16:41:49 by jsubel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,9 @@
 # define ERRNO_UNSET 19
 # define ERR_HOME_UNSET "HOME not set"
 # define ERRNO_HOME_UNSET 20
-
+# define ERR_PAR_DIR "chdir: error retrieving current directory: \
+getcwd: cannot access parent directories"
+# define ERRNO_PAR_DIR 21
 extern int	*g_pids;
 
 /**
