@@ -6,7 +6,7 @@
 /*   By: jsubel <jsubel@student.42wolfsburg.de >    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 10:53:46 by jsubel            #+#    #+#             */
-/*   Updated: 2022/06/01 16:00:29 by jsubel           ###   ########.fr       */
+/*   Updated: 2022/06/01 16:11:16 by jsubel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,9 @@
 # define ERRNO_ISDIR 18
 # define ERR_UNSET "not a valid identifier"
 # define ERRNO_UNSET 19
+# define ERR_HOME_UNSET "HOME not set"
+# define ERRNO_HOME_UNSET 20
+
 extern int	*g_pids;
 
 /**
