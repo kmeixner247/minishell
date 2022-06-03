@@ -6,17 +6,17 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 09:35:21 by jsubel            #+#    #+#             */
-/*   Updated: 2022/06/03 18:57:32 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/06/03 20:04:05 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
-static void	ft_meta_acc_wild_quote(t_shell *shell, t_token *token)
+static void	ft_meta_wild_quote(t_shell *shell, t_token *token)
 {
 	if (token->args)
 	{
-		meta_accountant(shell, token);
+		// meta_accountant(shell, token);
 		meta_args_wildcard(token);
 		quote_handler(token);
 	}
@@ -30,7 +30,7 @@ void	exec_children(t_shell *shell, t_token *token)
 	if (handle_redirs_single(shell, token) || !token->args)
 		exit(1);
 	envp = get_env(shell->env);
-	ft_meta_acc_wild_quote(shell, token);
+	ft_meta_wild_quote(shell, token);
 	dup2(token->infd, 0);
 	dup2(token->outfd, 1);
 	if (token->infd > 0)
@@ -100,7 +100,7 @@ void	exec(t_shell *shell)
 		g_pids = ft_calloc(sizeof(int), 1);
 		if (handle_redirs_single(shell, token))
 			return ;
-		ft_meta_acc_wild_quote(shell, token);
+		ft_meta_wild_quote(shell, token);
 		tempfd = dup(1);
 		dup2(token->outfd, 1);
 		shell->lastreturn = ft_exec_builtins(shell, token);
