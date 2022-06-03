@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_here_doc.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsubel <jsubel@student.42wolfsburg.de >    +#+  +:+       +#+        */
+/*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 12:04:21 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/30 10:07:34 by jsubel           ###   ########.fr       */
+/*   Updated: 2022/06/03 18:43:31 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static char	*get_env_value_hd(char *str, char **envp)
 		while (envp[i][j] != 61)
 			j++;
 		j++;
-		return (envp[i] + j);
+		return (ft_strdup(envp[i] + j));
 	}
 }
 
