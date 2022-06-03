@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_env.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsubel <jsubel@student.42wolfsburg.de >    +#+  +:+       +#+        */
+/*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 11:27:56 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/06/03 14:06:40 by jsubel           ###   ########.fr       */
+/*   Updated: 2022/06/03 18:49:39 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ t_env	*init_env(char **envp)
 			shell_level = ft_atoi(ft_strchr(envp[i], '=') + 1) + 1;
 			tmp_itoa = ft_strjoin3("SHLVL=", ft_itoa(shell_level));
 			tmp = new_env(tmp_itoa);
+			free(tmp_itoa);
 		}
 		else
 			tmp = new_env(envp[i]);
