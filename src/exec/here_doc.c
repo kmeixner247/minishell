@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsubel <jsubel@student.42wolfsburg.de >    +#+  +:+       +#+        */
+/*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 14:38:55 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/30 10:07:44 by jsubel           ###   ########.fr       */
+/*   Updated: 2022/06/03 19:04:27 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
-void	here_doc_child(t_shell *shell, char *delimiter, int outfd)
+void	here_doc_child(t_shell *shell, char *delimiter, int fd, int quoteflag)
 {
 	char	*line;
 
@@ -23,14 +23,15 @@ void	here_doc_child(t_shell *shell, char *delimiter, int outfd)
 	{
 		if (!line || !ft_strcmp(delimiter, line))
 			break ;
-		line = accountant_hd(shell, line);
-		write(outfd, line, ft_strlen(line));
-		write(outfd, "\n", 1);
+		if (!quoteflag)
+			line = accountant_hd(shell, line);
+		write(fd, line, ft_strlen(line));
+		write(fd, "\n", 1);
 		free(line);
 		line = readline("> ");
 	}
 	free(line);
-	close(outfd);
+	close(fd);
 }
 
 void	here_doc_parent(int pid, int outfd)
@@ -53,19 +54,19 @@ void	here_doc(t_shell *shell, t_redir *redir)
 {
 	int		fd;
 	char	*path;
-	int		openflags;
+	int		quoteflag;
 	int		pid;
 	char	*delimiter;
 
+	quoteflag = quotecount(redir->filename);
 	redir->filename = replace_string(redir->filename);
 	delimiter = redir->filename;
-	openflags = O_WRONLY | O_CREAT | O_EXCL | O_TRUNC;
 	path = ft_strjoin3("/tmp/minishell-thd", ft_itoa((int)&(redir->filename)));
-	fd = open(path, openflags, 0600);
+	fd = open(path, O_WRONLY | O_CREAT | O_EXCL | O_TRUNC, 0600);
 	pid = fork();
 	if (!pid)
 	{
-		here_doc_child(shell, delimiter, fd);
+		here_doc_child(shell, delimiter, fd, quoteflag);
 		exit(0);
 	}
 	else

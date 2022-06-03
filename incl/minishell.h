@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsubel <jsubel@student.42wolfsburg.de >    +#+  +:+       +#+        */
+/*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 10:53:46 by jsubel            #+#    #+#             */
-/*   Updated: 2022/06/03 11:57:48 by jsubel           ###   ########.fr       */
+/*   Updated: 2022/06/03 19:05:18 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -241,6 +241,7 @@ int			prechecks(t_shell *shell, char *str);
 void		quote_handler(t_token *token);
 int			quote_skipper(char *str);
 char		*replace_string(char *str);
+int			quotecount(char *str);
 
 // secretary.c
 

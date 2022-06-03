@@ -6,13 +6,13 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 10:56:56 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/28 20:22:16 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/06/03 19:04:42 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
-static int	quotecount(char *str)
+int	quotecount(char *str)
 {
 	int	sing;
 	int	doub;
