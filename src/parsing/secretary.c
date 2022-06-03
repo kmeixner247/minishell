@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   secretary.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
+/*   By: jsubel <jsubel@student.42wolfsburg.de >    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 11:37:40 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/23 13:16:16 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/06/03 09:56:02 by jsubel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,8 @@ static t_token	*get_token(char *str)
 	return (token);
 }
 
+/**
+ * @brief initialize and populate the token linked list from a char ** */
 t_token	*secretary(char **arr)
 {
 	int		i;

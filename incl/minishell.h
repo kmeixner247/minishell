@@ -6,7 +6,7 @@
 /*   By: jsubel <jsubel@student.42wolfsburg.de >    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 10:53:46 by jsubel            #+#    #+#             */
-/*   Updated: 2022/06/01 16:41:49 by jsubel           ###   ########.fr       */
+/*   Updated: 2022/06/03 11:57:48 by jsubel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@
 # define ERR_EXIT_COUNT "too many arguments"
 # define ERRNO_EXIT_COUNT 10
 # define ERR_EXIT_ISNUM	 "argument is not numeric"
-# define ERRNO_EXIT_ISNUM 11
+# define ERRNO_EXIT_ISNUM 255
 # define ERR_AMBIG "ambiguous redirect"
 # define ERRNO_AMBIG 12
 # define ERR_UNCLOSED_QUOTES "unclosed quotes"
@@ -163,6 +163,8 @@ void		env_addback(t_env **start, t_env *new);
 t_env		*init_env(char **envp);
 char		**get_env(t_env *env);
 int			free_env(t_env *env);
+// in cd
+t_env		*ft_find_element(t_env *env, char *str);
 
 // utils_export.c
 

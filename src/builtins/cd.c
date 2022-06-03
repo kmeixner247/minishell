@@ -6,14 +6,13 @@
 /*   By: jsubel <jsubel@student.42wolfsburg.de >    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 08:58:58 by jsubel            #+#    #+#             */
-/*   Updated: 2022/06/01 17:09:42 by jsubel           ###   ########.fr       */
+/*   Updated: 2022/06/03 13:24:01 by jsubel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
 static void		ft_change_env_pwd(char *pwd_old, char *pwd_new, t_env *env);
-static t_env	*ft_find_element(t_env *env, char *str);
 static int		ft_cd_no_args(t_shell *shell, char *pwd_old, t_env *env);
 
 /**
@@ -86,7 +85,7 @@ static void	ft_change_env_pwd(char *pwd_old, char *pwd_new, t_env *env)
 }
 
 /** @brief find a certain element within env */
-static t_env	*ft_find_element(t_env *env, char *str)
+t_env	*ft_find_element(t_env *env, char *str)
 {
 	t_env	*tmp;
 

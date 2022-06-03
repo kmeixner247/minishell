@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_env.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
+/*   By: jsubel <jsubel@student.42wolfsburg.de >    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 11:27:56 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/24 10:12:11 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/06/03 14:06:40 by jsubel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,23 +39,35 @@ void	env_addback(t_env **start, t_env *new)
 	temp->next = new;
 }
 
+/** @brief initialize env linked list from char **envp, increase SHLVL by 1
+ * for each time minishell is opened */
 t_env	*init_env(char **envp)
 {
 	int		i;
 	t_env	*env;
 	t_env	*tmp;
+	int		shell_level;
+	char	*tmp_itoa;
 
 	i = 0;
 	env = NULL;
 	while (envp[i])
 	{
-		tmp = new_env(envp[i]);
+		if (!(ft_strncmp("SHLVL=", envp[i], 6)))
+		{
+			shell_level = ft_atoi(ft_strchr(envp[i], '=') + 1) + 1;
+			tmp_itoa = ft_strjoin3("SHLVL=", ft_itoa(shell_level));
+			tmp = new_env(tmp_itoa);
+		}
+		else
+			tmp = new_env(envp[i]);
 		env_addback(&env, tmp);
 		i++;
 	}
 	return (env);
 }
 
+/** @brief turn back env linked list into char ** */
 char	**get_env(t_env *env)
 {
 	char	**envv;
