@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 09:35:21 by jsubel            #+#    #+#             */
-/*   Updated: 2022/06/01 16:40:42 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/06/03 18:57:32 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,12 @@
 
 static void	ft_meta_acc_wild_quote(t_shell *shell, t_token *token)
 {
-	meta_accountant(shell, token);
-	meta_args_wildcard(token);
-	quote_handler(token);
+	if (token->args)
+	{
+		meta_accountant(shell, token);
+		meta_args_wildcard(token);
+		quote_handler(token);
+	}
 }
 
 void	exec_children(t_shell *shell, t_token *token)
@@ -24,7 +27,7 @@ void	exec_children(t_shell *shell, t_token *token)
 	char		**args;
 	char		**envp;
 
-	if (handle_redirs_single(shell, token))
+	if (handle_redirs_single(shell, token) || !token->args)
 		exit(1);
 	envp = get_env(shell->env);
 	ft_meta_acc_wild_quote(shell, token);
