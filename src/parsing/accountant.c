@@ -6,11 +6,30 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 16:23:55 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/06/01 14:58:59 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/06/04 09:19:11 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
+
+//returns the valid environmental variable name, starting at *str
+char	*find_env_varname(char *str, char **envp)
+{
+	int		size;
+	char	*ret;
+
+	size = 0;
+	if (ft_isdigit(*str))
+		size = 1;
+	else
+	{
+		while (isalnum(str[size]) || str[size] == 95)
+			size++;
+	}
+	ret = ft_calloc(sizeof(char), size + 1);
+	ft_strlcpy(ret, str, size + 1);
+	return (ret);
+}
 
 //finds the first environmental variable in str (recognized by a non-escaped $)
 //replaces the variable with its value while preparing the string for proper

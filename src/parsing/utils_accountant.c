@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 13:20:32 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/06/03 21:47:32 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/06/04 09:21:21 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,25 @@ static char	*assemble_var(char *envvar)
 	return (ret);
 }
 
+//Checks whether there is a $ that should be interpreted.
+//Ensures that $ after << will be skipped
+int	iscash(char *str, int *pos, int *sing, int *doub)
+{
+	if (*pos >= 2 && str[*pos - 2] == 60 && str[*pos - 1] == 60)
+	{
+		while (str[*pos] == 32)
+			(*pos)++;
+		if (str[*pos] == 36)
+			(*pos)++;
+	}
+	if (str[*pos] == 36 && *sing == -1 && (isalnum(str[*pos + 1]) || \
+		str[*pos + 1] == 95 || str[*pos + 1] == 63 || \
+		(str[*pos + 1] == 34 && *doub == -1) || str[*pos + 1] == 39))
+		return (1);
+	else
+		return (0);
+}
+
 //Returns the position of the first non-escaped $
 //Returns -1 if there is none
 int	find_cash(char *str, int *doubflag)
@@ -84,12 +103,10 @@ int	find_cash(char *str, int *doubflag)
 			sing *= -1;
 		if (str[pos] == 34 && sing == -1)
 			doub *= -1;
-		if (!(pos >= 2 && str[pos - 2] == 60 && str[pos - 1] == 60) && \
-			str[pos] == 36 && sing == -1 && (isalnum(str[pos + 1]) || \
-			str[pos + 1] == 95 || str[pos + 1] == 63 || \
-			(str[pos + 1] == 34 && doub == -1) || str[pos + 1] == 39))
+		if (iscash(str, &pos, &sing, &doub))
 			break ;
-		pos++;
+		if (str[pos])
+			pos++;
 	}
 	*doubflag = doub;
 	if (str[pos])
@@ -124,24 +141,5 @@ char	*get_env_value(char *str, char **envp, int doubflag)
 		if (doubflag == 1)
 			ret = ft_strjoin3("\"", ft_strjoin2(ret, "\""));
 	}
-	return (ret);
-}
-
-//returns the valid environmental variable name, starting at *str
-char	*find_env_varname(char *str, char **envp)
-{
-	int		size;
-	char	*ret;
-
-	size = 0;
-	if (ft_isdigit(*str))
-		size = 1;
-	else
-	{
-		while (isalnum(str[size]) || str[size] == 95)
-			size++;
-	}
-	ret = ft_calloc(sizeof(char), size + 1);
-	ft_strlcpy(ret, str, size + 1);
 	return (ret);
 }
