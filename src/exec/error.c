@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 10:07:09 by jsubel            #+#    #+#             */
-/*   Updated: 2022/06/04 11:15:43 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/06/04 17:48:26 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ void	ft_error(t_shell *shell, char *arg, int error)
 		ft_error_unset(shell, arg);
 }
 
-void	notfound_or_isdir(t_shell *shell, char *path, char **ar, char **ev)
+int	notfound_or_isdir(t_shell *shell, char *path, char **ar, char **ev)
 {
 	struct stat	*statbuf;
 	int			err;
@@ -126,8 +126,6 @@ void	notfound_or_isdir(t_shell *shell, char *path, char **ar, char **ev)
 		err = 127;
 	}
 	free(statbuf);
-	free(ar);
-	free(ev);
 	ft_free_everything(shell);
-	exit(err);
+	return (err);
 }

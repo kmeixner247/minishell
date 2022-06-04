@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 09:35:21 by jsubel            #+#    #+#             */
-/*   Updated: 2022/06/04 11:05:26 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/06/04 17:47:54 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,11 @@ static void	ft_meta_wild_quote(t_shell *shell, t_token *token)
 
 void	exec_children(t_shell *shell, t_token *token)
 {
-	char		**args;
-	char		**envp;
+	char	**args;
+	char	**envp;
+	int		status;
 
+	status = -1;
 	if (handle_redirs_single(shell, token) || !token->args)
 		exit(1);
 	envp = get_env(shell->env);
@@ -38,15 +40,16 @@ void	exec_children(t_shell *shell, t_token *token)
 		close(token->outfd);
 	args = get_args(token->args);
 	if (isbuiltin(args[0]))
-	{
-		free(envp);
-		exit(ft_exec_builtins(shell, token));
-	}
+		status = ft_exec_builtins(shell, token);
 	else if (check_char('/', args[0]))
 		execve(args[0], args, envp);
 	else
 		try_paths(shell, args, envp);
-	notfound_or_isdir(shell, args[0], args, envp);
+	if (status == -1)
+		status = notfound_or_isdir(shell, args[0], args, envp);
+	free(args);
+	free(envp);
+	exit(status);
 }
 
 void	exec_parent(t_shell *shell, int fd)
