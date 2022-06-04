@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_exec.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsubel <jsubel@student.42wolfsburg.de >    +#+  +:+       +#+        */
+/*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 19:03:34 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/06/03 10:02:10 by jsubel           ###   ########.fr       */
+/*   Updated: 2022/06/03 20:48:33 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,6 @@ int	ft_exec_builtins(t_shell *shell, t_token *token)
 	if (ft_strcmp(args->arg, "unset") == 0)
 		result = ft_unset(shell);
 	if (ft_strcmp(args->arg, "exit") == 0)
-		ft_exit_minishell(shell);
+		result = ft_exit_minishell(shell);
 	return (result);
 }
