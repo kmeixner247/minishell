@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 09:35:21 by jsubel            #+#    #+#             */
-/*   Updated: 2022/06/04 10:59:29 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/06/04 11:05:26 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,6 @@ static void	ft_meta_wild_quote(t_shell *shell, t_token *token)
 		meta_args_wildcard(token);
 		quote_handler(token);
 	}
-}
-
-void	ft_very_important_function(char **envp, char **args)
-{
-	free(envp);
-	free(args);
-	exit(1);
 }
 
 void	exec_children(t_shell *shell, t_token *token)
@@ -53,8 +46,7 @@ void	exec_children(t_shell *shell, t_token *token)
 		execve(args[0], args, envp);
 	else
 		try_paths(shell, args, envp);
-	notfound_or_isdir(shell, args[0]);
-	ft_very_important_function(envp, args);
+	notfound_or_isdir(shell, args[0], args, envp);
 }
 
 void	exec_parent(t_shell *shell, int fd)

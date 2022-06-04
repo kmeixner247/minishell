@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 10:07:09 by jsubel            #+#    #+#             */
-/*   Updated: 2022/06/04 10:59:38 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/06/04 11:15:43 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,6 @@ void	ft_error_notfound(t_shell *shell, char *arg)
 	tmp = ft_strjoin2(tmp, ERR_NOT_FOUND);
 	ft_error_msg(shell, tmp, 127);
 	free(tmp);
-	ft_free_everything(shell);
-	exit(127);
 }
 
 void	ft_error_export(t_shell *shell, char *arg)
@@ -105,17 +103,31 @@ void	ft_error(t_shell *shell, char *arg, int error)
 		ft_error_unset(shell, arg);
 }
 
-void	notfound_or_isdir(t_shell *shell, char *path)
+void	notfound_or_isdir(t_shell *shell, char *path, char **ar, char **ev)
 {
 	struct stat	*statbuf;
+	int			err;
 
 	statbuf = ft_calloc(1, sizeof(struct stat));
 	stat(path, statbuf);
 	if (S_ISDIR(statbuf->st_mode))
+	{
 		ft_error(shell, path, ERRNO_ISDIR);
+		err = 126;
+	}		
 	else if (errno == EACCES)
+	{
 		ft_error_msg(shell, shell->token->args->arg, 0);
+		err = 126;
+	}
 	else
+	{
 		ft_error(shell, path, ERRNO_NOT_FOUND);
+		err = 127;
+	}
 	free(statbuf);
+	free(ar);
+	free(ev);
+	ft_free_everything(shell);
+	exit(err);
 }

@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 10:53:46 by jsubel            #+#    #+#             */
-/*   Updated: 2022/06/04 10:53:55 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/06/04 11:04:55 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -205,7 +205,7 @@ int			handle_redirs_single(t_shell *shell, t_token *token);
 int			ft_error_msg(t_shell *shell, char *msg, int err_num);
 void		ft_error_handler(t_shell *shell, char *msg, int err_num);
 void		ft_error(t_shell *shell, char *arg, int error);
-void		notfound_or_isdir(t_shell *shell, char *path);
+void		notfound_or_isdir(t_shell *shell, char *path, char **ar, char **ev);
 
 // free.c
 

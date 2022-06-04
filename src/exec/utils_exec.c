@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 19:03:34 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/06/03 20:48:33 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/06/04 11:26:55 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ void	try_paths(t_shell *shell, char **args, char **envp)
 
 	i = 0;
 	paths = NULL;
+	if (!args[0][0])
+		return ;
 	while (envp[i] && ft_strncmp(envp[i], "PATH=", 5))
 		i++;
 	if (envp[i])
@@ -72,33 +74,10 @@ void	try_paths(t_shell *shell, char **args, char **envp)
 		execve(paths[i], args, envp);
 		if (errno == EACCES)
 			break ;
-		free(paths[i]);
 		i++;
 	}
+	i = 0;
+	while (paths[i])
+		free(paths[i++]);
 	free(paths);
-}
-
-int	ft_exec_builtins(t_shell *shell, t_token *token)
-{
-	int		result;
-	t_args	*args;
-	int		tempfd;
-
-	args = token->args;
-	result = 0;
-	if (ft_strcmp(args->arg, "echo") == 0)
-		result = ft_echo(shell, args);
-	if (ft_strcmp(args->arg, "pwd") == 0)
-		result = ft_pwd();
-	if (ft_strcmp(args->arg, "cd") == 0)
-		result = ft_cd(shell, args, shell->env);
-	if (ft_strcmp(args->arg, "env") == 0)
-		result = ft_env(shell, token);
-	if (ft_strcmp(args->arg, "export") == 0)
-		result = ft_export(shell, token);
-	if (ft_strcmp(args->arg, "unset") == 0)
-		result = ft_unset(shell);
-	if (ft_strcmp(args->arg, "exit") == 0)
-		result = ft_exit_minishell(shell);
-	return (result);
 }
