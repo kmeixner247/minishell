@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 16:23:55 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/06/04 10:05:11 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/06/04 16:38:51 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ char	*currency_exchange(t_shell *shell, char *str, char **envp)
 {
 	char	*before;
 	char	*replace;
-	char	*after;
 	int		doubflag;
 	char	*varname;
 
@@ -58,14 +57,16 @@ char	*currency_exchange(t_shell *shell, char *str, char **envp)
 		str += ft_strlen(varname);
 		free(varname);
 	}
-	after = str;
-	return (ft_strjoin2(ft_strjoin3(before, replace), after));
+	str = ft_strjoin2(ft_strjoin3(before, replace), str);
+	free(before);
+	return (str);
 }
 
 //handles all the dollars
 char	*accountant(t_shell *shell, char *str)
 {
 	char	*tmp;
+	char	*tmp2;
 	int		doubflag;
 	char	**envp;
 
@@ -74,8 +75,6 @@ char	*accountant(t_shell *shell, char *str)
 	tmp = str;
 	while (find_cash(str, &doubflag) >= 0)
 		str = currency_exchange(shell, str, envp);
-	if (tmp != str)
-		free(tmp);
 	free(envp);
 	return (str);
 }
