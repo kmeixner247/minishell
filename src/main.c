@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsubel <jsubel@student.42wolfsburg.de >    +#+  +:+       +#+        */
+/*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 10:40:30 by jsubel            #+#    #+#             */
-/*   Updated: 2022/05/30 13:23:29 by jsubel           ###   ########.fr       */
+/*   Updated: 2022/06/04 10:40:43 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,6 @@ static void	ft_parse_and_execute(t_shell *shell, char *input)
 {
 	parser(shell, input);
 	exec(shell);
-	g_pids[0] = 0;
-	free(g_pids);
-	g_pids = NULL;
 	parsing_cleanup(shell);
 	shell->token = NULL;
 }

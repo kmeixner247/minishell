@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 10:07:09 by jsubel            #+#    #+#             */
-/*   Updated: 2022/06/01 16:43:07 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/06/04 10:59:38 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void	ft_error_isdir(t_shell *shell, char *arg)
 
 	tmp = ft_strjoin(arg, ": ");
 	tmp = ft_strjoin2(tmp, ERR_ISDIR);
-	ft_error_msg(shell, tmp, 1);
+	ft_error_msg(shell, tmp, 126);
 	free(tmp);
 }
 
@@ -111,10 +111,10 @@ void	notfound_or_isdir(t_shell *shell, char *path)
 
 	statbuf = ft_calloc(1, sizeof(struct stat));
 	stat(path, statbuf);
-	if (errno == EACCES)
-		ft_error_msg(shell, shell->token->args->arg, 0);
-	else if (S_ISDIR(statbuf->st_mode))
+	if (S_ISDIR(statbuf->st_mode))
 		ft_error(shell, path, ERRNO_ISDIR);
+	else if (errno == EACCES)
+		ft_error_msg(shell, shell->token->args->arg, 0);
 	else
 		ft_error(shell, path, ERRNO_NOT_FOUND);
 	free(statbuf);

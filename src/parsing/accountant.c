@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 16:23:55 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/06/04 09:19:11 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/06/04 10:05:11 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ char	*currency_exchange(t_shell *shell, char *str, char **envp)
 	str++;
 	if (*str == 63)
 	{
-		replace = ft_strdup(ft_itoa(shell->lastreturn));
+		replace = ft_itoa(shell->lastreturn);
 		str++;
 	}
 	else

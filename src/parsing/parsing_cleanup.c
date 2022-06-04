@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_cleanup.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsubel <jsubel@student.42wolfsburg.de >    +#+  +:+       +#+        */
+/*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 11:16:50 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/30 11:21:24 by jsubel           ###   ########.fr       */
+/*   Updated: 2022/06/04 10:40:50 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,12 @@ int	parsing_cleanup(t_shell *shell)
 		tokentmp = token;
 		token = token->next;
 		free(tokentmp);
+	}	
+	if (g_pids)
+	{
+		g_pids[0] = 0;
+		free(g_pids);
+		g_pids = NULL;
 	}
 	shell->token = NULL;
 	return (0);

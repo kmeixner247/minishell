@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 10:53:46 by jsubel            #+#    #+#             */
-/*   Updated: 2022/06/03 20:49:44 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/06/04 10:53:55 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,11 @@
 # define ERRNO_EXIT_ISNUM 255
 # define ERR_AMBIG "ambiguous redirect"
 # define ERRNO_AMBIG 12
-# define ERR_UNCLOSED_QUOTES "unclosed quotes"
+# define ERR_UNCLOSED_QUOTES "syntax error: unclosed quotes"
 # define ERRNO_UNCLOSED_QUOTES 13
-# define ERR_PIPE_INPUT "no valid input before or after pipe"
+# define ERR_PIPE_INPUT "syntax error: no valid input before or after pipe"
 # define ERRNO_PIPE_INPUT 14
-# define ERR_REDIR_INPUT "no valid input after redirection"
+# define ERR_REDIR_INPUT "syntax error: no valid input after redirection"
 # define ERRNO_REDIR_INPUT 15
 # define ERR_NOT_FOUND "command not found"
 # define ERRNO_NOT_FOUND 127
