@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 13:20:32 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/06/04 09:21:21 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/06/05 12:40:24 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,8 @@ static char	*assemble_var(char *envvar)
 	j = 0;
 	while (envvar[i])
 	{
-		if (envvar[i] == 34 || envvar[i] == 39 || envvar[i] == 36)
+		if (envvar[i] == 34 || envvar[i] == 39 || envvar[i] == 36 || \
+			envvar[i] == 60 || envvar[i] == 62 || envvar[i] == 124)
 			j += 2;
 		i++;
 		j++;
