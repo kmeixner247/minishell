@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 19:03:34 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/06/04 11:26:55 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/06/05 13:07:27 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,18 @@ void	assign_pipes(t_token *token, int pipefds[2])
 	}
 }
 
+static void	free_paths(char **paths)
+{
+	int	i;
+
+	if (!paths)
+		return ;
+	i = 0;
+	while (paths[i])
+		free(paths[i]);
+	free(paths);
+}
+
 void	try_paths(t_shell *shell, char **args, char **envp)
 {
 	int		i;
@@ -76,8 +88,5 @@ void	try_paths(t_shell *shell, char **args, char **envp)
 			break ;
 		i++;
 	}
-	i = 0;
-	while (paths[i])
-		free(paths[i++]);
-	free(paths);
+	free_paths(paths);
 }
