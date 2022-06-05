@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 09:35:21 by jsubel            #+#    #+#             */
-/*   Updated: 2022/06/04 17:47:54 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/06/05 13:25:57 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	exec_children(t_shell *shell, t_token *token)
 		close(token->outfd);
 	args = get_args(token->args);
 	if (isbuiltin(args[0]))
-		status = ft_exec_builtins(shell, token);
+		status = ft_exec_builtins(shell, token, -1);
 	else if (check_char('/', args[0]))
 		execve(args[0], args, envp);
 	else
@@ -104,7 +104,7 @@ void	exec(t_shell *shell)
 		ft_meta_wild_quote(shell, token);
 		tempfd = dup(1);
 		dup2(token->outfd, 1);
-		shell->lastreturn = ft_exec_builtins(shell, token);
+		shell->lastreturn = ft_exec_builtins(shell, token, tempfd);
 		if (token->infd > 0)
 			close(token->infd);
 		if (token->outfd > 1)

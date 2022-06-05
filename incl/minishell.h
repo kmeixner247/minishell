@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 10:53:46 by jsubel            #+#    #+#             */
-/*   Updated: 2022/06/04 17:28:54 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/06/05 13:26:30 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,7 +154,7 @@ void		ft_error_minishell(t_token *token);
 int			ft_cd(t_shell *shell, t_args *args, t_env *env);
 int			ft_env(t_shell *shell, t_token *token);
 
-int			ft_exit_minishell(t_shell *shell);
+int			ft_exit_minishell(t_shell *shell, int tempfd);
 
 // utils_env.c
 
@@ -194,7 +194,7 @@ char		*accountant_hd(t_shell *shell, char *str);
 void		write_pids(t_shell *shell);
 void		assign_pipes(t_token *token, int pipefds[2]);
 void		try_paths(t_shell *shell, char **args, char **envp);
-int			ft_exec_builtins(t_shell *shell, t_token *token);
+int			ft_exec_builtins(t_shell *shell, t_token *token, int tempfd);
 
 // redirs.c
 

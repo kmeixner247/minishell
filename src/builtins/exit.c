@@ -6,13 +6,14 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 12:01:04 by jsubel            #+#    #+#             */
-/*   Updated: 2022/06/03 21:05:25 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/06/05 13:27:50 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
 static int	ft_isnumeric(char *str);
+static void	ft_exit_cleanup(t_shell *shell, int tempfd);
 
 /**
 * @brief cleanly terminate and exit the program
@@ -21,7 +22,7 @@ static int	ft_isnumeric(char *str);
 *	if one numeric argument, exit with that
 *	if more than one, throw error and don't exit
 */
-int	ft_exit_minishell(t_shell *shell)
+int	ft_exit_minishell(t_shell *shell, int tempfd)
 {
 	int	nbr_args;
 	int	exitcode;
@@ -43,10 +44,18 @@ int	ft_exit_minishell(t_shell *shell)
 	}
 	else if (nbr_args == 2)
 		exitcode = ft_atoi(shell->token->args->next->arg);
-	ft_free_everything(shell);
-	rl_clear_history();
+	ft_exit_cleanup(shell, tempfd);
 	exit(exitcode);
 	return (0);
+}
+
+/** @brief clear memory and close file descriptor if applicable */
+static void	ft_exit_cleanup(t_shell *shell, int tempfd)
+{
+	ft_free_everything(shell);
+	rl_clear_history();
+	if (tempfd > 0)
+		close(tempfd);
 }
 
 /** @brief check if a string is fully numeric */
