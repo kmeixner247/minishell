@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 12:01:04 by jsubel            #+#    #+#             */
-/*   Updated: 2022/06/05 13:27:50 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/06/05 14:01:48 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	ft_exit_minishell(t_shell *shell, int tempfd)
 	ft_putendl_fd("exit", 2);
 	nbr_args = ft_nbr_args(shell->token->args);
 	if (nbr_args == 1)
-		exitcode = 0;
+		exitcode = shell->lastreturn;
 	else if (!(ft_isnumeric(shell->token->args->next->arg)))
 	{
 		ft_error_msg(shell, ERR_EXIT_ISNUM, ERRNO_EXIT_ISNUM);
