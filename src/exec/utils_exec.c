@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 19:03:34 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/06/05 13:07:27 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/06/05 13:12:12 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,10 @@ static void	free_paths(char **paths)
 		return ;
 	i = 0;
 	while (paths[i])
+	{
 		free(paths[i]);
+		i++;
+	}
 	free(paths);
 }
 
