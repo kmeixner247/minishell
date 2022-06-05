@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 19:03:34 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/06/05 13:12:12 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/06/05 22:37:00 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,4 +92,13 @@ void	try_paths(t_shell *shell, char **args, char **envp)
 		i++;
 	}
 	free_paths(paths);
+}
+
+void	ft_meta_wild_quote(t_shell *shell, t_token *token)
+{
+	if (token->args)
+	{
+		meta_args_wildcard(token);
+		quote_handler(token);
+	}
 }

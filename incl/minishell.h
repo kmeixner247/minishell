@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 10:53:46 by jsubel            #+#    #+#             */
-/*   Updated: 2022/06/05 13:26:30 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/06/05 22:37:17 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@
 # define ERR_PAR_DIR "chdir: error retrieving current directory: \
 getcwd: cannot access parent directories"
 # define ERRNO_PAR_DIR 21
+
 extern int	*g_pids;
 
 /**
@@ -195,6 +196,7 @@ void		write_pids(t_shell *shell);
 void		assign_pipes(t_token *token, int pipefds[2]);
 void		try_paths(t_shell *shell, char **args, char **envp);
 int			ft_exec_builtins(t_shell *shell, t_token *token, int tempfd);
+void		ft_meta_wild_quote(t_shell *shell, t_token *token);
 
 // redirs.c
 
