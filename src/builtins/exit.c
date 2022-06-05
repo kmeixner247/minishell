@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 12:01:04 by jsubel            #+#    #+#             */
-/*   Updated: 2022/06/05 14:01:48 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/06/05 14:09:07 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ static void	ft_exit_cleanup(t_shell *shell, int tempfd);
 * @brief cleanly terminate and exit the program
 * Check arguments of invocation:
 *   if no argument, exit with global error number
+*	if first argument non-numeric, throw error and don't exit
 *	if one numeric argument, exit with that
 *	if more than one, throw error and don't exit
 */
@@ -28,7 +29,8 @@ int	ft_exit_minishell(t_shell *shell, int tempfd)
 	int	exitcode;
 
 	exitcode = 0;
-	ft_putendl_fd("exit", 2);
+	if (!shell->token->next)
+		ft_putendl_fd("exit", 2);
 	nbr_args = ft_nbr_args(shell->token->args);
 	if (nbr_args == 1)
 		exitcode = shell->lastreturn;
