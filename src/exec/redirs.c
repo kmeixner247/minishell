@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 18:17:00 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/06/05 20:06:23 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/06/05 21:55:06 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,17 +46,9 @@ static int	redir_output(t_shell *shell, t_redir *redir, int tempoutfd)
 static void	ft_change_fd(t_token *token, int tempinfd, int tempoutfd)
 {
 	if (tempinfd > 0)
-	{
 		token->infd = tempinfd;
-		dup2(token->infd, 0);
-		close(token->infd);
-	}
 	if (tempoutfd > 1)
-	{
 		token->outfd = tempoutfd;
-		dup2(token->outfd, 1);
-		close(token->outfd);
-	}
 }
 
 int	handle_redirs_single(t_shell *shell, t_token *token)

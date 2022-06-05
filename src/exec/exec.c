@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 09:35:21 by jsubel            #+#    #+#             */
-/*   Updated: 2022/06/05 21:43:08 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/06/05 21:56:35 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,21 @@ void	exec_children(t_shell *shell, t_token *token)
 
 	status = -1;
 	if (handle_redirs_single(shell, token) || !token->args)
+	{
+		if (token->infd > 0)
+			close(token->infd);
+		if (token->outfd > 1)
+			close(token->outfd);
 		exit(1);
+	}
 	envp = get_env(shell->env);
 	ft_meta_wild_quote(shell, token);
+	dup2(token->infd, 0);
+	dup2(token->outfd, 1);
+	if (token->infd > 0)
+		close(token->infd);
+	if (token->outfd > 1)
+		close(token->outfd);
 	args = get_args(token->args);
 	if (isbuiltin(args[0]))
 		status = ft_exec_builtins(shell, token, -1);
