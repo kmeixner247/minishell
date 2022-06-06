@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 10:40:30 by jsubel            #+#    #+#             */
-/*   Updated: 2022/06/06 18:47:23 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/06/06 19:26:59 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ static void	ft_parse_and_execute(t_shell *shell, char *input)
 {
 	t_logical	*inputs;
 	t_logical	*tmp;
+
 	inputs = split_by_logicals(input);
 	tmp = inputs;
 	while (tmp)
