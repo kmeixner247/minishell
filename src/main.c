@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 10:40:30 by jsubel            #+#    #+#             */
-/*   Updated: 2022/06/04 10:40:43 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/06/06 18:47:23 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,23 @@ int	*g_pids = NULL;
 
 static void	ft_parse_and_execute(t_shell *shell, char *input)
 {
-	parser(shell, input);
-	exec(shell);
-	parsing_cleanup(shell);
-	shell->token = NULL;
+	t_logical	*inputs;
+	t_logical	*tmp;
+	inputs = split_by_logicals(input);
+	tmp = inputs;
+	while (tmp)
+	{
+		if (!(tmp->operator == 2 && !shell->lastreturn) && \
+			!(tmp->operator == 1 && shell->lastreturn))
+		{
+			parser(shell, tmp->token);
+			exec(shell);
+			parsing_cleanup(shell);
+			shell->token = NULL;
+		}
+		tmp = tmp->next;
+	}
+	free_logicals(inputs);
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -42,38 +55,6 @@ int	main(int argc, char **argv, char **envp)
 	printf("/* ********************************************************** */\n");
 	shell(envp);
 	return (0);
-}
-
-//	this is just temporarily here for testing
-void	printtoken(t_token **tokenn)
-{
-	t_args	*args;
-	t_redir	*redir;
-	t_token	*token;
-
-	token = *tokenn;
-	while (token)
-	{
-		printf("-------------NEW TOKEN------------\n");
-		printf("PID: %d\n", token->pid);
-		args = token->args;
-		printf("---------------ARGS---------------\n");
-		while (args)
-		{
-			printf("%s\n", args->arg);
-			args = args->next;
-		}
-		printf("----------------------------------\n");
-		redir = token->redir;
-		printf("--------------REDIRS--------------\n");
-		while (redir)
-		{
-			printf("%d: %s\n", redir->id, redir->filename);
-			redir = redir->next;
-		}
-		printf("----------------------------------\n");
-		token = token->next;
-	}
 }
 
 void	shell(char **envp)

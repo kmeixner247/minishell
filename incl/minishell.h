@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 10:53:46 by jsubel            #+#    #+#             */
-/*   Updated: 2022/06/05 22:37:17 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/06/06 18:44:51 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,13 @@ getcwd: cannot access parent directories"
 
 extern int	*g_pids;
 
+typedef struct s_logical
+{
+	char				*token;
+	int					operator;
+	struct s_logical	*next;
+}						t_logical;
+
 /**
  * @brief Main structure holding all the other structs
  * @param token one token per command, saved as a linked list
@@ -73,6 +80,7 @@ extern int	*g_pids;
  * @param lastreturn return of last process, saved for $?
  * @param raw_input raw user input for safekeeping and debugging
  */
+
 typedef struct s_shell
 {
 	struct s_token	*token;
@@ -233,6 +241,14 @@ char		*currency_exchange(t_shell *shell, char *str, char **envp);
 // plumber.c
 
 char		**plumber(char *str);
+
+// logicals.c
+
+char		*has_logical(char *str);
+void		logical_addback(t_logical **start, t_logical *new);
+t_logical	*new_logical(char *str);
+t_logical	*split_by_logicals(char *input);
+void		free_logicals(t_logical *logical);
 
 // prechecks.c
 

@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 16:30:07 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/06/04 10:51:55 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/06/06 16:47:11 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static int	checkpipes(char *str)
 {
 	while (*str)
 	{
-		if (*str == 124)
+		if (*str == 124 && *(str+1) != 124)
 		{
 			str++;
 			while (*str == 32)
