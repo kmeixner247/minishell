@@ -6,21 +6,55 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 17:07:10 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/06/06 18:48:07 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/06/06 21:28:34 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
+int	find_closing_parenthesis(char *str)
+{
+	int	i;
+	int	level;
+	int	sing;
+	int	doub;
+
+	i = 0;
+	level = 0;
+	sing = -1;
+	doub = -1;
+	while (str[i])
+	{
+		if (str[i] == 41 && sing == -1 && doub == -1)
+		{
+			if (level == 1)
+				break ;
+			else
+				level--;
+		}
+		else if (str[i] == 34 && sing == -1)
+			doub *= -1;
+		else if (str[i] == 39 && doub == -1)
+			sing *= -1;
+		else if (str[i] == 40 && doub == -1 && sing == -1)
+			level++;
+		i++;
+	}
+	return (i);
+}
+
 char	*has_logical(char *str)
 {
 	int	sing;
 	int	doub;
+	int	paren;
 
 	sing = -1;
 	doub = -1;
 	while (*str)
 	{
+		if (*str == 40 && sing == -1 && doub == -1)
+			str += find_closing_parenthesis(str);
 		if (*str == 34 && sing == -1)
 			doub *= -1;
 		if (*str == 39 && doub == -1)
@@ -49,11 +83,28 @@ void	logical_addback(t_logical **start, t_logical *new)
 	temp->next = new;
 }
 
+void	cut_spaces(char **str)
+{
+	int	i;
+
+	i = 0;
+	while (**str == 32)
+		(*str)++;
+	while ((*str)[i])
+		i++;
+	if (i > 0)
+		i--;
+	while (i > 0 && (*str)[i] == 32)
+		i--;
+	(*str)[i + 1] = 0;
+}
+
 t_logical	*new_logical(char *str)
 {
 	int			size;
 	t_logical	*new;
 
+	cut_spaces(&str);
 	new = ft_calloc(1, sizeof(t_logical));
 	if (!new)
 		return (NULL);
@@ -72,6 +123,13 @@ t_logical	*new_logical(char *str)
 		size = has_logical(str) - str;
 	else
 		size = ft_strlen(str);
+	new->parentheses = 0;
+	if (*str == 40)
+	{
+		new->parentheses = 1;
+		str++;
+		size -= 2;
+	}
 	new->token = ft_calloc(size + 1, sizeof(char));
 	ft_strlcpy(new->token, str, size + 1);
 	new->next = NULL;

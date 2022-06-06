@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 10:53:46 by jsubel            #+#    #+#             */
-/*   Updated: 2022/06/06 18:44:51 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/06/06 20:17:35 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ typedef struct s_logical
 {
 	char				*token;
 	int					operator;
+	int					parentheses;
 	struct s_logical	*next;
 }						t_logical;
 
