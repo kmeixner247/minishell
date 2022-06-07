@@ -6,7 +6,7 @@
 /*   By: jsubel <jsubel@student.42wolfsburg.de >    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 10:53:46 by jsubel            #+#    #+#             */
-/*   Updated: 2022/06/07 09:49:45 by jsubel           ###   ########.fr       */
+/*   Updated: 2022/06/07 13:47:43 by jsubel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,11 +60,13 @@
 # define ERRNO_UNSET 19
 # define ERR_HOME_UNSET "HOME not set"
 # define ERRNO_HOME_UNSET 20
+# define ERR_OLDPWD_UNSET "OLDPWD not set"
+# define ERRNO_OLDPWD_UNSET 21
 # define ERR_PAR_DIR "chdir: error retrieving current directory: \
 getcwd: cannot access parent directories"
-# define ERRNO_PAR_DIR 21
+# define ERRNO_PAR_DIR 22
 # define ERR_INVAL_OPT "invalid option"
-# define ERRNO_INVAL_OPT 22
+# define ERRNO_INVAL_OPT 23
 
 extern int	*g_pids;
 

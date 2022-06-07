@@ -6,7 +6,7 @@
 /*   By: jsubel <jsubel@student.42wolfsburg.de >    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 08:58:58 by jsubel            #+#    #+#             */
-/*   Updated: 2022/06/03 13:24:01 by jsubel           ###   ########.fr       */
+/*   Updated: 2022/06/07 13:51:55 by jsubel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 static void		ft_change_env_pwd(char *pwd_old, char *pwd_new, t_env *env);
 static int		ft_cd_no_args(t_shell *shell, char *pwd_old, t_env *env);
+static int		ft_cd_last_directory(t_shell *shell, char *pwd_old, t_env *env);
 
 /**
  * @brief recode of change directory (cd) builtin
@@ -35,6 +36,8 @@ int	ft_cd(t_shell *shell, t_args *args, t_env *env)
 		perror(ERR_PAR_DIR);
 		return (ERRNO_PAR_DIR);
 	}
+	if (ft_strncmp(args->next->arg, "-", 1) == 0)
+		return (ft_cd_last_directory(shell, pwd_old, env));
 	if (chdir(args->next->arg) != 0)
 		ft_error_msg(shell, args->next->arg, 0);
 	else
@@ -119,6 +122,29 @@ static int	ft_cd_no_args(t_shell *shell, char *pwd_old, t_env *env)
 		ft_error_msg(shell, "cd: ", 0);
 	ft_change_env_pwd(pwd_old, pwd_home, env);
 	free(pwd_home);
+	free(pwd_old);
+	return (0);
+}
+
+static int	ft_cd_last_directory(t_shell *shell, char *pwd_old, t_env *env)
+{
+	t_env	*last_dir;
+	char	*pwd_last;
+
+	if (!pwd_old)
+		pwd_old = ft_substr(ft_find_element(shell->env, "PWD")->var, \
+			5, ft_strlen(ft_find_element(shell->env, "PWD")->var) - 5);
+	last_dir = ft_find_element(shell->env, "OLDPWD");
+	if (!last_dir)
+	{
+		ft_error_msg(shell, ERR_OLDPWD_UNSET, ERRNO_OLDPWD_UNSET);
+		return (ERRNO_OLDPWD_UNSET);
+	}
+	pwd_last = ft_substr(last_dir->var, 7, ft_strlen(last_dir->var) - 7);
+	if (chdir(pwd_last) != 0)
+		ft_error_msg(shell, "cd: ", 0);
+	ft_change_env_pwd(pwd_old, pwd_last, env);
+	free(pwd_last);
 	free(pwd_old);
 	return (0);
 }
