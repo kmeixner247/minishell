@@ -23,22 +23,23 @@ SRC_FILES 	=	main.c \
 				$(EXEC)free.c \
 				$(EXEC)here_doc.c \
 				$(EXEC)redirs.c \
+				$(EXEC)utils_error.c \
 				$(EXEC)utils_exec.c \
 				$(EXEC)utils_here_doc.c \
 				$(PAR)accountant.c \
 				$(PAR)parser.c \
-				$(PAR)plumber.c \
 				$(PAR)parsing_cleanup.c \
+				$(PAR)plumber.c \
 				$(PAR)prechecks.c \
 				$(PAR)quotes.c \
 				$(PAR)secretary.c \
 				$(PAR)utils_accountant.c \
 				$(PAR)utils_args.c \
+				$(PAR)utils_parsing.c \
 				$(PAR)utils_redir.c \
 				$(PAR)utils_tokens.c \
-				$(PAR)utils_parsing.c \
-				$(PAR)wildcard.c \
 				$(PAR)utils_wildcard.c \
+				$(PAR)wildcard.c \
 				signals.c
 
 SRC			= $(addprefix $(SRC_PATH)/,$(SRC_FILES))

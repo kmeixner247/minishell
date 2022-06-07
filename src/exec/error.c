@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
+/*   By: jsubel <jsubel@student.42wolfsburg.de >    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 10:07:09 by jsubel            #+#    #+#             */
-/*   Updated: 2022/06/04 17:48:26 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/06/07 08:58:58 by jsubel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,58 +33,6 @@ int	ft_error_msg(t_shell *shell, char *msg, int err_num)
 	}
 	free(tmp);
 	return (-1);
-}
-
-void	ft_error_notfound(t_shell *shell, char *arg)
-{
-	char	*tmp;
-
-	tmp = ft_strjoin(arg, ": ");
-	tmp = ft_strjoin2(tmp, ERR_NOT_FOUND);
-	ft_error_msg(shell, tmp, 127);
-	free(tmp);
-}
-
-void	ft_error_export(t_shell *shell, char *arg)
-{
-	char	*tmp;
-
-	tmp = ft_strjoin("export: `", arg);
-	tmp = ft_strjoin2(tmp, "': ");
-	tmp = ft_strjoin2(tmp, ERR_EXPORT);
-	ft_error_msg(shell, tmp, 1);
-	free(tmp);
-}
-
-void	ft_error_unset(t_shell *shell, char *arg)
-{
-	char	*tmp;
-
-	tmp = ft_strjoin("unset: `", arg);
-	tmp = ft_strjoin2(tmp, "': ");
-	tmp = ft_strjoin2(tmp, ERR_EXPORT);
-	ft_error_msg(shell, tmp, 1);
-	free(tmp);
-}
-
-void	ft_error_ambig(t_shell *shell, char *arg)
-{
-	char	*tmp;
-
-	tmp = ft_strjoin(arg, ": ");
-	tmp = ft_strjoin2(tmp, ERR_AMBIG);
-	ft_error_msg(shell, tmp, 1);
-	free(tmp);
-}
-
-void	ft_error_isdir(t_shell *shell, char *arg)
-{
-	char	*tmp;
-
-	tmp = ft_strjoin(arg, ": ");
-	tmp = ft_strjoin2(tmp, ERR_ISDIR);
-	ft_error_msg(shell, tmp, 126);
-	free(tmp);
 }
 
 void	ft_error(t_shell *shell, char *arg, int error)
@@ -114,7 +62,7 @@ int	notfound_or_isdir(t_shell *shell, char *path, char **ar, char **ev)
 	{
 		ft_error(shell, path, ERRNO_ISDIR);
 		err = 126;
-	}		
+	}
 	else if (errno == EACCES)
 	{
 		ft_error_msg(shell, shell->token->args->arg, 0);
