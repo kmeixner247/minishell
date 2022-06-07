@@ -6,7 +6,7 @@
 /*   By: jsubel <jsubel@student.42wolfsburg.de >    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 10:07:09 by jsubel            #+#    #+#             */
-/*   Updated: 2022/06/07 08:58:58 by jsubel           ###   ########.fr       */
+/*   Updated: 2022/06/07 09:46:52 by jsubel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ int	ft_error_msg(t_shell *shell, char *msg, int err_num)
 	return (-1);
 }
 
+/** @brief handler for specific errors */
 void	ft_error(t_shell *shell, char *arg, int error)
 {
 	if (error == ERRNO_NOT_FOUND)

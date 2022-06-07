@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
+/*   By: jsubel <jsubel@student.42wolfsburg.de >    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 10:53:46 by jsubel            #+#    #+#             */
-/*   Updated: 2022/06/05 22:37:17 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/06/07 09:49:45 by jsubel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@
 # define ERR_PAR_DIR "chdir: error retrieving current directory: \
 getcwd: cannot access parent directories"
 # define ERRNO_PAR_DIR 21
+# define ERR_INVAL_OPT "invalid option"
+# define ERRNO_INVAL_OPT 22
 
 extern int	*g_pids;
 
@@ -209,6 +211,13 @@ void		ft_error_handler(t_shell *shell, char *msg, int err_num);
 void		ft_error(t_shell *shell, char *arg, int error);
 int			notfound_or_isdir(t_shell *shell, char *path, char **ar, char **ev);
 
+// utils_error.c
+
+void	ft_error_notfound(t_shell *shell, char *arg);
+void	ft_error_export(t_shell *shell, char *arg);
+void	ft_error_isdir(t_shell *shell, char *arg);
+void	ft_error_unset(t_shell *shell, char *arg);
+void	ft_error_ambig(t_shell *shell, char *arg);
 // free.c
 
 void		ft_free_everything(t_shell *shell);

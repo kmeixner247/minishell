@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
+/*   By: jsubel <jsubel@student.42wolfsburg.de >    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 11:29:32 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/06/01 15:16:48 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/06/07 11:32:38 by jsubel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static int	search_env(t_shell *shell, char **args)
 	int		i;
 	int		status;
 	char	*tempstr;
-
+	char	*errstr;
 	i = 1;
 	status = 0;
 	while (args[i])
@@ -64,7 +64,17 @@ static int	search_env(t_shell *shell, char **args)
 		tempstr = get_varname(args[i]);
 		if (!is_valid_varname(tempstr))
 		{
-			ft_error(shell, args[i], ERRNO_EXPORT);
+			if (tempstr[0] == '-')
+			{
+				errstr = ft_strdup("export: ");
+				errstr = ft_strjoin3(errstr, ft_substr(tempstr, 0, 2));
+				errstr = ft_strjoin2(errstr, ": ");
+				errstr = ft_strjoin2(errstr, ERR_INVAL_OPT);
+				ft_error_msg(shell, errstr, ERRNO_INVAL_OPT);
+				free(errstr);
+			}
+			else
+				ft_error(shell, args[i], ERRNO_EXPORT);
 			status = 1;
 		}
 		else
