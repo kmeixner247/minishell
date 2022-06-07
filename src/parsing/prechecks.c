@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 16:30:07 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/06/07 11:22:46 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/06/07 23:13:23 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,10 +105,10 @@ int	checklogicals(char *str)
 
 int check_opening_parentheses(char *str)
 {
-	char	previous;
-	int		start;
+	int	start;
+	int	i;
 
-	previous = 0;
+	i = 0;
 	start = 1;
 	while (*str)
 	{
@@ -116,18 +116,19 @@ int check_opening_parentheses(char *str)
 			return (1);
 		if (*str == 40)
 		{
-			str++;
-			while (*str == 32)
-				str++;
-			if (check_char(*str, "<>|)") || (*str == 38 && *(str + 1) == 38))
+			i = 1;
+			while (str[i] == 32)
+				i++;
+			if (str[i] == 41)
 				return (1);
 		}
-		if ((*str == 38 && previous == 38) || (*str == 124 && previous == 124))
+		if ((*str == 38 || *str == 124) && *str == *(str + 1))
+		{
+			str++;
 			start = 1;
-		else if (*str != 32)
+		}
+		else if (*str != 32 && *str != 40)
 			start = 0;
-		if (*str != 32)
-			previous = *str;
 		str += quote_skipper(str);
 		if (*str)
 			str++;
@@ -144,11 +145,12 @@ int	check_closing_parentheses(char *str)
 			str++;
 			while (*str == 32)
 				str++;
-			if (*str && *str != 41 && (!check_char(*str, "&|") && *str == *(str + 1)))
+			if (!(!*str || *str == 41 || *str == 38 && *(str + 1) == 38 \
+				|| *str == 124 && *(str + 1) == 124))
 				return (1);
 		}
 		str += quote_skipper(str);
-		if (*str)
+		if (*str && *str != 41)
 			str++;
 	}
 	return (0);
@@ -157,21 +159,23 @@ int	check_closing_parentheses(char *str)
 int checkparentheses(char *str)
 {
 	int	level;
+	int	i;
 
+	i = 0;
 	level = 0;
-	if (check_opening_parentheses(str) || check_closing_parentheses(str))
-		return (1);
-	while (*str)
+	while (str[i])
 	{
-		if (*str == 40)
+		if (str[i] == 40)
 			level++;
-		if (*str == 41)
+		if (str[i] == 41)
 			level--;
-		str += quote_skipper(str);
-		if (*str)
-			str++;
+		i += quote_skipper(str + i);
+		if (str[i])
+			i++;
 	}
 	if (level != 0)
+		return (1);
+	if (check_opening_parentheses(str) || check_closing_parentheses(str))
 		return (1);
 	return (0);
 }

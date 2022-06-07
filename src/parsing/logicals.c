@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 17:07:10 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/06/07 13:52:37 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/06/07 23:23:15 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,43 +115,6 @@ int	find_size(char *str)
 		end++;
 	return (end - str);
 }
-
-// t_logical	*new_logical(char *str)
-// {
-// 	int			size;
-// 	t_logical	*new;
-
-// 	cut_spaces(&str);
-// 	new = ft_calloc(1, sizeof(t_logical));
-// 	if (!new)
-// 		return (NULL);
-// 	new->operator = 0;
-// 	if (*str == 38)
-// 	{
-// 		new->operator = 1;
-// 		str += 2;
-// 	}
-// 	else if (*str == 124)
-// 	{
-// 		new->operator = 2;
-// 		str += 2;
-// 	}
-// 	if (has_logical(str))
-// 		size = find_size(str);
-// 	else
-// 		size = ft_strlen(str);
-// 	new->parentheses = 0;
-// 	if (*str == 40)
-// 	{
-// 		new->parentheses = 1;
-// 		str++;
-// 		size -= 2;
-// 	}
-// 	new->token = ft_calloc(size + 1, sizeof(char));
-// 	ft_strlcpy(new->token, str, size + 1);
-// 	new->next = NULL;
-// 	return (new);
-// }
 
 t_logical	*new_logical(char *str)
 {
