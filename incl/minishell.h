@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 10:53:46 by jsubel            #+#    #+#             */
-/*   Updated: 2022/06/06 20:17:35 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/06/07 11:23:07 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,10 @@
 # define ERR_PAR_DIR "chdir: error retrieving current directory: \
 getcwd: cannot access parent directories"
 # define ERRNO_PAR_DIR 21
-
+# define ERR_LOGICS_INPUT "syntax error: no valid input after logical operator"
+# define ERRNO_LOGICS_INPUT 22
+# define ERR_PARENTH_INPUT "syntax error: invalid use of parentheses"
+# define ERRNO_PARENTH_INPUT 23
 extern int	*g_pids;
 
 typedef struct s_logical

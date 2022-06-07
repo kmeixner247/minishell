@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 17:07:10 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/06/06 21:28:34 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/06/07 12:46:08 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,23 @@ void	cut_spaces(char **str)
 	(*str)[i + 1] = 0;
 }
 
+int	find_size(char *str)
+{
+	char	*end;
+	int		i;
+
+	if (!str)
+		return (0);
+	end = has_logical(str);
+	if (end > str)
+		end--;
+	while (end > str && *end == 32)
+		end--;
+	if (end != str)
+		end++;
+	return (end - str);
+}
+
 t_logical	*new_logical(char *str)
 {
 	int			size;
@@ -120,7 +137,7 @@ t_logical	*new_logical(char *str)
 		str += 2;
 	}
 	if (has_logical(str))
-		size = has_logical(str) - str;
+		size = find_size(str);
 	else
 		size = ft_strlen(str);
 	new->parentheses = 0;

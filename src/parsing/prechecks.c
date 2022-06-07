@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 16:30:07 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/06/06 16:47:11 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/06/07 11:22:46 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static int	checkpipes(char *str)
 {
 	while (*str)
 	{
-		if (*str == 124 && *(str+1) != 124)
+		if (*str == 124 && *(str + 1) != 124)
 		{
 			str++;
 			while (*str == 32)
@@ -46,7 +46,8 @@ static int	checkpipes(char *str)
 				return (1);
 		}
 		str += quote_skipper(str);
-		str++;
+		if (*str)
+			str++;
 	}
 	return (0);
 }
@@ -62,11 +63,12 @@ static int	checkredirs(char *str)
 				str++;
 			while (*str == 32)
 				str++;
-			if (check_char(*str, "<>|"))
+			if (check_char(*str, "<>|") || (*str == 38 && *(str + 1) == 38))
 				return (1);
 		}
 		str += quote_skipper(str);
-		str++;
+		if (*str)
+			str++;
 	}
 	return (0);
 }
@@ -81,6 +83,99 @@ int	justspaces(char *str)
 		return (0);
 }
 
+int	checklogicals(char *str)
+{
+	while (*str)
+	{
+		if ((*str == 124 && *(str + 1) == 124) || \
+			(*str == 38 && *(str + 1) == 38))
+		{
+			str += 2;
+			while (*str == 32)
+				str++;
+			if (check_char(*str, "<>|") || (*str == 38 && *(str + 1) == 38))
+				return (1);
+		}
+		str += quote_skipper(str);
+		if (*str)
+			str++;
+	}
+	return (0);
+}
+
+int check_opening_parentheses(char *str)
+{
+	char	previous;
+	int		start;
+
+	previous = 0;
+	start = 1;
+	while (*str)
+	{
+		if (*str == 40 && start == 0)
+			return (1);
+		if (*str == 40)
+		{
+			str++;
+			while (*str == 32)
+				str++;
+			if (check_char(*str, "<>|)") || (*str == 38 && *(str + 1) == 38))
+				return (1);
+		}
+		if ((*str == 38 && previous == 38) || (*str == 124 && previous == 124))
+			start = 1;
+		else if (*str != 32)
+			start = 0;
+		if (*str != 32)
+			previous = *str;
+		str += quote_skipper(str);
+		if (*str)
+			str++;
+	}
+	return (0);
+}
+
+int	check_closing_parentheses(char *str)
+{
+	while (*str)
+	{
+		if (*str == 41)
+		{
+			str++;
+			while (*str == 32)
+				str++;
+			if (*str && *str != 41 && (!check_char(*str, "&|") && *str == *(str + 1)))
+				return (1);
+		}
+		str += quote_skipper(str);
+		if (*str)
+			str++;
+	}
+	return (0);
+}
+
+int checkparentheses(char *str)
+{
+	int	level;
+
+	level = 0;
+	if (check_opening_parentheses(str) || check_closing_parentheses(str))
+		return (1);
+	while (*str)
+	{
+		if (*str == 40)
+			level++;
+		if (*str == 41)
+			level--;
+		str += quote_skipper(str);
+		if (*str)
+			str++;
+	}
+	if (level != 0)
+		return (1);
+	return (0);
+}
+
 int	prechecks(t_shell *shell, char *str)
 {
 	int	i;
@@ -92,10 +187,14 @@ int	prechecks(t_shell *shell, char *str)
 		return (-1);
 	if (check_openquotes(str))
 		ft_error_msg(shell, ERR_UNCLOSED_QUOTES, 258);
+	else if (checklogicals(str))
+		ft_error_msg(shell, ERR_LOGICS_INPUT, 258);
 	else if (*str == 124 || checkpipes(str))
 		ft_error_msg(shell, ERR_PIPE_INPUT, 258);
 	else if (checkredirs(str))
 		ft_error_msg(shell, ERR_REDIR_INPUT, 258);
+	else if (checkparentheses(str))
+		ft_error_msg(shell, ERR_PARENTH_INPUT, 258);
 	else
 		return (0);
 	return (-1);

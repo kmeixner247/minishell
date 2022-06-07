@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 10:40:30 by jsubel            #+#    #+#             */
-/*   Updated: 2022/06/06 21:47:40 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/06/07 12:11:01 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	*g_pids = NULL;
 
-static void	ft_parse_and_execute(t_shell *shell, char *input, int level)
+static void	ft_parse_and_execute(t_shell *shell, char *input)
 {
 	t_logical	*inputs;
 	t_logical	*tmp;
@@ -33,7 +33,7 @@ static void	ft_parse_and_execute(t_shell *shell, char *input, int level)
 				pid = fork();
 				if (!pid)
 				{
-					ft_parse_and_execute(shell, tmp->token, level + 1);
+					ft_parse_and_execute(shell, tmp->token);
 					free_logicals(inputs);
 					exit(shell->lastreturn);
 					// ft_free_everything(shell);
@@ -42,6 +42,7 @@ static void	ft_parse_and_execute(t_shell *shell, char *input, int level)
 				{
 					waitpid(pid, &shell->lastreturn, 0);
 					tmp = tmp->next;
+					continue ;
 				}
 			}
 			if (!tmp)
@@ -97,7 +98,7 @@ void	shell(char **envp)
 		}
 		add_history(input);
 		if (input && *input && !prechecks(shell, input))
-			ft_parse_and_execute(shell, input, 0);
+			ft_parse_and_execute(shell, input);
 		free(input);
 	}
 	rl_clear_history();
