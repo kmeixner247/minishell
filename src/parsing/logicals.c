@@ -6,11 +6,19 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 17:07:10 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/06/07 23:23:15 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/06/07 23:45:24 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
+
+void	init_values(int *i, int *level, int *sing, int *doub)
+{
+	i = 0;
+	level = 0;
+	*sing = -1;
+	*doub = -1;
+}
 
 int	find_closing_parenthesis(char *str)
 {
@@ -19,10 +27,7 @@ int	find_closing_parenthesis(char *str)
 	int	sing;
 	int	doub;
 
-	i = 0;
-	level = 0;
-	sing = -1;
-	doub = -1;
+	init_values(&i, &level, &sing, &doub);
 	while (str[i])
 	{
 		if (str[i] == 41 && sing == -1 && doub == -1)
@@ -116,6 +121,28 @@ int	find_size(char *str)
 	return (end - str);
 }
 
+int	set_operator(char *str)
+{
+	if (*str == 38 && *(str + 1) == 38)
+		return (1);
+	else if (*str == 124 && *(str + 1) == 124)
+		return (2);
+	else
+		return (0);
+}
+
+int	set_parentheses_flag(char **str, int *size)
+{
+	if (**str == 40)
+	{
+		(*str)++;
+		*size -= 2;
+		return (1);
+	}
+	else
+		return (0);
+}
+
 t_logical	*new_logical(char *str)
 {
 	t_logical	*new;
@@ -125,11 +152,7 @@ t_logical	*new_logical(char *str)
 	new = ft_calloc(1, sizeof(t_logical));
 	if (!new)
 		return (NULL);
-	new->operator = 0;
-	if (*str == 38 && *(str + 1) == 38)
-		new->operator = 1;
-	if (*str == 124 && *(str + 1) == 124)
-		new->operator = 2;
+	new->operator = set_operator(str);
 	if ((*str == 38 && *(str + 1) == 38) || (*str == 124 && *(str + 1) == 124))
 		str += 2;
 	while (*str == 32)
@@ -138,13 +161,7 @@ t_logical	*new_logical(char *str)
 		size = find_size(str);
 	else
 		size = ft_strlen(str);
-	new->parentheses = 0;
-	if (*str == 40)
-	{
-		new->parentheses = 1;
-		str++;
-		size -= 2;
-	}
+	new->parentheses = set_parentheses_flag(&str, &size);
 	new->token = ft_calloc(size + 1, sizeof(char));
 	ft_strlcpy(new->token, str, size + 1);
 	new->next = NULL;

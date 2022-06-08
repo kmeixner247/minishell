@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 10:53:46 by jsubel            #+#    #+#             */
-/*   Updated: 2022/06/07 11:23:07 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/06/07 23:47:43 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@
 # define ERR_TEMPLATE "Error: message goes here"
 # define ERR_EXIT_COUNT "too many arguments"
 # define ERRNO_EXIT_COUNT 10
-# define ERR_EXIT_ISNUM	 "argument is not numeric"
+# define ERR_EXIT_ISNUM "argument is not numeric"
 # define ERRNO_EXIT_ISNUM 255
 # define ERR_AMBIG "ambiguous redirect"
 # define ERRNO_AMBIG 12
@@ -67,6 +67,7 @@ getcwd: cannot access parent directories"
 # define ERRNO_LOGICS_INPUT 22
 # define ERR_PARENTH_INPUT "syntax error: invalid use of parentheses"
 # define ERRNO_PARENTH_INPUT 23
+
 extern int	*g_pids;
 
 typedef struct s_logical

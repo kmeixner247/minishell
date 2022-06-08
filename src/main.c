@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 10:40:30 by jsubel            #+#    #+#             */
-/*   Updated: 2022/06/07 12:11:01 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/06/08 08:15:12 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,45 @@
 
 int	*g_pids = NULL;
 
-static void	ft_parse_and_execute(t_shell *shell, char *input)
+static void	handle_logicals(t_shell *shell, char *input);
+
+static void	logical_child(t_shell *shell, t_logical *tmp, t_logical *inputs)
+{
+	handle_logicals(shell, tmp->token);
+	free_logicals(inputs);
+	exit(shell->lastreturn);
+}
+
+static void	ft_parse_and_execute(t_shell *shell, t_logical *tmp, char *input)
+{
+	parser(shell, tmp->token);
+	exec(shell);
+	parsing_cleanup(shell);
+	shell->token = NULL;
+}
+
+static int	normfunction(t_shell *shell, t_logical *tmp, t_logical *inputs)
+{
+	int	pid;
+
+	pid = fork();
+	if (!pid)
+		logical_child(shell, tmp, inputs);
+	else
+	{
+		waitpid(pid, &shell->lastreturn, 0);
+		tmp = tmp->next;
+		return (1);
+	}
+	return (0);
+}
+
+static void	handle_logicals(t_shell *shell, char *input)
 {
 	t_logical	*inputs;
 	t_logical	*tmp;
 	int			pid;
 
-	pid = 1;
 	inputs = split_by_logicals(input);
 	tmp = inputs;
 	while (tmp)
@@ -29,28 +61,9 @@ static void	ft_parse_and_execute(t_shell *shell, char *input)
 			!(tmp->operator == 1 && shell->lastreturn))
 		{
 			if (tmp->parentheses == 1)
-			{
-				pid = fork();
-				if (!pid)
-				{
-					ft_parse_and_execute(shell, tmp->token);
-					free_logicals(inputs);
-					exit(shell->lastreturn);
-					// ft_free_everything(shell);
-				}
-				else
-				{
-					waitpid(pid, &shell->lastreturn, 0);
-					tmp = tmp->next;
-					continue ;
-				}
-			}
-			if (!tmp)
-				break ;
-			parser(shell, tmp->token);
-			exec(shell);
-			parsing_cleanup(shell);
-			shell->token = NULL;
+				normfunction(shell, tmp, inputs);
+			else
+				ft_parse_and_execute(shell, tmp, input);
 		}
 		tmp = tmp->next;
 	}
@@ -98,7 +111,7 @@ void	shell(char **envp)
 		}
 		add_history(input);
 		if (input && *input && !prechecks(shell, input))
-			ft_parse_and_execute(shell, input);
+			handle_logicals(shell, input);
 		free(input);
 	}
 	rl_clear_history();

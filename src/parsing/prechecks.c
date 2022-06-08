@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 16:30:07 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/06/07 23:13:23 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/06/07 23:29:08 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,18 @@ int	checklogicals(char *str)
 	return (0);
 }
 
-int check_opening_parentheses(char *str)
+int	check_empty_parentheses(char *str)
+{
+	if (*str == 40)
+		str++;
+	while (*str == 32)
+		str++;
+	if (*str == 41)
+		return (1);
+	return (0);
+}
+
+int	check_opening_parentheses(char *str)
 {
 	int	start;
 	int	i;
@@ -112,16 +123,8 @@ int check_opening_parentheses(char *str)
 	start = 1;
 	while (*str)
 	{
-		if (*str == 40 && start == 0)
+		if (*str == 40 && (start == 0 || check_empty_parentheses(str)))
 			return (1);
-		if (*str == 40)
-		{
-			i = 1;
-			while (str[i] == 32)
-				i++;
-			if (str[i] == 41)
-				return (1);
-		}
 		if ((*str == 38 || *str == 124) && *str == *(str + 1))
 		{
 			str++;
@@ -156,7 +159,7 @@ int	check_closing_parentheses(char *str)
 	return (0);
 }
 
-int checkparentheses(char *str)
+int	checkparentheses(char *str)
 {
 	int	level;
 	int	i;
