@@ -6,7 +6,7 @@
 /*   By: jsubel <jsubel@student.42wolfsburg.de >    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 10:53:46 by jsubel            #+#    #+#             */
-/*   Updated: 2022/06/07 13:47:43 by jsubel           ###   ########.fr       */
+/*   Updated: 2022/06/08 09:28:19 by jsubel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -220,6 +220,7 @@ void	ft_error_export(t_shell *shell, char *arg);
 void	ft_error_isdir(t_shell *shell, char *arg);
 void	ft_error_unset(t_shell *shell, char *arg);
 void	ft_error_ambig(t_shell *shell, char *arg);
+
 // free.c
 
 void		ft_free_everything(t_shell *shell);

@@ -6,11 +6,13 @@
 /*   By: jsubel <jsubel@student.42wolfsburg.de >    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 11:29:32 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/06/07 11:32:38 by jsubel           ###   ########.fr       */
+/*   Updated: 2022/06/08 09:27:38 by jsubel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
+
+static void	ft_flag_handler_export(t_shell *shell, char *errstr, char *tempstr);
 
 /**
  * @brief check if variable exists with the given name inside env
@@ -57,6 +59,7 @@ static int	search_env(t_shell *shell, char **args)
 	int		status;
 	char	*tempstr;
 	char	*errstr;
+
 	i = 1;
 	status = 0;
 	while (args[i])
@@ -65,14 +68,7 @@ static int	search_env(t_shell *shell, char **args)
 		if (!is_valid_varname(tempstr))
 		{
 			if (tempstr[0] == '-')
-			{
-				errstr = ft_strdup("export: ");
-				errstr = ft_strjoin3(errstr, ft_substr(tempstr, 0, 2));
-				errstr = ft_strjoin2(errstr, ": ");
-				errstr = ft_strjoin2(errstr, ERR_INVAL_OPT);
-				ft_error_msg(shell, errstr, ERRNO_INVAL_OPT);
-				free(errstr);
-			}
+				ft_flag_handler_export(shell, errstr, tempstr);
 			else
 				ft_error(shell, args[i], ERRNO_EXPORT);
 			status = 1;
@@ -105,4 +101,14 @@ int	ft_export(t_shell *shell, t_token *token)
 		status = search_env(shell, args);
 	free(args);
 	return (status);
+}
+
+static void	ft_flag_handler_export(t_shell *shell, char *errstr, char *tempstr)
+{
+	errstr = ft_strdup("export: ");
+	errstr = ft_strjoin3(errstr, ft_substr(tempstr, 0, 2));
+	errstr = ft_strjoin2(errstr, ": ");
+	errstr = ft_strjoin2(errstr, ERR_INVAL_OPT);
+	ft_error_msg(shell, errstr, ERRNO_INVAL_OPT);
+	free(errstr);
 }

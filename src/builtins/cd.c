@@ -6,7 +6,7 @@
 /*   By: jsubel <jsubel@student.42wolfsburg.de >    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 08:58:58 by jsubel            #+#    #+#             */
-/*   Updated: 2022/06/07 13:51:55 by jsubel           ###   ########.fr       */
+/*   Updated: 2022/06/08 09:29:05 by jsubel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,14 @@ int	ft_cd(t_shell *shell, t_args *args, t_env *env)
 	pwd_old = NULL;
 	pwd_new = NULL;
 	pwd_old = getcwd(pwd_old, MAXPATHLEN);
+	if (args->next->next)
+		return (ft_error_msg(shell, ERR_EXIT_COUNT, ERRNO_EXIT_COUNT));
 	if (args->next == NULL)
 		return (ft_cd_no_args(shell, pwd_old, env));
 	if (!pwd_old)
-	{
 		perror(ERR_PAR_DIR);
+	if (!pwd_old)
 		return (ERRNO_PAR_DIR);
-	}
 	if (ft_strncmp(args->next->arg, "-", 1) == 0)
 		return (ft_cd_last_directory(shell, pwd_old, env));
 	if (chdir(args->next->arg) != 0)
