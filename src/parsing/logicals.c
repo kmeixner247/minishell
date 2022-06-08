@@ -6,13 +6,13 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 17:07:10 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/06/07 23:45:24 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/06/08 10:24:45 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
-void	init_values(int *i, int *level, int *sing, int *doub)
+static void	init_values(int *i, int *level, int *sing, int *doub)
 {
 	i = 0;
 	level = 0;
