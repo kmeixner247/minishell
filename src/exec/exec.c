@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 09:35:21 by jsubel            #+#    #+#             */
-/*   Updated: 2022/06/08 13:00:59 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/06/08 15:49:05 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ void	exec_parent(t_shell *shell, int fd)
 {
 	int	wpid;
 
+	signal(SIGINT, SIG_IGN);
 	wpid = 1;
 	if (fd > 1)
 		close(fd);
@@ -68,6 +69,7 @@ void	exec_parent(t_shell *shell, int fd)
 		if (wpid > 0)
 			shell->lastreturn = WEXITSTATUS(shell->lastreturn);
 	}
+	signal(SIGINT, handle_sigint);
 }
 
 void	fork_and_execute(t_shell *shell)

@@ -1,6 +1,6 @@
 NAME		= minishell
 GCC			= gcc
-FLAGS		= -Wall -Wextra -Werror -ggdb3 -O0 -g
+FLAGS		= -Wall -Wextra -Werror -O3
 SRC_PATH	= src
 LIBFT		= libft
 BI			= builtins/
@@ -57,10 +57,10 @@ $(NAME): $(SRC) $(LIBFT)/libft.a
 
 clean:
 	make clean -C $(LIBFT)
-	rm $(NAME)
+	rm -f $(NAME)
 
 fclean: clean
-	rm $(LIBFT)/libft.a
+	rm -f $(LIBFT)/libft.a
 	rm -rf *.dSYM
 
 re: clean all

@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 12:48:23 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/06/08 12:40:29 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/06/08 15:50:39 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,15 +32,6 @@ void	handle_sigint(int sig)
 		{
 			if (g_pids[0] < 0)
 				kill(g_pids[1], SIGUSR1);
-			else
-			{
-				printf("\n");
-				while (g_pids[i])
-				{
-					kill(g_pids[i], SIGKILL);
-					i++;
-				}
-			}
 		}
 		else
 			sigint_interactive();
