@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsubel <jsubel@student.42wolfsburg.de >    +#+  +:+       +#+        */
+/*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 09:24:27 by jsubel            #+#    #+#             */
-/*   Updated: 2022/06/01 09:51:02 by jsubel           ###   ########.fr       */
+/*   Updated: 2022/06/08 12:57:40 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	ft_echo_isvalidflag(char *str)
  * @brief echo function - print input to terminal
  * @param flag_n flag to see if -n flag is used
  */
-int	ft_echo(t_shell *shell, t_args *args)
+int	ft_echo(t_args *args)
 {
 	int	i;
 	int	flag_n;

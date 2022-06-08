@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 08:58:58 by jsubel            #+#    #+#             */
-/*   Updated: 2022/06/08 10:23:13 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/06/08 12:52:05 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,6 @@
 static void		ft_change_env_pwd(char *pwd_old, char *pwd_new, t_env *env);
 static int		ft_cd_no_args(t_shell *shell, char *pwd_old, t_env *env);
 static int		ft_cd_last_directory(t_shell *shell, char *pwd_old, t_env *env);
-
-/**
- * @brief very necessary function. !!!DO NOT TOUCH!!!
- * @param str1 a string
- * @param str2 another string
- */
-static void	ft_free_chars(char *str1, char *str2)
-{
-	if (str1)
-		free(str1);
-	if (str2)
-		free(str2);
-}
 
 /**
  * @brief recode of change directory (cd) builtin
@@ -102,21 +89,6 @@ static void	ft_change_env_pwd(char *pwd_old, char *pwd_new, t_env *env)
 	tmp = ft_strjoin("PWD=", pwd_new);
 	new->var = ft_strdup(tmp);
 	free(tmp);
-}
-
-/** @brief find a certain element within env */
-t_env	*ft_find_element(t_env *env, char *str)
-{
-	t_env	*tmp;
-
-	tmp = env;
-	while (tmp)
-	{
-		if (!ft_strncmp(str, tmp->var, ft_strlen(str)))
-			break ;
-		tmp = tmp->next;
-	}
-	return (tmp);
 }
 
 /** @brief if cd gets called with no arguments, use this */

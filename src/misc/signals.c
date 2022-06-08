@@ -6,11 +6,11 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 12:48:23 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/05/27 12:50:59 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/06/08 12:40:29 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../incl/minishell.h"
+#include "../../incl/minishell.h"
 
 static void	sigint_interactive(void)
 {

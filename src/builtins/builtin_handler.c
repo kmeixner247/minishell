@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 19:08:10 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/06/05 13:21:59 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/06/08 12:57:49 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,11 @@ int	ft_exec_builtins(t_shell *shell, t_token *token, int tmpfd)
 {
 	int		result;
 	t_args	*args;
-	int		tempfd;
 
 	args = token->args;
 	result = 0;
 	if (ft_strcmp(args->arg, "echo") == 0)
-		result = ft_echo(shell, args);
+		result = ft_echo(args);
 	if (ft_strcmp(args->arg, "pwd") == 0)
 		result = ft_pwd();
 	if (ft_strcmp(args->arg, "cd") == 0)

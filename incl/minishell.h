@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 10:53:46 by jsubel            #+#    #+#             */
-/*   Updated: 2022/06/08 09:39:26 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/06/08 13:04:54 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,7 +161,7 @@ void		shell(char **envp);
 
 // builtins
 
-int			ft_echo(t_shell *shell, t_args *args);
+int			ft_echo(t_args *args);
 int			ft_pwd(void);
 int			ft_export(t_shell *shell, t_token *token);
 int			ft_unset(t_shell *shell);
@@ -211,9 +211,9 @@ char		*accountant_hd(t_shell *shell, char *str);
 
 void		write_pids(t_shell *shell);
 void		assign_pipes(t_token *token, int pipefds[2]);
-void		try_paths(t_shell *shell, char **args, char **envp);
+void		try_paths(char **args, char **envp);
 int			ft_exec_builtins(t_shell *shell, t_token *token, int tempfd);
-void		ft_meta_wild_quote(t_shell *shell, t_token *token);
+void		ft_meta_wild_quote(t_token *token);
 
 // redirs.c
 
@@ -224,7 +224,7 @@ int			handle_redirs_single(t_shell *shell, t_token *token);
 int			ft_error_msg(t_shell *shell, char *msg, int err_num);
 void		ft_error_handler(t_shell *shell, char *msg, int err_num);
 void		ft_error(t_shell *shell, char *arg, int error);
-int			notfound_or_isdir(t_shell *shell, char *path, char **ar, char **ev);
+int			notfound_or_isdir(t_shell *shell, char *path);
 
 // utils_error.c
 
@@ -244,6 +244,7 @@ void		ft_free_everything(t_shell *shell);
 // parser.c
 
 void		parser(t_shell *shell, char *input);
+void		handle_logicals(t_shell *shell, char *input);
 
 // parsing_cleanup.c
 
@@ -261,15 +262,19 @@ char		**plumber(char *str);
 
 // logicals.c
 
-char		*has_logical(char *str);
-void		logical_addback(t_logical **start, t_logical *new);
-t_logical	*new_logical(char *str);
-t_logical	*split_by_logicals(char *input);
-void		free_logicals(t_logical *logical);
+int			find_closing_parenthesis(char *str);
+int			find_size(char *str);
+int			set_operator(char *str);
+int			set_parentheses_flag(char **str, int *size);
 
 // prechecks.c
 
 int			prechecks(t_shell *shell, char *str);
+
+// prechecks_pars_logicals.c
+
+int			checklogicals(char *str);
+int			checkparentheses(char *str);
 
 // quotes.c
 
@@ -286,7 +291,7 @@ t_token		*secretary(char **arr);
 
 int			find_cash(char *str, int *doubflag);
 char		*find_env_var(char *str, char **envp, int doubflag);
-char		*find_env_varname(char *str, char **envp);
+char		*find_env_varname(char *str);
 char		*get_env_value(char *str, char **envp, int doubflag);
 
 // utils_args.c
@@ -297,6 +302,17 @@ char		**get_args(t_args *args);
 int			ft_nbr_args(t_args *args);
 void		args_delfirst(t_args **args);
 
+// utils_logicals.c
+
+t_logical	*new_logical(char *str);
+t_logical	*split_by_logicals(char *input);
+void		free_logicals(t_logical *logical);
+void		logical_addback(t_logical **start, t_logical *new);
+char		*has_logical(char *str);
+
+// utils_parsing.c
+
+void		handle_sigint(int sig);
 //	utils_redir.c
 
 t_redir		*new_redir(void);
@@ -307,23 +323,27 @@ void		redir_addback(t_redir **start, t_redir *new);
 t_token		*new_token(void);
 void		token_addback(t_token **start, t_token *new);
 
-// utils_parsing.c
-
-int			check_char(unsigned char c, const char *str);
-
-void		handle_sigint(int sig);
-
 // wildcard.c
 
 int			redir_wildcard(t_shell *shell, t_redir *redir);
 void		meta_args_wildcard(t_token *token);
-
-void		printtoken(t_token **tokenn);
 
 // utils_wildcard.c
 
 int			haswildcard(char *str);
 void		ft_important_function(t_args *args);
 int			match(char *pattern, char *str);
+
+/*---------------------------------------------------------------------------*/
+/*                                    MISC                                   */
+/*---------------------------------------------------------------------------*/
+// signals.c
+void		handle_sigint(int sig);
+
+// utils.c
+int			check_char(unsigned char c, const char *str);
+void		cut_spaces(char **str);
+void		ft_free_chars(char *str1, char *str2);
+t_env		*ft_find_element(t_env *env, char *str);
 
 #endif

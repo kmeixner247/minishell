@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 09:35:21 by jsubel            #+#    #+#             */
-/*   Updated: 2022/06/05 22:36:41 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/06/08 13:00:59 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	prepare_child(t_shell *shell, t_token *token)
 			close(token->outfd);
 		exit(1);
 	}
-	ft_meta_wild_quote(shell, token);
+	ft_meta_wild_quote(token);
 	dup2(token->infd, 0);
 	dup2(token->outfd, 1);
 	if (token->infd > 0)
@@ -46,9 +46,9 @@ void	exec_children(t_shell *shell, t_token *token)
 	else if (check_char('/', args[0]))
 		execve(args[0], args, envp);
 	else
-		try_paths(shell, args, envp);
+		try_paths(args, envp);
 	if (status == -1)
-		status = notfound_or_isdir(shell, args[0], args, envp);
+		status = notfound_or_isdir(shell, args[0]);
 	free(args);
 	free(envp);
 	exit(status);
@@ -103,7 +103,7 @@ void	exec(t_shell *shell)
 		g_pids = ft_calloc(sizeof(int), 1);
 		if (handle_redirs_single(shell, token))
 			return ;
-		ft_meta_wild_quote(shell, token);
+		ft_meta_wild_quote(token);
 		tempfd = dup(1);
 		dup2(token->outfd, 1);
 		shell->lastreturn = ft_exec_builtins(shell, token, tempfd);

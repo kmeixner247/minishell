@@ -6,14 +6,14 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 16:23:55 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/06/04 16:38:51 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/06/08 13:02:31 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
 //returns the valid environmental variable name, starting at *str
-char	*find_env_varname(char *str, char **envp)
+char	*find_env_varname(char *str)
 {
 	int		size;
 	char	*ret;
@@ -52,7 +52,7 @@ char	*currency_exchange(t_shell *shell, char *str, char **envp)
 	}
 	else
 	{
-		varname = find_env_varname(str, envp);
+		varname = find_env_varname(str);
 		replace = get_env_value(varname, envp, doubflag);
 		str += ft_strlen(varname);
 		free(varname);
@@ -66,7 +66,6 @@ char	*currency_exchange(t_shell *shell, char *str, char **envp)
 char	*accountant(t_shell *shell, char *str)
 {
 	char	*tmp;
-	char	*tmp2;
 	int		doubflag;
 	char	**envp;
 

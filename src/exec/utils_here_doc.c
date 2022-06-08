@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 12:04:21 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/06/03 18:43:31 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/06/08 13:06:49 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ static int	find_cash_hd(char *str)
 
 static char	*get_env_value_hd(char *str, char **envp)
 {
-	int		size;
 	int		i;
 	int		j;
 	char	*tmp;
@@ -68,7 +67,7 @@ static char	*currency_exchange_hd(t_shell *shell, char *str, char **envp)
 	}
 	else
 	{
-		varname = find_env_varname(str, envp);
+		varname = find_env_varname(str);
 		replace = get_env_value_hd(varname, envp);
 		str += ft_strlen(varname);
 		free(varname);
@@ -96,5 +95,6 @@ char	*accountant_hd(t_shell *shell, char *str)
 
 void	hd_newline(int sig)
 {
-	printf("\n");
+	if (sig == SIGINT)
+		printf("\n");
 }

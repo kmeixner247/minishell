@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 19:03:34 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/06/05 22:37:00 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/06/08 13:00:20 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ static void	free_paths(char **paths)
 	free(paths);
 }
 
-void	try_paths(t_shell *shell, char **args, char **envp)
+void	try_paths(char **args, char **envp)
 {
 	int		i;
 	char	**paths;
@@ -94,7 +94,7 @@ void	try_paths(t_shell *shell, char **args, char **envp)
 	free_paths(paths);
 }
 
-void	ft_meta_wild_quote(t_shell *shell, t_token *token)
+void	ft_meta_wild_quote(t_token *token)
 {
 	if (token->args)
 	{

@@ -1,12 +1,12 @@
 NAME		= minishell
 GCC			= gcc
-FLAGS		= -Wall -Wextra -Werror -ggdb3 -O0 -g -fsaniziter=address
+FLAGS		= -Wall -Wextra -Werror -ggdb3 -O0 -g
 SRC_PATH	= src
 LIBFT		= libft
 BI			= builtins/
 EXEC		= exec/
 PAR			= parsing/
-EXEC		= exec/
+MISC		= misc/
 SRC_FILES 	=	main.c \
 				$(BI)builtin_handler.c \
 				$(BI)cd.c \
@@ -31,17 +31,19 @@ SRC_FILES 	=	main.c \
 				$(PAR)parser.c \
 				$(PAR)parsing_cleanup.c \
 				$(PAR)plumber.c \
+				$(PAR)prechecks_pars_logicals.c \
 				$(PAR)prechecks.c \
 				$(PAR)quotes.c \
 				$(PAR)secretary.c \
 				$(PAR)utils_accountant.c \
 				$(PAR)utils_args.c \
-				$(PAR)utils_parsing.c \
+				$(PAR)utils_logicals.c \
 				$(PAR)utils_redir.c \
 				$(PAR)utils_tokens.c \
 				$(PAR)utils_wildcard.c \
 				$(PAR)wildcard.c \
-				signals.c
+				$(MISC)signals.c \
+				$(MISC)utils.c
 
 SRC			= $(addprefix $(SRC_PATH)/,$(SRC_FILES))
 
@@ -51,7 +53,7 @@ lib:
 	make -C $(LIBFT)
 
 $(NAME): $(SRC) $(LIBFT)/libft.a
-	$(GCC) $^ -I $(HOME)/goinfre/.brew/opt/readline/include/ -L $(LIBFT) -L $(HOME)/goinfre/.brew/opt/readline/lib/ -l readline  -o $(NAME)
+	$(GCC) $(FLAGS) $^ -I $(HOME)/goinfre/.brew/opt/readline/include/ -L $(LIBFT) -L $(HOME)/goinfre/.brew/opt/readline/lib/ -l readline  -o $(NAME)
 
 clean:
 	make clean -C $(LIBFT)
