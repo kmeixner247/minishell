@@ -27,6 +27,7 @@ SRC = 	ft_abs.c \
 		ft_strjoin.c \
 		ft_strjoin2.c \
 		ft_strjoin3.c \
+		ft_strjoin4.c \
 		ft_strlcat.c \
 		ft_strlcpy.c \
 		ft_strlen.c \

@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 14:29:14 by jsubel            #+#    #+#             */
-/*   Updated: 2022/05/17 16:17:32 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/06/08 10:37:25 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ void			ft_striteri(char *s, void (*f)(unsigned int, char*));
 char			*ft_strjoin(char const *s1, char const *s2);
 char			*ft_strjoin2(char *s1, char const *s2);
 char			*ft_strjoin3(char const *s1, char *s2);
+char			*ft_strjoin4(char *s1, char *s2);
 unsigned int	ft_strlcat(char *dest, const char *src, unsigned int size);
 size_t			ft_strlcpy(char *dst, const char *src, size_t len);
 size_t			ft_strlen(const char *str);

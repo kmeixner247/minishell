@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsubel <jsubel@student.42wolfsburg.de >    +#+  +:+       +#+        */
+/*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 11:29:32 by kmeixner          #+#    #+#             */
-/*   Updated: 2022/06/08 09:27:38 by jsubel           ###   ########.fr       */
+/*   Updated: 2022/06/08 10:38:55 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
-static void	ft_flag_handler_export(t_shell *shell, char *errstr, char *tempstr);
+static void	ft_flag_handler_export(t_shell *shell, char *tempstr);
 
 /**
  * @brief check if variable exists with the given name inside env
@@ -58,7 +58,6 @@ static int	search_env(t_shell *shell, char **args)
 	int		i;
 	int		status;
 	char	*tempstr;
-	char	*errstr;
 
 	i = 1;
 	status = 0;
@@ -68,7 +67,7 @@ static int	search_env(t_shell *shell, char **args)
 		if (!is_valid_varname(tempstr))
 		{
 			if (tempstr[0] == '-')
-				ft_flag_handler_export(shell, errstr, tempstr);
+				ft_flag_handler_export(shell, tempstr);
 			else
 				ft_error(shell, args[i], ERRNO_EXPORT);
 			status = 1;
@@ -103,10 +102,12 @@ int	ft_export(t_shell *shell, t_token *token)
 	return (status);
 }
 
-static void	ft_flag_handler_export(t_shell *shell, char *errstr, char *tempstr)
+static void	ft_flag_handler_export(t_shell *shell, char *tempstr)
 {
+	char	*errstr;
+
 	errstr = ft_strdup("export: ");
-	errstr = ft_strjoin3(errstr, ft_substr(tempstr, 0, 2));
+	errstr = ft_strjoin4(errstr, ft_substr(tempstr, 0, 2));
 	errstr = ft_strjoin2(errstr, ": ");
 	errstr = ft_strjoin2(errstr, ERR_INVAL_OPT);
 	ft_error_msg(shell, errstr, ERRNO_INVAL_OPT);
