@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsubel <jsubel@student.42wolfsburg.de >    +#+  +:+       +#+        */
+/*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 08:58:58 by jsubel            #+#    #+#             */
-/*   Updated: 2022/06/03 13:24:01 by jsubel           ###   ########.fr       */
+/*   Updated: 2022/06/08 10:23:13 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,40 +14,61 @@
 
 static void		ft_change_env_pwd(char *pwd_old, char *pwd_new, t_env *env);
 static int		ft_cd_no_args(t_shell *shell, char *pwd_old, t_env *env);
+static int		ft_cd_last_directory(t_shell *shell, char *pwd_old, t_env *env);
+
+/**
+ * @brief very necessary function. !!!DO NOT TOUCH!!!
+ * @param str1 a string
+ * @param str2 another string
+ */
+static void	ft_free_chars(char *str1, char *str2)
+{
+	if (str1)
+		free(str1);
+	if (str2)
+		free(str2);
+}
 
 /**
  * @brief recode of change directory (cd) builtin
  * @param pwd_old string to save working directory before changing
  * @param pwd_new string to save working directory after changing
  */
+
+int	ft_par_dir_err(void)
+{
+	perror(ERR_PAR_DIR);
+	return (ERRNO_PAR_DIR);
+}
+
 int	ft_cd(t_shell *shell, t_args *args, t_env *env)
 {
 	char	*pwd_old;
 	char	*pwd_new;
+	int		status;
 
+	status = 0;
 	pwd_old = NULL;
 	pwd_new = NULL;
 	pwd_old = getcwd(pwd_old, MAXPATHLEN);
 	if (args->next == NULL)
-		return (ft_cd_no_args(shell, pwd_old, env));
-	if (!pwd_old)
-	{
-		perror(ERR_PAR_DIR);
-		return (ERRNO_PAR_DIR);
-	}
-	if (chdir(args->next->arg) != 0)
+		status = ft_cd_no_args(shell, pwd_old, env);
+	else if (args->next->next)
+		status = ft_error_msg(shell, ERR_EXIT_COUNT, ERRNO_EXIT_COUNT);
+	else if (!pwd_old)
+		status = ft_par_dir_err();
+	else if (ft_strncmp(args->next->arg, "-", 1) == 0)
+		status = ft_cd_last_directory(shell, pwd_old, env);
+	else if (chdir(args->next->arg) != 0)
 		ft_error_msg(shell, args->next->arg, 0);
 	else
 	{
 		pwd_new = getcwd(pwd_new, MAXPATHLEN);
 		ft_change_env_pwd(pwd_old, pwd_new, shell->env);
 	}
-	free(pwd_old);
-	free(pwd_new);
-	return (0);
+	ft_free_chars(pwd_old, pwd_new);
+	return (status);
 }
-
-//			excel: 430/431
 
 /**
  * @brief helper function to swap around the OLDPWD and PWD variables in env
@@ -68,20 +89,19 @@ static void	ft_change_env_pwd(char *pwd_old, char *pwd_new, t_env *env)
 	if (old)
 	{
 		free(old->var);
-		pwd_old = ft_strjoin("OLDPWD=", pwd_old);
-		old->var = ft_strdup(pwd_old);
+		tmp = ft_strjoin("OLDPWD=", pwd_old);
+		old->var = ft_strdup(tmp);
 	}
 	else
 	{
 		tmp = ft_strjoin("OLDPWD=", pwd_old);
 		env_addback(&env, new_env(tmp));
-		free(tmp);
 	}
+	free(tmp);
 	free(new->var);
-	pwd_new = ft_strjoin("PWD=", pwd_new);
-	new->var = ft_strdup(pwd_new);
-	free(pwd_old);
-	free(pwd_new);
+	tmp = ft_strjoin("PWD=", pwd_new);
+	new->var = ft_strdup(tmp);
+	free(tmp);
 }
 
 /** @brief find a certain element within env */
@@ -119,6 +139,27 @@ static int	ft_cd_no_args(t_shell *shell, char *pwd_old, t_env *env)
 		ft_error_msg(shell, "cd: ", 0);
 	ft_change_env_pwd(pwd_old, pwd_home, env);
 	free(pwd_home);
-	free(pwd_old);
+	return (0);
+}
+
+static int	ft_cd_last_directory(t_shell *shell, char *pwd_old, t_env *env)
+{
+	t_env	*last_dir;
+	char	*pwd_last;
+
+	if (!pwd_old)
+		pwd_old = ft_substr(ft_find_element(shell->env, "PWD")->var, \
+			5, ft_strlen(ft_find_element(shell->env, "PWD")->var) - 5);
+	last_dir = ft_find_element(shell->env, "OLDPWD");
+	if (!last_dir)
+	{
+		ft_error_msg(shell, ERR_OLDPWD_UNSET, ERRNO_OLDPWD_UNSET);
+		return (ERRNO_OLDPWD_UNSET);
+	}
+	pwd_last = ft_substr(last_dir->var, 7, ft_strlen(last_dir->var) - 7);
+	if (chdir(pwd_last) != 0)
+		ft_error_msg(shell, "cd: ", 0);
+	ft_change_env_pwd(pwd_old, pwd_last, env);
+	free(pwd_last);
 	return (0);
 }

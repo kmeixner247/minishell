@@ -6,7 +6,7 @@
 /*   By: kmeixner <konstantin.meixner@freenet.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 10:53:46 by jsubel            #+#    #+#             */
-/*   Updated: 2022/06/07 23:47:43 by kmeixner         ###   ########.fr       */
+/*   Updated: 2022/06/08 09:39:26 by kmeixner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,13 +60,17 @@
 # define ERRNO_UNSET 19
 # define ERR_HOME_UNSET "HOME not set"
 # define ERRNO_HOME_UNSET 20
+# define ERR_OLDPWD_UNSET "OLDPWD not set"
+# define ERRNO_OLDPWD_UNSET 21
 # define ERR_PAR_DIR "chdir: error retrieving current directory: \
 getcwd: cannot access parent directories"
-# define ERRNO_PAR_DIR 21
+# define ERRNO_PAR_DIR 22
 # define ERR_LOGICS_INPUT "syntax error: no valid input after logical operator"
-# define ERRNO_LOGICS_INPUT 22
+# define ERRNO_LOGICS_INPUT 23
 # define ERR_PARENTH_INPUT "syntax error: invalid use of parentheses"
-# define ERRNO_PARENTH_INPUT 23
+# define ERRNO_PARENTH_INPUT 24
+# define ERR_INVAL_OPT "invalid option"
+# define ERRNO_INVAL_OPT 25
 
 extern int	*g_pids;
 
@@ -221,6 +225,14 @@ int			ft_error_msg(t_shell *shell, char *msg, int err_num);
 void		ft_error_handler(t_shell *shell, char *msg, int err_num);
 void		ft_error(t_shell *shell, char *arg, int error);
 int			notfound_or_isdir(t_shell *shell, char *path, char **ar, char **ev);
+
+// utils_error.c
+
+void		ft_error_notfound(t_shell *shell, char *arg);
+void		ft_error_export(t_shell *shell, char *arg);
+void		ft_error_isdir(t_shell *shell, char *arg);
+void		ft_error_unset(t_shell *shell, char *arg);
+void		ft_error_ambig(t_shell *shell, char *arg);
 
 // free.c
 
